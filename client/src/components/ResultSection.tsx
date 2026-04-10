@@ -1,10 +1,12 @@
 /*
  * ResultSection - 診断結果（冒険のスタート地点）
  * Design: ゴールドバッジ、星評価、冒険の書イメージ
- * 1位: 大きなカード、2位・3位: コンパクトカード、比較テーブル
+ * 1位: 大きなカード（独自の強み・特色プログラム強調）
+ * 2位・3位: コンパクトカード（強みサマリー表示）
+ * 比較テーブル
  */
 import { motion } from "framer-motion";
-import { Star, Trophy, Medal, Award, ArrowRight, Sparkles, RotateCcw } from "lucide-react";
+import { Star, Trophy, Medal, Award, ArrowRight, Sparkles, RotateCcw, GraduationCap, Lightbulb } from "lucide-react";
 import type { SchoolScore, DiagnosisInput } from "@/lib/schoolData";
 
 const BOOK_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663286960690/3onwxhANtpgAkHzmhikcoQ/open-book-result-eKLoEFqvPzPE32MSjqjNnZ.webp";
@@ -178,7 +180,7 @@ export default function ResultSection({ results, userInput, onRestart }: ResultS
 }
 
 /* ============================================================
-   First Place Card
+   First Place Card - 独自の強み・特色プログラム強調
    ============================================================ */
 
 function FirstPlaceCard({ result, userInput }: { result: SchoolScore; userInput: DiagnosisInput }) {
@@ -254,6 +256,74 @@ function FirstPlaceCard({ result, userInput }: { result: SchoolScore; userInput:
           {/* Divider */}
           <div className="h-px bg-gradient-to-r from-transparent via-[#C5A55A]/25 to-transparent mb-4" />
 
+          {/* ===== 独自の強み セクション ===== */}
+          <div className="mb-4">
+            <div className="flex items-center gap-1.5 mb-3">
+              <Lightbulb className="w-4 h-4 text-[#D4AF37]" />
+              <h4 className="font-serif font-bold text-[#2C1810] text-[13px]">
+                この学校の強み
+              </h4>
+            </div>
+            <div className="space-y-2.5">
+              {school.uniqueStrengths.map((strength, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, x: -15 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 + idx * 0.1 }}
+                  className="flex gap-2.5 p-2.5 rounded-lg bg-gradient-to-r from-[#D4AF37]/[0.06] to-transparent border border-[#D4AF37]/10 hover:border-[#D4AF37]/25 transition-colors"
+                >
+                  <span className="text-lg shrink-0 mt-0.5 leading-none">{strength.icon}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-serif font-bold text-[#2C1810] text-[11px] leading-tight mb-0.5">
+                      {strength.title}
+                    </p>
+                    <p className="font-sans text-[10px] text-[#5A4632] leading-[1.6]">
+                      {strength.detail}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* ===== 特色プログラム セクション ===== */}
+          <div className="mb-4">
+            <div className="flex items-center gap-1.5 mb-3">
+              <GraduationCap className="w-4 h-4 text-[#D4AF37]" />
+              <h4 className="font-serif font-bold text-[#2C1810] text-[13px]">
+                特色あるプログラム
+              </h4>
+            </div>
+            <div className="space-y-2">
+              {school.signaturePrograms.map((program, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, x: -15 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5 + idx * 0.1 }}
+                  className="relative p-3 rounded-lg border border-[#C5A55A]/15 bg-[#2C1810]/[0.02] overflow-hidden"
+                >
+                  {/* Left accent bar */}
+                  <div className="absolute left-0 top-2 bottom-2 w-[3px] rounded-full bg-gradient-to-b from-[#D4AF37] to-[#C5A55A]/50" />
+                  <div className="pl-2.5">
+                    <p className="font-serif font-bold text-[#8B6914] text-[11px] mb-1">
+                      {program.name}
+                    </p>
+                    <p className="font-sans text-[10px] text-[#5A4632] leading-[1.65]">
+                      {program.description}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="h-px bg-gradient-to-r from-transparent via-[#C5A55A]/25 to-transparent mb-4" />
+
           {/* Match Comment */}
           <div className="p-3.5 rounded-xl bg-gradient-to-br from-[#2C1810]/[0.04] to-[#2C1810]/[0.02] border border-[#C5A55A]/12">
             <p className="font-serif text-[12px] text-[#3D2B1F] leading-[1.85] whitespace-pre-line">
@@ -267,7 +337,7 @@ function FirstPlaceCard({ result, userInput }: { result: SchoolScore; userInput:
 }
 
 /* ============================================================
-   Runner-Up Card
+   Runner-Up Card - 強みサマリー付き
    ============================================================ */
 
 function RunnerUpCard({
@@ -327,8 +397,42 @@ function RunnerUpCard({
             <CompactRating label="表現" value={school.expressionLevel} />
           </div>
 
+          {/* ===== 独自の強み（コンパクト表示） ===== */}
+          <div className="mt-3 space-y-1.5">
+            {school.uniqueStrengths.slice(0, 2).map((strength, idx) => (
+              <div key={idx} className="flex items-start gap-1.5">
+                <span className="text-sm shrink-0 leading-none mt-px">{strength.icon}</span>
+                <div className="min-w-0">
+                  <span className="font-serif font-bold text-[10px] text-[#2C1810]">
+                    {strength.title}
+                  </span>
+                  <span className="font-sans text-[9px] text-[#6B5744] ml-1">
+                    — {strength.detail.length > 30 ? strength.detail.slice(0, 30) + "…" : strength.detail}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 特色プログラム（1つだけ表示） */}
+          {school.signaturePrograms.length > 0 && (
+            <div className="mt-2 pl-2 border-l-2 border-[#D4AF37]/25">
+              <p className="font-serif font-bold text-[9px] text-[#8B6914]">
+                {school.signaturePrograms[0].name}
+              </p>
+              <p className="font-sans text-[9px] text-[#6B5744] leading-[1.5]">
+                {school.signaturePrograms[0].description.length > 40
+                  ? school.signaturePrograms[0].description.slice(0, 40) + "…"
+                  : school.signaturePrograms[0].description}
+              </p>
+            </div>
+          )}
+
+          {/* Divider */}
+          <div className="h-px bg-gradient-to-r from-[#C5A55A]/15 to-transparent my-2.5" />
+
           {/* Comment */}
-          <p className="font-serif text-[11px] text-[#5A4632] leading-relaxed mt-2.5">
+          <p className="font-serif text-[11px] text-[#5A4632] leading-relaxed">
             {result.matchComment.split("\n")[0]}
           </p>
         </div>
@@ -392,6 +496,17 @@ function ComparisonSection({ results, userInput }: { results: SchoolScore[]; use
             <CRow label="AI教育" values={results.map((r) => starStr(r.school.aiEducationLevel))} />
             <CRow label="適性相性" values={results.map((r) => getMatchLabel(r.strengthMatchScore))} />
             <CRow label="成長相性" values={results.map((r) => getMatchLabel(r.growthMatchScore))} />
+            {/* 特色プログラム行を追加 */}
+            <CRow
+              label="特色"
+              values={results.map((r) =>
+                r.school.signaturePrograms.length > 0
+                  ? r.school.signaturePrograms[0].name.length > 8
+                    ? r.school.signaturePrograms[0].name.slice(0, 8) + "…"
+                    : r.school.signaturePrograms[0].name
+                  : "—"
+              )}
+            />
           </tbody>
         </table>
       </div>
