@@ -12,6 +12,7 @@ import ResultSection from "@/components/ResultSection";
 import MonitorBanner from "@/components/MonitorBanner";
 import type { DiagnosisInput, SchoolScore } from "@/lib/schoolData";
 import { calculateScores } from "@/lib/schoolData";
+import { supabase } from "@/lib/supabase";
 
 export default function Home() {
   const [phase, setPhase] = useState<"top" | "form" | "loading" | "result">("top");
@@ -39,6 +40,43 @@ export default function Home() {
       setTimeout(() => {
         resultRef.current?.scrollIntoView({ behavior: "smooth" });
       }, 200);
+
+      // Save diagnosis results to Supabase (fire-and-forget)
+      if (supabase) {
+        const resultScores = scores.map((s) => ({
+          schoolId: s.school.id,
+          schoolName: s.school.name,
+          totalScore: s.totalScore,
+          deviationScore: s.deviationScore,
+          styleScore: s.styleScore,
+          explorationScore: s.explorationScore,
+          passionScore: s.passionScore,
+          selfDriveScore: s.selfDriveScore,
+          futureScore: s.futureScore,
+          techScore: s.techScore,
+          strengthMatchScore: s.strengthMatchScore,
+          growthMatchScore: s.growthMatchScore,
+        }));
+
+        supabase
+          .from("diagnoses")
+          .insert({
+            hensachi_source: input.deviationStandard,
+            hensachi_value: input.deviationRange,
+            inquiry_score: input.explorationPower,
+            passion_score: input.passionLevel,
+            self_driven_score: input.selfDrive,
+            expression_score: input.expressionPower,
+            collaboration_score: input.collaborationPower,
+            future_score: input.futureOrientation,
+            preferred_style: input.schoolStyle,
+            coed_pref: input.coedPreference,
+            result_scores: resultScores,
+          })
+          .then(({ error }) => {
+            if (error) console.error("Failed to save diagnosis:", error.message);
+          });
+      }
     }, 2500);
   }, []);
 
