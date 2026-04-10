@@ -381,8 +381,8 @@ export const schools: School[] = [
     collaborationLevel: 5,
     futureOrientation: 5,
     coed: "共学",
-    features: ["PBL", "国際", "カトリック", "英語"],
-    description: "PBL（課題解決型学習）と英語教育を柱に、グローバルな視野を持つ人材を育てます。",
+    features: ["PBL", "21世紀型", "国際", "STEAM"],
+    description: "PBL型授業と21世紀型教育で、主体的に学び、社会に貢献できる人材を育成します。",
     commuteAreas: ["北区", "板橋", "豊島", "荒川"],
   },
   {
@@ -435,16 +435,52 @@ export interface DiagnosisInput {
   grade: string;
   deviationStandard: "sapix" | "yotsuya";
   deviationRange: string;
+  // 現在の適性（お子さまの今の強み）
+  currentStrengths: string[];
+  // 伸ばしたい能力
+  desiredGrowth: string[];
+  // 性格・学びのスタイル
   explorationPower: number;
   passionLevel: number;
   selfDrive: number;
   expressionPower: number;
   collaborationPower: number;
   futureOrientation: number;
+  // 環境
   schoolStyle: "自由" | "規律" | "バランス" | "こだわらない";
-  commuteTime: string;
   coedPreference: "共学" | "男子校" | "女子校" | "こだわらない";
+  // 通学条件（任意）
+  includeCommute: boolean;
+  commuteTime: string;
 }
+
+// ============================================================
+// 適性・伸ばしたい能力の選択肢
+// ============================================================
+
+export const STRENGTH_OPTIONS = [
+  { value: "exploration", label: "探究心", desc: "知りたい・調べたいが止まらない", icon: "🔍" },
+  { value: "logic", label: "論理的思考", desc: "筋道を立てて考えるのが得意", icon: "🧩" },
+  { value: "creativity", label: "創造力", desc: "新しいアイデアを生み出すのが好き", icon: "💡" },
+  { value: "expression", label: "表現力", desc: "自分の考えを伝えるのが上手", icon: "🎤" },
+  { value: "persistence", label: "粘り強さ", desc: "最後まで諦めずにやり遂げる", icon: "💪" },
+  { value: "sociability", label: "社交性", desc: "友達と協力するのが得意", icon: "🤝" },
+  { value: "concentration", label: "集中力", desc: "一つのことに深く没頭できる", icon: "🎯" },
+  { value: "curiosity", label: "好奇心", desc: "いろんなことに興味を持つ", icon: "✨" },
+  { value: "leadership", label: "リーダーシップ", desc: "みんなをまとめるのが得意", icon: "👑" },
+  { value: "independence", label: "自立心", desc: "自分で考えて行動できる", icon: "🚀" },
+];
+
+export const GROWTH_OPTIONS = [
+  { value: "exploration", label: "探究力", desc: "自ら問いを立て深く学ぶ力", icon: "🔍" },
+  { value: "global", label: "国際力", desc: "英語力・異文化理解・グローバル視野", icon: "🌍" },
+  { value: "science", label: "理系力", desc: "科学的思考・実験・データ分析", icon: "🔬" },
+  { value: "expression", label: "表現力", desc: "プレゼン・文章・芸術的表現", icon: "🎨" },
+  { value: "digital", label: "デジタル力", desc: "プログラミング・AI・ICTスキル", icon: "💻" },
+  { value: "selfDrive", label: "自走力", desc: "自分で計画し実行する力", icon: "🚀" },
+  { value: "collaboration", label: "協働力", desc: "チームで課題を解決する力", icon: "🤝" },
+  { value: "humanPower", label: "人間力", desc: "教養・礼節・豊かな人間性", icon: "📚" },
+];
 
 // ============================================================
 // スコアリングロジック
@@ -460,6 +496,8 @@ export interface SchoolScore {
   selfDriveScore: number;
   futureScore: number;
   techScore: number;
+  strengthMatchScore: number;
+  growthMatchScore: number;
   matchComment: string;
 }
 
@@ -522,6 +560,65 @@ function calculateAttributeScore(
   return 15;
 }
 
+// 現在の適性と学校の特徴のマッチング
+function calculateStrengthMatch(strengths: string[], school: School): number {
+  if (strengths.length === 0) return 60; // 未選択の場合は中立
+
+  const strengthToSchoolMap: Record<string, (s: School) => number> = {
+    exploration: (s) => s.explorationLevel,
+    logic: (s) => Math.max(s.explorationLevel, s.selfDriveLevel),
+    creativity: (s) => s.expressionLevel,
+    expression: (s) => s.expressionLevel,
+    persistence: (s) => s.selfDriveLevel,
+    sociability: (s) => s.collaborationLevel,
+    concentration: (s) => s.selfDriveLevel,
+    curiosity: (s) => s.explorationLevel,
+    leadership: (s) => s.collaborationLevel,
+    independence: (s) => s.selfDriveLevel,
+  };
+
+  let totalScore = 0;
+  let count = 0;
+  for (const str of strengths) {
+    const getter = strengthToSchoolMap[str];
+    if (getter) {
+      const schoolVal = getter(school);
+      // 高い適性 × 学校の高い特徴 = 良いマッチ
+      totalScore += schoolVal >= 4 ? 100 : schoolVal >= 3 ? 70 : 40;
+      count++;
+    }
+  }
+  return count > 0 ? totalScore / count : 60;
+}
+
+// 伸ばしたい能力と学校の特徴のマッチング
+function calculateGrowthMatch(growthAreas: string[], school: School): number {
+  if (growthAreas.length === 0) return 60;
+
+  const growthToSchoolMap: Record<string, (s: School) => number> = {
+    exploration: (s) => s.explorationLevel,
+    global: (s) => (s.features.some(f => ["国際", "IB", "グローバル"].includes(f)) ? 5 : s.collaborationLevel >= 4 ? 3 : 2),
+    science: (s) => (s.features.some(f => ["理系", "サイエンス", "STEAM"].includes(f)) ? 5 : s.aiEducationLevel >= 4 ? 4 : 2),
+    expression: (s) => s.expressionLevel,
+    digital: (s) => Math.max(s.aiEducationLevel, s.digitalEnvironment),
+    selfDrive: (s) => s.selfDriveLevel,
+    collaboration: (s) => s.collaborationLevel,
+    humanPower: (s) => (s.features.some(f => ["教養", "伝統", "礼法", "仏教", "カトリック"].includes(f)) ? 5 : s.collaborationLevel >= 4 ? 3 : 2),
+  };
+
+  let totalScore = 0;
+  let count = 0;
+  for (const area of growthAreas) {
+    const getter = growthToSchoolMap[area];
+    if (getter) {
+      const schoolVal = getter(school);
+      totalScore += schoolVal >= 4 ? 100 : schoolVal >= 3 ? 65 : 30;
+      count++;
+    }
+  }
+  return count > 0 ? totalScore / count : 60;
+}
+
 function generateMatchComment(input: DiagnosisInput, school: School, rank: number): string {
   const comments: string[] = [];
 
@@ -549,51 +646,49 @@ function generateMatchComment(input: DiagnosisInput, school: School, rank: numbe
     s20: "芸術と学力を両立させる教育方針が、お子さまの感性と知性をバランスよく伸ばしてくれそうです。",
   };
 
-  // Add school-specific opener
   if (schoolSpecificOpeners[school.id]) {
     comments.push(schoolSpecificOpeners[school.id]);
   }
 
-  // Add attribute-based comment (pick the strongest match)
-  const attributeMatches: { score: number; comment: string }[] = [];
+  // 伸ばしたい能力に基づくコメント
+  const growthComments: Record<string, string> = {
+    exploration: "探究力を伸ばしたいというご希望に、この学校の探究型カリキュラムがしっかり応えてくれるでしょう。",
+    global: "国際力を育みたいというお気持ちに、グローバルな学びの機会が豊富なこの環境はぴったりです。",
+    science: "理系の力を伸ばしたいお子さまにとって、充実した実験・研究環境が大きな魅力となるでしょう。",
+    expression: "表現力を磨きたいというご希望に、発表やプレゼンの機会が多いこの学校は理想的です。",
+    digital: "デジタルスキルを伸ばしたいお子さまに、先進的なICT環境が力強い味方になってくれます。",
+    selfDrive: "自走力を育みたいというお気持ちに、自主性を重んじるこの学校の教育方針が合っています。",
+    collaboration: "協働力を伸ばしたいお子さまにとって、チームで学ぶ機会が豊富なこの環境は最適です。",
+    humanPower: "豊かな人間力を育みたいというご希望に、教養と礼節を大切にするこの学校の伝統が応えてくれます。",
+  };
 
-  if (input.explorationPower >= 4 && school.explorationLevel >= 4) {
-    attributeMatches.push({
-      score: input.explorationPower + school.explorationLevel,
-      comment: "自ら学びを進める力が強いお子さまにとって、自主性を重んじるこの学校は大きな成長の場となるでしょう。",
-    });
-  }
-  if (input.selfDrive >= 4 && school.selfDriveLevel >= 4) {
-    attributeMatches.push({
-      score: input.selfDrive + school.selfDriveLevel,
-      comment: "自走する力を持つお子さまが、のびのびと才能を発揮できる環境が整っています。",
-    });
-  }
-  if (input.passionLevel >= 4 && school.passionLevel >= 4) {
-    attributeMatches.push({
-      score: input.passionLevel + school.passionLevel,
-      comment: "情熱を持って物事に取り組む姿勢が、この学校の熱量ある学びの文化と調和します。",
-    });
-  }
-  if (input.futureOrientation >= 4 && school.futureOrientation >= 4) {
-    attributeMatches.push({
-      score: input.futureOrientation + school.futureOrientation,
-      comment: "未来を見据える視野の広さが、この学校の先進的な教育プログラムで一層磨かれるでしょう。",
-    });
-  }
-  if (input.expressionPower >= 4 && school.expressionLevel >= 4) {
-    attributeMatches.push({
-      score: input.expressionPower + school.expressionLevel,
-      comment: "豊かな表現力を持つお子さまが、自由に発信できる環境がここにあります。",
-    });
+  // 伸ばしたい能力のうち、学校の特徴と合致するものをコメントに追加
+  if (input.desiredGrowth.length > 0) {
+    const matchedGrowth = input.desiredGrowth.find(g => growthComments[g]);
+    if (matchedGrowth) {
+      comments.push(growthComments[matchedGrowth]);
+    }
   }
 
-  // Sort by score and pick the best one that's different from opener
-  attributeMatches.sort((a, b) => b.score - a.score);
-  // Use different index based on rank to ensure variety
-  const attrIndex = Math.min(rank - 1, attributeMatches.length - 1);
-  if (attributeMatches.length > 0 && attrIndex >= 0) {
-    comments.push(attributeMatches[attrIndex].comment);
+  // 現在の適性に基づくコメント
+  const strengthComments: { score: number; comment: string }[] = [];
+  if (input.currentStrengths.includes("exploration") && school.explorationLevel >= 4) {
+    strengthComments.push({ score: school.explorationLevel, comment: "お子さまの探究心の強さが、この学校の学びの文化と見事に調和しています。" });
+  }
+  if (input.currentStrengths.includes("independence") && school.selfDriveLevel >= 4) {
+    strengthComments.push({ score: school.selfDriveLevel, comment: "自立心のあるお子さまが、のびのびと才能を発揮できる環境が整っています。" });
+  }
+  if (input.currentStrengths.includes("creativity") && school.expressionLevel >= 4) {
+    strengthComments.push({ score: school.expressionLevel, comment: "創造力豊かなお子さまの個性が、この学校で大きく花開くことでしょう。" });
+  }
+  if (input.currentStrengths.includes("sociability") && school.collaborationLevel >= 4) {
+    strengthComments.push({ score: school.collaborationLevel, comment: "社交性のあるお子さまが、多様な仲間と切磋琢磨できる環境です。" });
+  }
+
+  strengthComments.sort((a, b) => b.score - a.score);
+  const attrIndex = Math.min(rank - 1, strengthComments.length - 1);
+  if (strengthComments.length > 0 && attrIndex >= 0) {
+    comments.push(strengthComments[attrIndex].comment);
   }
 
   if (comments.length === 0) {
@@ -612,7 +707,6 @@ export function calculateScores(input: DiagnosisInput): SchoolScore[] {
     filteredSchools = schools.filter(
       (s) => s.coed === input.coedPreference
     );
-    // If too few results, include all
     if (filteredSchools.length < 3) {
       filteredSchools = schools;
     }
@@ -641,16 +735,20 @@ export function calculateScores(input: DiagnosisInput): SchoolScore[] {
       Math.max(input.futureOrientation, input.explorationPower),
       Math.max(school.aiEducationLevel, school.digitalEnvironment)
     );
+    const strengthMatchScore = calculateStrengthMatch(input.currentStrengths, school);
+    const growthMatchScore = calculateGrowthMatch(input.desiredGrowth, school);
 
-    // Weighted total
+    // Weighted total - 適性と成長希望を重視
     const totalScore =
-      deviationScore * 0.25 +
-      styleScore * 0.15 +
-      explorationScore * 0.15 +
-      passionScore * 0.1 +
-      selfDriveScore * 0.1 +
-      futureScore * 0.1 +
-      techScore * 0.15;
+      deviationScore * 0.20 +
+      styleScore * 0.10 +
+      explorationScore * 0.10 +
+      passionScore * 0.05 +
+      selfDriveScore * 0.05 +
+      futureScore * 0.05 +
+      techScore * 0.10 +
+      strengthMatchScore * 0.15 +
+      growthMatchScore * 0.20;
 
     return {
       school,
@@ -662,14 +760,14 @@ export function calculateScores(input: DiagnosisInput): SchoolScore[] {
       selfDriveScore,
       futureScore,
       techScore,
-      matchComment: "", // will be filled after sorting
+      strengthMatchScore,
+      growthMatchScore,
+      matchComment: "",
     };
   });
 
-  // Sort by total score descending
   scored.sort((a, b) => b.totalScore - a.totalScore);
 
-  // Generate rank-aware match comments for top 3
   const top3 = scored.slice(0, 3);
   top3.forEach((item, index) => {
     item.matchComment = generateMatchComment(input, item.school, index + 1);

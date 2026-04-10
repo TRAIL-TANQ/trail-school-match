@@ -390,6 +390,8 @@ function ComparisonSection({ results, userInput }: { results: SchoolScore[]; use
             <CRow label="共学/別学" values={results.map((r) => r.school.coed)} />
             <CRow label="ICT環境" values={results.map((r) => starStr(r.school.digitalEnvironment))} />
             <CRow label="AI教育" values={results.map((r) => starStr(r.school.aiEducationLevel))} />
+            <CRow label="適性相性" values={results.map((r) => getMatchLabel(r.strengthMatchScore))} />
+            <CRow label="成長相性" values={results.map((r) => getMatchLabel(r.growthMatchScore))} />
           </tbody>
         </table>
       </div>
