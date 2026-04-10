@@ -16,10 +16,229 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Shield, Sparkles, Target, Flame, TreePine, Users, MapPin,
-  ChevronRight, ChevronLeft,
+  ChevronRight, ChevronLeft, Zap, Search,
 } from "lucide-react";
+import {
+  Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer,
+} from "recharts";
 import type { DiagnosisInput } from "@/lib/schoolData";
 import { STRENGTH_OPTIONS, GROWTH_OPTIONS } from "@/lib/schoolData";
+
+/* ============================================================
+   Quiz Questions - 能力を自動算出するための質問セット
+   ============================================================ */
+
+type Ability =
+  | "exploration"
+  | "passion"
+  | "selfDrive"
+  | "expression"
+  | "collaboration"
+  | "future";
+
+type QuizAnswer = { label: string; effects: Partial<Record<Ability, number>> };
+type QuizQuestion = { id: string; category: string; question: string; answers: QuizAnswer[] };
+
+const QUIZ_SIMPLE: QuizQuestion[] = [
+  {
+    id: "q1",
+    category: "探究力",
+    question: "お子さまが興味を持ったことに対して、どんな行動をとりますか？",
+    answers: [
+      { label: "自分で本やネットで徹底的に調べる", effects: { exploration: 5 } },
+      { label: "親や先生に聞いて満足する", effects: { exploration: 3 } },
+      { label: "とりあえず手を動かしてやってみる", effects: { exploration: 3, passion: 2 } },
+      { label: "特に深追いしない", effects: { exploration: 1 } },
+    ],
+  },
+  {
+    id: "q2",
+    category: "情熱",
+    question: "好きなことへの没頭度は？",
+    answers: [
+      { label: "何時間でも夢中になって止まらない", effects: { passion: 5 } },
+      { label: "好きなことには集中するが切り替えもできる", effects: { passion: 4 } },
+      { label: "興味はあるが長続きしにくい", effects: { passion: 2 } },
+      { label: "特に夢中になることがない", effects: { passion: 1 } },
+    ],
+  },
+  {
+    id: "q3",
+    category: "自走力",
+    question: "宿題や課題への取り組み方は？",
+    answers: [
+      { label: "自分で計画を立てて、言われなくても進める", effects: { selfDrive: 5 } },
+      { label: "声をかければ自分でやる", effects: { selfDrive: 3 } },
+      { label: "親が横についていればやる", effects: { selfDrive: 2 } },
+      { label: "なかなか取りかからない", effects: { selfDrive: 1 } },
+    ],
+  },
+  {
+    id: "q4",
+    category: "表現力",
+    question: "自分の考えを伝える場面で？",
+    answers: [
+      { label: "作文・発表・絵など何かしらで表現するのが好き", effects: { expression: 5 } },
+      { label: "話すのは得意だが書くのは苦手（またはその逆）", effects: { expression: 3 } },
+      { label: "聞かれれば答えるが自分からは発信しない", effects: { expression: 2 } },
+      { label: "人前で話すのが苦手", effects: { expression: 1 } },
+    ],
+  },
+  {
+    id: "q5",
+    category: "協働力",
+    question: "グループ活動での役割は？",
+    answers: [
+      { label: "みんなの意見をまとめるリーダータイプ", effects: { collaboration: 5 } },
+      { label: "自分の意見を出しつつ協力できる", effects: { collaboration: 4 } },
+      { label: "周りに合わせるタイプ", effects: { collaboration: 3 } },
+      { label: "一人で進めたがる", effects: { collaboration: 1 } },
+    ],
+  },
+  {
+    id: "q6",
+    category: "未来志向",
+    question: "将来やりたいことについて聞くと？",
+    answers: [
+      { label: "具体的な夢や目標を語る", effects: { future: 5 } },
+      { label: "いろんなことに興味があって絞れない", effects: { future: 4 } },
+      { label: "「まだわからない」と言う", effects: { future: 2 } },
+      { label: "あまり考えたことがなさそう", effects: { future: 1 } },
+    ],
+  },
+  {
+    id: "q7",
+    category: "テクノロジー",
+    question: "プログラミング・実験・ものづくりへの反応は？",
+    answers: [
+      { label: "大好き、自分からどんどんやる", effects: { future: 3, exploration: 2 } },
+      { label: "やれば楽しそうにするが自分からはやらない", effects: { future: 2, exploration: 1 } },
+      { label: "あまり興味を示さない", effects: { future: 1 } },
+      { label: "タブレットやPCを使いこなしている", effects: { future: 3, selfDrive: 1 } },
+    ],
+  },
+];
+
+const QUIZ_DETAILED_EXTRA: QuizQuestion[] = [
+  {
+    id: "q8",
+    category: "探究力・深掘り",
+    question: "自由研究や調べ学習のスタイルは？",
+    answers: [
+      { label: "テーマ選びからこだわり、何日もかけて深く掘り下げる", effects: { exploration: 5, passion: 2 } },
+      { label: "先生に言われたテーマをそれなりにまとめる", effects: { exploration: 2 } },
+      { label: "面白いテーマを見つけるが途中で別のことに興味が移る", effects: { exploration: 4, selfDrive: -1 } },
+      { label: "親が手伝わないと進められない", effects: { exploration: 1 } },
+    ],
+  },
+  {
+    id: "q9",
+    category: "情熱・持続",
+    question: "習い事やスポーツへの姿勢は？",
+    answers: [
+      { label: "上手くなりたくて自主練習もする", effects: { passion: 5, selfDrive: 2 } },
+      { label: "練習は真面目にやるが自主練はしない", effects: { passion: 3 } },
+      { label: "楽しいけど頑張るのは苦手", effects: { passion: 2 } },
+      { label: "すぐ辞めたがる", effects: { passion: 1 } },
+    ],
+  },
+  {
+    id: "q10",
+    category: "自走力・深掘り",
+    question: "朝の準備や持ち物管理は？",
+    answers: [
+      { label: "前日に自分で全部準備できる", effects: { selfDrive: 5 } },
+      { label: "声をかければ自分でやる", effects: { selfDrive: 3 } },
+      { label: "チェックリストがあればできる", effects: { selfDrive: 2 } },
+      { label: "毎回親が確認しないと忘れ物が多い", effects: { selfDrive: 1 } },
+    ],
+  },
+  {
+    id: "q11",
+    category: "表現力・深掘り",
+    question: "読書感想文や作文を書くときは？",
+    answers: [
+      { label: "自分の意見や気持ちを豊かに書ける", effects: { expression: 5, exploration: 1 } },
+      { label: "事実は書けるが感想が短い", effects: { expression: 2 } },
+      { label: "書くのは苦手だが口頭なら伝えられる", effects: { expression: 3 } },
+      { label: "何を書いていいかわからず固まる", effects: { expression: 1 } },
+    ],
+  },
+  {
+    id: "q12",
+    category: "協働力・深掘り",
+    question: "友達との関わり方は？",
+    answers: [
+      { label: "いろんなタイプの子と仲良くできる", effects: { collaboration: 5 } },
+      { label: "少数の仲良しグループがある", effects: { collaboration: 3 } },
+      { label: "大人や年上の人と話す方が得意", effects: { collaboration: 2, expression: 1 } },
+      { label: "一人で過ごすのが好き", effects: { collaboration: 1, exploration: 1 } },
+    ],
+  },
+  {
+    id: "q13",
+    category: "未来志向・深掘り",
+    question: "ニュースや社会の出来事への反応は？",
+    answers: [
+      { label: "自分から聞いたり調べたりする", effects: { future: 5, exploration: 2 } },
+      { label: "親が話せば興味を持つ", effects: { future: 3 } },
+      { label: "あまり関心がない", effects: { future: 1 } },
+      { label: "環境問題やSDGsなど特定のテーマに強い関心", effects: { future: 5, passion: 2 } },
+    ],
+  },
+  {
+    id: "q14",
+    category: "総合・学びのスタイル",
+    question: "お子さまにとって「学び」とは？",
+    answers: [
+      { label: "知らないことを知るのが楽しい", effects: { exploration: 3, passion: 2 } },
+      { label: "テストで良い点を取ること", effects: { selfDrive: 2 } },
+      { label: "友達と一緒に何かを作り上げること", effects: { collaboration: 3, expression: 2 } },
+      { label: "将来の夢に近づくための手段", effects: { future: 3, selfDrive: 2 } },
+    ],
+  },
+];
+
+const ABILITIES: Ability[] = [
+  "exploration", "passion", "selfDrive", "expression", "collaboration", "future",
+];
+
+function computeAbilityScores(
+  questions: QuizQuestion[],
+  answers: (number | null)[]
+): Record<Ability, number> {
+  const sum: Record<Ability, number> = {
+    exploration: 0, passion: 0, selfDrive: 0, expression: 0, collaboration: 0, future: 0,
+  };
+  const min: Record<Ability, number> = { ...sum };
+  const max: Record<Ability, number> = { ...sum };
+
+  questions.forEach((q, i) => {
+    ABILITIES.forEach((a) => {
+      const values = q.answers.map((ans) => ans.effects[a] ?? 0);
+      min[a] += Math.min(...values);
+      max[a] += Math.max(...values);
+    });
+    const selected = answers[i];
+    if (selected == null) return;
+    const ans = q.answers[selected];
+    for (const [k, v] of Object.entries(ans.effects)) {
+      sum[k as Ability] += v as number;
+    }
+  });
+
+  const result: Record<Ability, number> = { ...sum };
+  ABILITIES.forEach((a) => {
+    const range = max[a] - min[a];
+    if (range === 0) {
+      result[a] = 3;
+    } else {
+      const normalized = 1 + ((sum[a] - min[a]) / range) * 4;
+      result[a] = Math.max(1, Math.min(5, Math.round(normalized)));
+    }
+  });
+  return result;
+}
 
 const QUEST_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663286960690/3onwxhANtpgAkHzmhikcoQ/quest-map-bg-2DikbyW7biu93HRJZty2Xd.webp";
 
@@ -41,7 +260,15 @@ const STEPS = [
 const TOTAL_STEPS = STEPS.length;
 
 export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormProps) {
+  const [quizMode, setQuizMode] = useState<"simple" | "detailed" | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
+  const [quizIndex, setQuizIndex] = useState(0);
+  const [quizAnswers, setQuizAnswers] = useState<(number | null)[]>([]);
+  const [showRadar, setShowRadar] = useState(false);
+
+  const quizQuestions =
+    quizMode === "detailed" ? [...QUIZ_SIMPLE, ...QUIZ_DETAILED_EXTRA] : QUIZ_SIMPLE;
+
   const [formData, setFormData] = useState<Partial<DiagnosisInput>>({
     grade: "",
     deviationStandard: "sapix",
@@ -110,10 +337,54 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
   };
 
   const handlePrev = () => {
+    if (currentStep === 4 && showRadar) {
+      setShowRadar(false);
+      return;
+    }
+    if (currentStep === 4 && quizIndex > 0) {
+      setQuizIndex(quizIndex - 1);
+      return;
+    }
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
       scrollToSection();
     }
+  };
+
+  const handleQuizAnswer = (answerIdx: number) => {
+    const newAnswers = [...quizAnswers];
+    while (newAnswers.length < quizQuestions.length) newAnswers.push(null);
+    newAnswers[quizIndex] = answerIdx;
+    setQuizAnswers(newAnswers);
+
+    if (quizIndex < quizQuestions.length - 1) {
+      setTimeout(() => setQuizIndex(quizIndex + 1), 280);
+    } else {
+      // 全問完了 → スコア算出 → レーダーチャート表示
+      const scores = computeAbilityScores(quizQuestions, newAnswers);
+      setFormData((prev) => ({
+        ...prev,
+        explorationPower: scores.exploration,
+        passionLevel: scores.passion,
+        selfDrive: scores.selfDrive,
+        expressionPower: scores.expression,
+        collaborationPower: scores.collaboration,
+        futureOrientation: scores.future,
+      }));
+      setTimeout(() => setShowRadar(true), 280);
+    }
+  };
+
+  const handleRadarContinue = () => {
+    setShowRadar(false);
+    setCurrentStep(5);
+    setQuizIndex(0);
+    scrollToSection();
+  };
+
+  const selectMode = (mode: "simple" | "detailed") => {
+    setQuizMode(mode);
+    setQuizAnswers(new Array(mode === "detailed" ? 14 : 7).fill(null));
   };
 
   const handleSubmit = () => {
@@ -150,6 +421,13 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
           </h2>
         </motion.div>
 
+        {/* Mode Selection - 診断モードを選んでください */}
+        {quizMode === null && !isCompleted && (
+          <ModeSelection onSelect={selectMode} />
+        )}
+
+        {quizMode !== null && (
+        <>
         {/* Step Progress Bar */}
         <div className="flex items-center justify-center gap-0 mb-7 px-1">
           {STEPS.map((step, idx) => (
@@ -219,7 +497,17 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
               {currentStep === 1 && <Step1 formData={formData} updateField={updateField} />}
               {currentStep === 2 && <Step2 formData={formData} toggleArrayField={toggleArrayField} />}
               {currentStep === 3 && <Step3 formData={formData} toggleArrayField={toggleArrayField} />}
-              {currentStep === 4 && <Step4 formData={formData} updateField={updateField} />}
+              {currentStep === 4 && !showRadar && (
+                <QuizStep
+                  questions={quizQuestions}
+                  quizIndex={quizIndex}
+                  answers={quizAnswers}
+                  onAnswer={handleQuizAnswer}
+                />
+              )}
+              {currentStep === 4 && showRadar && (
+                <RadarResultView formData={formData} onContinue={handleRadarContinue} />
+              )}
               {currentStep === 5 && <Step5 formData={formData} updateField={updateField} />}
               {currentStep === 6 && <Step6 formData={formData} updateField={updateField} />}
               {currentStep === 7 && <Step7 formData={formData} updateField={updateField} />}
@@ -230,7 +518,7 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
         {/* Navigation */}
         {!isCompleted && (
           <div className="flex gap-3">
-            {currentStep > 1 && (
+            {(currentStep > 1 || (currentStep === 4 && quizIndex > 0)) && (
               <button
                 onClick={handlePrev}
                 className="flex-1 py-3.5 rounded-xl border-2 border-[#C5A55A]/30 text-[#8B6914] font-serif font-semibold text-[13px] bg-[#F5E6C8]/30 hover:bg-[#EDD9B3]/50 active:bg-[#EDD9B3] transition-all duration-200 flex items-center justify-center gap-1.5"
@@ -239,7 +527,10 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
                 戻る
               </button>
             )}
-            {currentStep < TOTAL_STEPS ? (
+            {currentStep === 4 ? (
+              // STEP4 (quiz) は選択で自動的に進むため「次へ」ボタンは非表示
+              null
+            ) : currentStep < TOTAL_STEPS ? (
               <button
                 onClick={handleNext}
                 disabled={!canProceed()}
@@ -262,8 +553,227 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
             )}
           </div>
         )}
+        </>
+        )}
       </div>
     </section>
+  );
+}
+
+/* ============================================================
+   Mode Selection Screen
+   ============================================================ */
+
+function ModeSelection({ onSelect }: { onSelect: (mode: "simple" | "detailed") => void }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="parchment-card rounded-2xl p-5 sm:p-6 shadow-lg shadow-[#8B6914]/8"
+    >
+      <div className="text-center mb-5">
+        <h3 className="font-serif font-bold text-[#2C1810] text-[16px] mb-1">
+          診断モードを選んでください
+        </h3>
+        <p className="font-sans text-[11px] text-[#8B6914]/60">
+          お子さまの学びタイプを自動で分析します
+        </p>
+      </div>
+      <div className="space-y-3">
+        <button
+          onClick={() => onSelect("simple")}
+          className="w-full text-left p-4 rounded-xl border-2 border-[#C5A55A]/25 bg-white/35 hover:border-[#D4AF37] hover:bg-[#D4AF37]/8 active:scale-[0.98] transition-all duration-200"
+          data-testid="button-mode-simple"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-full bg-gradient-to-b from-[#E5C04B] to-[#8B6914] flex items-center justify-center shrink-0 shadow-sm">
+              <Zap className="w-5 h-5 text-white" />
+            </div>
+            <div className="flex-1">
+              <div className="flex items-baseline gap-2">
+                <span className="font-serif font-bold text-[14px] text-[#2C1810]">
+                  サクッと診断
+                </span>
+                <span className="font-sans text-[10px] text-[#8B6914]/60">約3分</span>
+              </div>
+              <p className="font-sans text-[11px] text-[#6B5744] mt-0.5">
+                7つの質問で手軽に診断
+              </p>
+            </div>
+          </div>
+        </button>
+        <button
+          onClick={() => onSelect("detailed")}
+          className="relative w-full text-left p-4 rounded-xl border-2 border-[#D4AF37] bg-gradient-to-br from-[#D4AF37]/15 to-[#D4AF37]/5 shadow-md shadow-[#D4AF37]/15 active:scale-[0.98] transition-all duration-200"
+          data-testid="button-mode-detailed"
+        >
+          <span className="absolute -top-2 right-3 text-[9px] font-sans font-bold text-white bg-gradient-to-b from-[#D4AF37] to-[#8B6914] px-2 py-0.5 rounded-full shadow-sm">
+            おすすめ
+          </span>
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-full bg-gradient-to-b from-[#E5C04B] to-[#8B6914] flex items-center justify-center shrink-0 shadow-sm">
+              <Search className="w-5 h-5 text-white" />
+            </div>
+            <div className="flex-1">
+              <div className="flex items-baseline gap-2">
+                <span className="font-serif font-bold text-[14px] text-[#8B6914]">
+                  じっくり診断
+                </span>
+                <span className="font-sans text-[10px] text-[#8B6914]/70">約7分</span>
+              </div>
+              <p className="font-sans text-[11px] text-[#6B5744] mt-0.5">
+                14の質問で精密に診断
+              </p>
+            </div>
+          </div>
+        </button>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ============================================================
+   Quiz Step - 1問ずつカード表示、自動で次へ
+   ============================================================ */
+
+function QuizStep({
+  questions,
+  quizIndex,
+  answers,
+  onAnswer,
+}: {
+  questions: QuizQuestion[];
+  quizIndex: number;
+  answers: (number | null)[];
+  onAnswer: (idx: number) => void;
+}) {
+  const q = questions[quizIndex];
+  const selected = answers[quizIndex];
+  return (
+    <div>
+      {/* 質問進捗 */}
+      <div className="flex items-center justify-between mb-3">
+        <span className="font-sans text-[10px] font-bold text-[#B8860B] tracking-wider uppercase">
+          Q{quizIndex + 1} / {questions.length}
+        </span>
+        <span className="font-sans text-[10px] text-[#8B6914]/60">{q.category}</span>
+      </div>
+      <div className="h-1 bg-[#C5A55A]/15 rounded-full mb-4 overflow-hidden">
+        <motion.div
+          className="h-full bg-gradient-to-r from-[#D4AF37] to-[#8B6914]"
+          initial={{ width: 0 }}
+          animate={{ width: `${((quizIndex + 1) / questions.length) * 100}%` }}
+          transition={{ duration: 0.35 }}
+        />
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={q.id}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.22 }}
+        >
+          <h4 className="font-serif font-bold text-[#2C1810] text-[14px] leading-relaxed mb-4">
+            {q.question}
+          </h4>
+          <div className="space-y-2.5">
+            {q.answers.map((ans, idx) => (
+              <button
+                key={idx}
+                onClick={() => onAnswer(idx)}
+                className={`w-full text-left p-3.5 rounded-xl border-2 transition-all duration-200 active:scale-[0.98] ${
+                  selected === idx
+                    ? "border-[#D4AF37] bg-gradient-to-br from-[#D4AF37]/25 to-[#D4AF37]/10 shadow-md shadow-[#D4AF37]/20"
+                    : "border-[#C5A55A]/15 bg-white/30 hover:border-[#C5A55A]/40 active:bg-[#EDD9B3]/30"
+                }`}
+                data-testid={`button-quiz-${q.id}-${idx}`}
+              >
+                <div className="flex items-start gap-2.5">
+                  <span
+                    className={`shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center font-serif font-bold text-[11px] ${
+                      selected === idx
+                        ? "border-[#8B6914] bg-[#D4AF37] text-white"
+                        : "border-[#C5A55A]/40 text-[#8B6914]/60"
+                    }`}
+                  >
+                    {String.fromCharCode(65 + idx)}
+                  </span>
+                  <span className="font-serif text-[12px] text-[#2C1810] leading-relaxed pt-0.5">
+                    {ans.label}
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/* ============================================================
+   Radar Chart Result View - 診断結果プレビュー
+   ============================================================ */
+
+function RadarResultView({
+  formData,
+  onContinue,
+}: {
+  formData: Partial<DiagnosisInput>;
+  onContinue: () => void;
+}) {
+  const data = [
+    { axis: "探究力", value: formData.explorationPower ?? 3 },
+    { axis: "情熱", value: formData.passionLevel ?? 3 },
+    { axis: "自走力", value: formData.selfDrive ?? 3 },
+    { axis: "表現力", value: formData.expressionPower ?? 3 },
+    { axis: "協働力", value: formData.collaborationPower ?? 3 },
+    { axis: "未来志向", value: formData.futureOrientation ?? 3 },
+  ];
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="text-center"
+    >
+      <h4 className="font-serif font-bold text-[#2C1810] text-[15px] mb-1">
+        お子さまの学びのタイプ
+      </h4>
+      <p className="font-sans text-[11px] text-[#8B6914]/60 mb-3">
+        診断結果を可視化しました
+      </p>
+      <div className="w-full h-[260px] -mx-2">
+        <ResponsiveContainer width="100%" height="100%">
+          <RadarChart data={data} outerRadius="72%">
+            <PolarGrid stroke="#C5A55A" strokeOpacity={0.3} />
+            <PolarAngleAxis
+              dataKey="axis"
+              tick={{ fill: "#5A4632", fontSize: 11, fontWeight: 600 }}
+            />
+            <PolarRadiusAxis domain={[0, 5]} tick={false} axisLine={false} />
+            <Radar
+              name="スコア"
+              dataKey="value"
+              stroke="#8B6914"
+              fill="#D4AF37"
+              fillOpacity={0.5}
+              strokeWidth={2}
+            />
+          </RadarChart>
+        </ResponsiveContainer>
+      </div>
+      <button
+        onClick={onContinue}
+        className="mt-3 gold-btn py-3 px-8 rounded-xl text-[13px] relative overflow-hidden inline-flex items-center gap-1.5"
+        data-testid="button-radar-continue"
+      >
+        <span className="relative z-10">次のステップへ</span>
+        <ChevronRight className="w-4 h-4 relative z-10" />
+        <div className="absolute inset-0 gold-shimmer" />
+      </button>
+    </motion.div>
   );
 }
 
@@ -402,50 +912,6 @@ function Step3({ formData, toggleArrayField }: ArrayStepProps) {
           />
         ))}
       </div>
-    </div>
-  );
-}
-
-/* STEP 4: 学びのスタイル（性格特性） */
-function Step4({ formData, updateField }: StepProps) {
-  return (
-    <div className="space-y-5">
-      <RatingBar
-        label="探究力"
-        description="自ら問いを見つけ、調べ、考える力"
-        value={formData.explorationPower ?? 3}
-        onChange={(v) => updateField("explorationPower", v)}
-      />
-      <RatingBar
-        label="情熱度"
-        description="好きなことに没頭し、熱中する力"
-        value={formData.passionLevel ?? 3}
-        onChange={(v) => updateField("passionLevel", v)}
-      />
-      <RatingBar
-        label="自走力"
-        description="自分で計画を立て、実行する力"
-        value={formData.selfDrive ?? 3}
-        onChange={(v) => updateField("selfDrive", v)}
-      />
-      <RatingBar
-        label="表現力"
-        description="自分の考えを言葉や作品で伝える力"
-        value={formData.expressionPower ?? 3}
-        onChange={(v) => updateField("expressionPower", v)}
-      />
-      <RatingBar
-        label="協働力"
-        description="仲間と協力して目標を達成する力"
-        value={formData.collaborationPower ?? 3}
-        onChange={(v) => updateField("collaborationPower", v)}
-      />
-      <RatingBar
-        label="未来志向"
-        description="テクノロジーや新しい学びへの関心"
-        value={formData.futureOrientation ?? 3}
-        onChange={(v) => updateField("futureOrientation", v)}
-      />
     </div>
   );
 }
@@ -703,45 +1169,3 @@ function OptionCard({
   );
 }
 
-function RatingBar({
-  label,
-  description,
-  value,
-  onChange,
-}: {
-  label: string;
-  description: string;
-  value: number;
-  onChange: (v: number) => void;
-}) {
-  const labels = ["低い", "やや低い", "普通", "やや高い", "高い"];
-
-  return (
-    <div>
-      <div className="flex items-baseline justify-between mb-0.5">
-        <span className="font-serif font-bold text-[13px] text-[#2C1810]">{label}</span>
-        <span className={`font-sans text-[11px] font-semibold transition-colors ${
-          value >= 4 ? "text-[#B8860B]" : value <= 2 ? "text-[#8B6914]/50" : "text-[#8B6914]/70"
-        }`}>
-          {labels[value - 1]}
-        </span>
-      </div>
-      <p className="font-sans text-[10px] text-[#8B6914]/45 mb-2.5">{description}</p>
-      <div className="flex gap-1.5">
-        {[1, 2, 3, 4, 5].map((level) => (
-          <button
-            key={level}
-            onClick={() => onChange(level)}
-            className={`flex-1 h-10 rounded-lg border-2 transition-all duration-200 flex items-center justify-center text-[12px] font-bold active:scale-95 ${
-              level <= value
-                ? "border-[#D4AF37] bg-gradient-to-b from-[#D4AF37]/25 to-[#D4AF37]/8 text-[#8B6914] shadow-sm shadow-[#D4AF37]/10"
-                : "border-[#C5A55A]/10 bg-white/15 text-[#C5A55A]/25 hover:border-[#C5A55A]/20"
-            }`}
-          >
-            {level}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
