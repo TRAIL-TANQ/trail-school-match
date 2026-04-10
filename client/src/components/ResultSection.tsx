@@ -5,8 +5,9 @@
  * 2位・3位: コンパクトカード（強みサマリー表示）
  * 比較テーブル
  */
-import { motion } from "framer-motion";
-import { Star, Trophy, Medal, Award, ArrowRight, Sparkles, RotateCcw, GraduationCap, Lightbulb } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Star, Trophy, Medal, Award, ArrowRight, Sparkles, RotateCcw, GraduationCap, Lightbulb, Share2, Copy, Check } from "lucide-react";
 import type { SchoolScore, DiagnosisInput } from "@/lib/schoolData";
 
 const BOOK_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663286960690/3onwxhANtpgAkHzmhikcoQ/open-book-result-eKLoEFqvPzPE32MSjqjNnZ.webp";
@@ -147,6 +148,17 @@ export default function ResultSection({ results, userInput, onRestart }: ResultS
             <br />
             冒険の鍵を手に、新しい学びの旅へ出発しましょう！
           </p>
+        </motion.div>
+
+        {/* SNS Share Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.52 }}
+          className="mb-6"
+        >
+          <ShareSection results={results} />
         </motion.div>
 
         {/* CTA Buttons */}
@@ -581,4 +593,219 @@ function getMatchLabel(score: number): string {
 
 function starStr(n: number): string {
   return "★".repeat(n) + "☆".repeat(5 - n);
+}
+
+/* ============================================================
+   SNS Share Section - LINE・X(Twitter)・クリップボード
+   ============================================================ */
+
+function ShareSection({ results }: { results: SchoolScore[] }) {
+  const [copied, setCopied] = useState(false);
+  const [_showPanel, setShowPanel] = useState(false);
+
+  const first = results[0];
+  const second = results[1];
+  const third = results[2];
+
+  const shareTitle = "TRAIL 私立中学 相性診断の結果";
+  const shareText = [
+    "\u2728 TRAIL 私立中学 相性診断の結果 \u2728",
+    "",
+    `\u{1F3C6} 1位: ${first?.school.name ?? ""} (${first?.totalScore ?? 0}pt)`,
+    second ? `\u{1F948} 2位: ${second.school.name} (${second.totalScore}pt)` : "",
+    third ? `\u{1F949} 3位: ${third.school.name} (${third.totalScore}pt)` : "",
+    "",
+    "お子さまに合った学びのルートをAIが導きます。",
+    "あなたも診断してみませんか？",
+    "",
+    "#TRAIL私立中学診断 #私立中学受験 #中学受験",
+  ].filter(Boolean).join("\n");
+
+  const shareUrl = typeof window !== "undefined" ? window.location.origin : "";
+
+  const handleShareLine = () => {
+    const lineUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
+    window.open(lineUrl, "_blank", "noopener,noreferrer");
+  };
+
+  const handleShareX = () => {
+    const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+    window.open(xUrl, "_blank", "noopener,noreferrer");
+  };
+
+  const handleCopy = async () => {
+    try {
+      const copyText = shareText + "\n" + shareUrl;
+      await navigator.clipboard.writeText(copyText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      // fallback
+      const textarea = document.createElement("textarea");
+      textarea.value = shareText + "\n" + shareUrl;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
+  };
+
+  const handleNativeShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: shareText,
+          url: shareUrl,
+        });
+      } catch {
+        // user cancelled
+      }
+    } else {
+      setShowPanel((prev) => !prev);
+    }
+  };
+
+  return (
+    <div className="parchment-card rounded-2xl p-5 border border-[#C5A55A]/20">
+      {/* Header */}
+      <div className="flex items-center justify-center gap-2 mb-1">
+        <div className="h-px w-6 bg-gradient-to-r from-transparent to-[#C5A55A]" />
+        <span className="font-heading text-[10px] tracking-[0.2em] text-[#B8860B] uppercase">
+          Share
+        </span>
+        <div className="h-px w-6 bg-gradient-to-l from-transparent to-[#C5A55A]" />
+      </div>
+      <h3 className="font-serif font-bold text-[#2C1810] text-base mb-2 text-center">
+        診断結果をシェア
+      </h3>
+      <p className="font-sans text-[11px] text-[#6B5744] text-center mb-4 leading-relaxed">
+        お友達やご家族に診断結果を共有しましょう
+      </p>
+
+      {/* Share Preview Card */}
+      <div className="mb-4 p-3.5 rounded-xl bg-gradient-to-br from-[#2C1810]/[0.04] to-[#2C1810]/[0.02] border border-[#C5A55A]/12">
+        <div className="flex items-center gap-2 mb-2">
+          <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+          <span className="font-serif font-bold text-[11px] text-[#2C1810]">シェア内容プレビュー</span>
+        </div>
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <Trophy className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
+            <span className="font-sans text-[11px] text-[#3D2B1F] font-medium">
+              1位: {first?.school.name} ({first?.totalScore}pt)
+            </span>
+          </div>
+          {second && (
+            <div className="flex items-center gap-2">
+              <Medal className="w-3.5 h-3.5 text-[#A0845C] shrink-0" />
+              <span className="font-sans text-[10px] text-[#5A4632]">
+                2位: {second.school.name} ({second.totalScore}pt)
+              </span>
+            </div>
+          )}
+          {third && (
+            <div className="flex items-center gap-2">
+              <Award className="w-3.5 h-3.5 text-[#8B7355] shrink-0" />
+              <span className="font-sans text-[10px] text-[#5A4632]">
+                3位: {third.school.name} ({third.totalScore}pt)
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Main Share Button (native share on mobile) */}
+      <button
+        onClick={handleNativeShare}
+        className="w-full mb-3 py-3 rounded-xl bg-gradient-to-r from-[#2C1810] to-[#3D2B1F] text-white font-serif font-semibold text-[13px] flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-[0.98] transition-all duration-200"
+      >
+        <Share2 className="w-4 h-4" />
+        結果をシェアする
+      </button>
+
+      {/* SNS Buttons Grid */}
+      <div className="grid grid-cols-3 gap-2.5">
+        {/* LINE */}
+        <button
+          onClick={handleShareLine}
+          className="group flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl border border-[#06C755]/20 bg-[#06C755]/5 hover:bg-[#06C755]/15 active:scale-[0.96] transition-all duration-200"
+        >
+          <div className="w-9 h-9 rounded-full bg-[#06C755] flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+            <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white">
+              <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314" />
+            </svg>
+          </div>
+          <span className="font-sans text-[10px] font-bold text-[#06C755]">LINE</span>
+        </button>
+
+        {/* X (Twitter) */}
+        <button
+          onClick={handleShareX}
+          className="group flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl border border-[#2C1810]/15 bg-[#2C1810]/[0.03] hover:bg-[#2C1810]/[0.08] active:scale-[0.96] transition-all duration-200"
+        >
+          <div className="w-9 h-9 rounded-full bg-[#0f1419] flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+            <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+          </div>
+          <span className="font-sans text-[10px] font-bold text-[#0f1419]">X</span>
+        </button>
+
+        {/* Copy */}
+        <button
+          onClick={handleCopy}
+          className="group flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl border border-[#C5A55A]/20 bg-[#D4AF37]/5 hover:bg-[#D4AF37]/15 active:scale-[0.96] transition-all duration-200"
+        >
+          <div className="w-9 h-9 rounded-full bg-gradient-to-b from-[#D4AF37] to-[#8B6914] flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+            <AnimatePresence mode="wait">
+              {copied ? (
+                <motion.div
+                  key="check"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
+                >
+                  <Check className="w-4 h-4 text-white" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="copy"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
+                >
+                  <Copy className="w-4 h-4 text-white" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+          <span className="font-sans text-[10px] font-bold text-[#8B6914]">
+            {copied ? "コピー済" : "コピー"}
+          </span>
+        </button>
+      </div>
+
+      {/* Copied Toast */}
+      <AnimatePresence>
+        {copied && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            className="mt-3 py-2 px-4 rounded-lg bg-[#2C1810] text-white text-center"
+          >
+            <p className="font-sans text-[11px] flex items-center justify-center gap-1.5">
+              <Check className="w-3.5 h-3.5" />
+              診断結果をクリップボードにコピーしました
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 }
