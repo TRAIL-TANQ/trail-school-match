@@ -26,6 +26,7 @@ export interface School {
   description: string;
   commuteAreas: string[];
   // 独自の強み・特色プログラム
+  homepage: string;
   uniqueStrengths: { icon: string; title: string; detail: string }[];
   signaturePrograms: { name: string; description: string }[];
 }
@@ -53,6 +54,7 @@ export const schools: School[] = [
     features: ["探究", "国際", "自主性", "ICT"],
     description: "自調自考を教育理念に掲げ、生徒の自主性と探究心を最大限に伸ばす環境が整っています。",
     commuteAreas: ["渋谷", "新宿", "目黒", "世田谷"],
+    homepage: "https://www.shibushibu.jp/",
     uniqueStrengths: [
       { icon: "🔍", title: "自調自考の探究教育", detail: "生徒が自ら課題を設定し、調査・考察する独自の探究プログラムで、主体的な学びの姿勢を育成" },
       { icon: "🌍", title: "グローバルリーダー育成", detail: "海外研修・模擬国連・英語ディベートなど、国際舞台で活躍できる力を養う多彩なプログラム" },
@@ -85,6 +87,7 @@ export const schools: School[] = [
     features: ["ICT", "サイエンス", "国際", "医進"],
     description: "最先端のICT環境とサイエンス教育で、未来を切り拓く力を育む先進的な学校です。",
     commuteAreas: ["港区", "渋谷", "品川", "目黒"],
+    homepage: "https://www.hiroogakuen.ed.jp/",
     uniqueStrengths: [
       { icon: "🔬", title: "本格サイエンス教育", detail: "大学レベルの実験設備を備え、医進・サイエンスコースでは研究者と連携した本格的な探究活動を実施" },
       { icon: "💻", title: "最先端ICT活用", detail: "全生徒がChromebookを持ち、Google Workspaceを活用したクラウドベースの協働学習を日常的に実践" },
@@ -117,6 +120,7 @@ export const schools: School[] = [
     features: ["探究", "国際", "PBL", "STEAM"],
     description: "「発想の自由人」を育てることを目指し、探究型学習とグローバル教育を融合させた革新的な教育を展開しています。",
     commuteAreas: ["世田谷", "渋谷", "目黒", "大田"],
+    homepage: "https://www.mita-is.ed.jp/",
     uniqueStrengths: [
       { icon: "🧪", title: "探究型PBL授業", detail: "全教科でPBL（課題解決型学習）を導入し、教科横断的な「問い」から深い学びを実現" },
       { icon: "🌍", title: "真のグローバル教育", detail: "インターナショナルクラスでは授業の大半を英語で実施。多国籍の教員陣による本物の国際教育" },
@@ -149,6 +153,7 @@ export const schools: School[] = [
     features: ["進学実績", "自主性", "伝統", "運動会"],
     description: "「ペンは剣よりも強し」の精神のもと、自由な校風で生徒の知的好奇心と自立心を育てます。",
     commuteAreas: ["荒川", "文京", "台東", "北区"],
+    homepage: "https://kaiseigakuen.jp/",
     uniqueStrengths: [
       { icon: "🏛️", title: "知的自由の伝統", detail: "「ペンは剣よりも強し」の校訓のもと、生徒の知的好奇心を制限せず自由に伸ばす教育哲学" },
       { icon: "🎌", title: "名物・運動会", detail: "中高合同の大規模運動会は生徒が企画運営。リーダーシップと協働力を実践的に育む学校行事" },
@@ -181,6 +186,7 @@ export const schools: School[] = [
     features: ["進学実績", "礼法", "伝統", "理系"],
     description: "礼と学びの調和を大切にし、確かな学力と豊かな人間性を兼ね備えた女性を育成します。",
     commuteAreas: ["文京", "千代田", "台東", "豊島"],
+    homepage: "https://www.oin.ed.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "最高水準の学力育成", detail: "女子校トップの進学実績を支える質の高い授業と、自ら学ぶ姿勢を重視した教育方針" },
       { icon: "🎎", title: "礼法教育", detail: "茶道・華道を通じた日本の伝統文化教育で、品格と教養を兼ね備えた女性を育成" },
@@ -213,6 +219,7 @@ export const schools: School[] = [
     features: ["探究", "自主性", "少人数", "本物体験"],
     description: "「自ら調べ自ら考える」を重視し、少人数教育で一人ひとりの知的探究心を深く育てます。",
     commuteAreas: ["練馬", "豊島", "板橋", "新宿"],
+    homepage: "https://www.musashi.ed.jp/",
     uniqueStrengths: [
       { icon: "🔭", title: "本物に触れる教育", detail: "標本室・天文台・植物園を備え、「本物に触れる」体験を通じて深い知的好奇心を育む" },
       { icon: "📝", title: "少人数ゼミ形式", detail: "1学年160名の少人数制で、教員と生徒が密に対話しながら学ぶゼミナール形式の授業" },
@@ -245,6 +252,7 @@ export const schools: School[] = [
     features: ["大学附属", "教養", "人間力", "多様性"],
     description: "「独立自尊」の精神を基盤に、幅広い教養と社会性を育む一貫教育を提供します。",
     commuteAreas: ["港区", "渋谷", "品川", "目黒"],
+    homepage: "https://www.kgc.keio.ac.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "一貫教育の安心感", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育てる環境" },
       { icon: "🤝", title: "多様性と人間力", detail: "様々な背景を持つ仲間との交流を通じて、社会性・コミュニケーション力・リーダーシップを養う" },
@@ -277,6 +285,7 @@ export const schools: School[] = [
     features: ["自由", "教養", "議論", "個性"],
     description: "自由闊達な校風のもと、深い教養と独自の視点を持つ人間を育てる伝統校です。",
     commuteAreas: ["港区", "渋谷", "品川", "目黒"],
+    homepage: "https://www.azabu-jh.ed.jp/",
     uniqueStrengths: [
       { icon: "💭", title: "自由と教養の文化", detail: "校則がほぼなく、生徒の自主性を最大限に尊重。自由の中で自ら考え行動する力を育む" },
       { icon: "📖", title: "深い議論の文化", detail: "授業中の活発な議論を重視し、多角的な視点から物事を考える力と表現力を鍛える" },
@@ -309,6 +318,7 @@ export const schools: School[] = [
     features: ["自由", "キリスト教", "自主性", "教養"],
     description: "キリスト教精神に基づく自由な教育で、自ら考え行動できる女性を育てます。",
     commuteAreas: ["千代田", "文京", "港区", "中央"],
+    homepage: "https://www.joshigakuin.ed.jp/",
     uniqueStrengths: [
       { icon: "✝️", title: "キリスト教に基づく自由教育", detail: "「自分で考え、自分で決める」を大切にし、校則に頼らず生徒の内面的な成長を促す" },
       { icon: "📚", title: "幅広い教養教育", detail: "文理を問わず幅広い科目を学び、バランスの取れた知性と教養を身につける6年間" },
@@ -341,6 +351,7 @@ export const schools: School[] = [
     features: ["カトリック", "自然", "教養", "少人数"],
     description: "鎌倉の豊かな自然の中で、カトリック精神に基づいた全人教育を実践しています。",
     commuteAreas: ["鎌倉", "横浜", "藤沢", "逗子"],
+    homepage: "https://ekh.jp/",
     uniqueStrengths: [
       { icon: "⛪", title: "カトリック全人教育", detail: "「Men for Others, with Others」の精神のもと、他者への奉仕と共生の心を育む教育" },
       { icon: "🏔️", title: "鎌倉の自然環境", detail: "緑豊かな鎌倉の丘陵地に位置し、自然と共に学ぶ恵まれた教育環境" },
@@ -373,6 +384,7 @@ export const schools: School[] = [
     features: ["理系", "ICT", "探究", "グローバル"],
     description: "理系教育とICTを軸に、探究心と実践力を育む教育環境を提供しています。",
     commuteAreas: ["世田谷", "目黒", "大田", "渋谷"],
+    homepage: "https://www.tcu-jsh.ed.jp/",
     uniqueStrengths: [
       { icon: "🔬", title: "理系教育の充実", detail: "大学との連携による本格的な理系教育。実験・観察を重視し、科学的思考力を育成" },
       { icon: "💻", title: "ICT先進校", detail: "全教室に電子黒板を設置し、タブレットを活用した双方向型授業を展開" },
@@ -405,6 +417,7 @@ export const schools: School[] = [
     features: ["音楽", "国際", "探究", "ICT"],
     description: "音楽教育の伝統を持ちながら、グローバルな視野と探究力を育む先進的な女子校です。",
     commuteAreas: ["川崎", "横浜", "大田", "世田谷"],
+    homepage: "https://www.senzoku-gakuen.ed.jp/",
     uniqueStrengths: [
       { icon: "🎵", title: "音楽教育の伝統", detail: "音楽大学を併設する学園ならではの本格的な音楽教育。感性と表現力を豊かに育む" },
       { icon: "🌍", title: "グローバル教育の充実", detail: "多彩な海外研修プログラムと校内での国際交流で、世界で通用する力を養成" },
@@ -437,6 +450,7 @@ export const schools: School[] = [
     features: ["探究", "国際", "自調自考", "ICT"],
     description: "自調自考の精神を基盤に、グローバルな視野と深い探究力を育む千葉の名門校です。",
     commuteAreas: ["千葉", "船橋", "習志野", "市川"],
+    homepage: "https://www.shibumaku.jp/",
     uniqueStrengths: [
       { icon: "🔍", title: "自調自考の深い探究", detail: "渋谷教育学園の教育理念「自調自考」を軸に、生徒が自ら問いを立て深く探究する文化" },
       { icon: "🌐", title: "世界水準の国際教育", detail: "ハーバード・イェールなど海外名門大学への進学実績。模擬国連でも世界的な活躍" },
@@ -469,6 +483,7 @@ export const schools: School[] = [
     features: ["カトリック", "進学実績", "規律", "教養"],
     description: "カトリック精神に基づく規律ある教育で、高い学力と豊かな人間性を育てます。",
     commuteAreas: ["横浜", "川崎", "鎌倉", "藤沢"],
+    homepage: "https://www.seiko.ac.jp/",
     uniqueStrengths: [
       { icon: "⛪", title: "カトリック精神の教育", detail: "「紳士たれ」の校訓のもと、高い学力と品格を兼ね備えた人間を育成する伝統校" },
       { icon: "📈", title: "神奈川トップの進学力", detail: "東大・医学部への高い合格実績を支える、体系的で質の高い授業カリキュラム" },
@@ -501,6 +516,7 @@ export const schools: School[] = [
     features: ["進学実績", "運針", "規律", "理系"],
     description: "毎朝の運針に象徴される集中力と努力の精神で、確かな学力を育てる女子校です。",
     commuteAreas: ["豊島", "文京", "新宿", "板橋"],
+    homepage: "https://www.toshimagaoka.ed.jp/",
     uniqueStrengths: [
       { icon: "🧵", title: "運針の精神", detail: "毎朝5分間の運針で集中力と忍耐力を養う伝統。この精神が全ての学びの基盤となる" },
       { icon: "📊", title: "理系教育の強さ", detail: "理系進学率が高く、数学・理科の授業時間を多く確保。女子の理系進学を強力に支援" },
@@ -533,6 +549,7 @@ export const schools: School[] = [
     features: ["ドルトンプラン", "探究", "STEAM", "個別最適"],
     description: "ドルトンプランに基づく個別最適な学びで、一人ひとりの探究心と創造力を最大限に引き出します。",
     commuteAreas: ["調布", "世田谷", "狛江", "府中"],
+    homepage: "https://www.daltontokyo.ed.jp/",
     uniqueStrengths: [
       { icon: "🎯", title: "ドルトンプランの個別最適学習", detail: "一人ひとりの興味・関心・学習ペースに合わせた個別最適な学びを実現する革新的教育法" },
       { icon: "🏠", title: "ハウス制度", detail: "異学年混合のハウスで日常的に交流。年齢を超えた学び合いとコミュニティ意識を育む" },
@@ -565,6 +582,7 @@ export const schools: School[] = [
     features: ["IB", "探究", "国際", "PBL"],
     description: "国際バカロレア（IB）の理念を取り入れた探究型教育で、世界で活躍できる人材を育成します。",
     commuteAreas: ["中央", "千代田", "台東", "江東"],
+    homepage: "https://www.kng.ed.jp/",
     uniqueStrengths: [
       { icon: "🌐", title: "国際バカロレア(IB)教育", detail: "MYP認定校として、IBの教育理念に基づいた探究型・概念型の授業を全教科で展開" },
       { icon: "🗣️", title: "多言語教育", detail: "英語に加え、第二外国語も学べる環境。多言語・多文化理解を通じてグローバル人材を育成" },
@@ -597,6 +615,7 @@ export const schools: School[] = [
     features: ["PBL", "21世紀型", "国際", "STEAM"],
     description: "PBL型授業と21世紀型教育で、主体的に学び、社会に貢献できる人材を育成します。",
     commuteAreas: ["北区", "板橋", "豊島", "荒川"],
+    homepage: "https://www.salesian.international.seibi.ac.jp/",
     uniqueStrengths: [
       { icon: "🌱", title: "21世紀型PBL教育", detail: "全教科でPBL（課題解決型学習）を導入し、「考え、議論し、表現する」力を育成" },
       { icon: "🌍", title: "インターナショナルな環境", detail: "ネイティブ教員による英語イマージョン教育と、多文化共生を体験できる学校環境" },
@@ -629,6 +648,7 @@ export const schools: School[] = [
     features: ["伝統", "仏教", "温かさ", "文武両道"],
     description: "仏教精神に基づく温かな校風の中で、文武両道を実践する伝統ある男子校です。",
     commuteAreas: ["港区", "品川", "渋谷", "中央"],
+    homepage: "https://www.shiba.ac.jp/",
     uniqueStrengths: [
       { icon: "🙏", title: "仏教精神の温かな校風", detail: "浄土宗の教えに基づく「共生（ともいき）」の精神で、思いやりと協調性を育む温かな環境" },
       { icon: "⚽", title: "文武両道の実践", detail: "部活動が盛んで、学業との両立を重視。心身ともにバランスの取れた成長を支援" },
@@ -661,6 +681,7 @@ export const schools: School[] = [
     features: ["芸術", "自主性", "進学実績", "バランス"],
     description: "芸術教育と学力向上を両立させ、自主性と感性豊かな女性を育てる学校です。",
     commuteAreas: ["武蔵野", "三鷹", "杉並", "練馬"],
+    homepage: "https://www.kichijo-joshi.jp/",
     uniqueStrengths: [
       { icon: "🎨", title: "芸術教育の充実", detail: "美術・音楽・書道の授業時間が豊富で、感性と表現力を磨く独自のカリキュラム" },
       { icon: "📚", title: "自主性を重んじる教育", detail: "「自分の頭で考え、自分の言葉で表現する」ことを大切にし、主体的な学びの姿勢を育成" },
@@ -693,6 +714,7 @@ export const schools: School[] = [
     features: ["探究", "国際", "帰国生", "進学実績"],
     description: "探究型学習と国際教育を両輪に、グローバル社会で活躍できる力を育む男子校です。",
     commuteAreas: ["新宿", "豊島", "渋谷", "中野"],
+    homepage: "https://www.kaijo.ed.jp/",
     uniqueStrengths: [
       { icon: "🔍", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "🌐", title: "国際教育プログラム", detail: "海外研修や異文化交流を通じて、グローバルな視野と実践的な英語力を養成" },
@@ -725,6 +747,7 @@ export const schools: School[] = [
     features: ["進学実績", "自主性", "文武両道", "伝統"],
     description: "高い進学実績と文武両道を両立し、バランスの取れた人材を育成する男子校です。",
     commuteAreas: ["新宿", "豊島", "文京", "渋谷"],
+    homepage: "https://www.waseda-h.ed.jp/",
     uniqueStrengths: [
       { icon: "📊", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "🚀", title: "自主性を重視する教育", detail: "生徒が自ら考え、判断し、行動する力を育む教育方針で、主体的な学びを実現" },
@@ -757,6 +780,7 @@ export const schools: School[] = [
     features: ["進学実績", "理系", "自主性", "教養"],
     description: "理系教育に定評があり、科学的な思考力と実践力を伸ばす男子校です。",
     commuteAreas: ["世田谷", "目黒", "渋谷", "大田"],
+    homepage: "https://www.komabajh.toho-u.ac.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "⚗️", title: "理系教育の充実", detail: "充実した実験設備と体系的なカリキュラムで、科学的思考力と探究心を育成" },
@@ -789,6 +813,7 @@ export const schools: School[] = [
     features: ["進学実績", "文武両道", "伝統", "理系"],
     description: "理系教育に定評があり、科学的な思考力と実践力を伸ばす男子校です。",
     commuteAreas: ["豊島", "文京", "板橋", "新宿"],
+    homepage: "https://www.hongo.ed.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "🏃", title: "文武両道の実践", detail: "学業と部活動の両立を重視し、バランスの取れた成長を支える充実した環境" },
@@ -821,6 +846,7 @@ export const schools: School[] = [
     features: ["進学実績", "伝統", "規律", "国際"],
     description: "国際教育に力を入れ、英語力と異文化理解力を育む男子校です。",
     commuteAreas: ["品川", "大田", "渋谷", "目黒"],
+    homepage: "https://www.kogyokusha.ed.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "📜", title: "伝統校の教育力", detail: "長年の教育実績に裏打ちされた指導ノウハウで、確かな学力と人間力を育成" },
@@ -853,6 +879,7 @@ export const schools: School[] = [
     features: ["進学実績", "努力主義", "規律", "伝統"],
     description: "確かな進学実績に裏打ちされた教育力で、生徒の可能性を最大限に引き出す男子校です。",
     commuteAreas: ["豊島", "文京", "板橋", "北区"],
+    homepage: "https://www.sugamo.ed.jp/",
     uniqueStrengths: [
       { icon: "📈", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "📋", title: "規律ある学習環境", detail: "規律を大切にする教育で、集中力と自律心を養い、確かな学力を育成" },
@@ -885,6 +912,7 @@ export const schools: School[] = [
     features: ["仏教", "進学実績", "文武両道", "伝統"],
     description: "仏教精神に基づく温かな教育で、心の成長と学力向上を両立する男子校です。",
     commuteAreas: ["世田谷", "渋谷", "目黒", "大田"],
+    homepage: "https://www.setagayagakuen.ac.jp/",
     uniqueStrengths: [
       { icon: "🙏", title: "仏教精神に基づく教育", detail: "仏教の教えを通じて、命の尊さと他者への思いやりを学ぶ心の教育" },
       { icon: "📊", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
@@ -917,6 +945,7 @@ export const schools: School[] = [
     features: ["自由", "自然", "音楽", "伝統"],
     description: "自由な校風のもとで生徒の自主性を尊重し、個性豊かな人間を育てる男子校です。",
     commuteAreas: ["国立", "立川", "国分寺", "府中"],
+    homepage: "https://www.toho.ed.jp/",
     uniqueStrengths: [
       { icon: "🕊️", title: "自由な校風と自主性", detail: "生徒の自主性を最大限に尊重し、自ら考え行動する力を育む自由闊達な環境" },
       { icon: "🏔️", title: "自然豊かな学習環境", detail: "緑豊かなキャンパスで、自然と触れ合いながら豊かな感性と学びを育む" },
@@ -949,6 +978,7 @@ export const schools: School[] = [
     features: ["進学実績", "文武両道", "規律", "理系"],
     description: "理系教育に定評があり、科学的な思考力と実践力を伸ばす男子校です。",
     commuteAreas: ["板橋", "豊島", "練馬", "北区"],
+    homepage: "https://www.johoku.ac.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "🎯", title: "文武両道の実践", detail: "学業と部活動の両立を重視し、バランスの取れた成長を支える充実した環境" },
@@ -981,6 +1011,7 @@ export const schools: School[] = [
     features: ["大学附属", "教養", "バランス", "ICT"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["調布", "世田谷", "府中", "三鷹"],
+    homepage: "https://www.meiji.ac.jp/ko_chu/meimei/",
     uniqueStrengths: [
       { icon: "📚", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "📖", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -1013,6 +1044,7 @@ export const schools: School[] = [
     features: ["大学附属", "キリスト教", "国際", "教養"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["渋谷", "港区", "目黒", "世田谷"],
+    homepage: "https://www.jh.aoyama.ed.jp/",
     uniqueStrengths: [
       { icon: "🏫", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "⛪", title: "キリスト教に基づく教育", detail: "キリスト教の精神を土台に、豊かな人間性と他者を思いやる心を育む" },
@@ -1045,6 +1077,7 @@ export const schools: School[] = [
     features: ["大学附属", "自由", "教養", "進学"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["小金井", "武蔵野", "国分寺", "三鷹"],
+    homepage: "https://www.cu-hs.chuo-u.ac.jp/chu/",
     uniqueStrengths: [
       { icon: "📚", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "🕊️", title: "自由な校風と自主性", detail: "生徒の自主性を最大限に尊重し、自ら考え行動する力を育む自由闊達な環境" },
@@ -1077,6 +1110,7 @@ export const schools: School[] = [
     features: ["大学附属", "自由", "教養", "進学"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["三鷹", "武蔵野", "杉並", "調布"],
+    homepage: "https://www.hosei.ed.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "💫", title: "自由な校風と自主性", detail: "生徒の自主性を最大限に尊重し、自ら考え行動する力を育む自由闊達な環境" },
@@ -1109,6 +1143,7 @@ export const schools: School[] = [
     features: ["理系", "実学", "探究", "ICT"],
     description: "探究型の学びを大切にし、生徒一人ひとりの知的好奇心を伸ばす学校です。",
     commuteAreas: ["世田谷", "渋谷", "目黒", "大田"],
+    homepage: "https://www.nodai-1-h.ed.jp/",
     uniqueStrengths: [
       { icon: "🧬", title: "理系教育の充実", detail: "充実した実験設備と体系的なカリキュラムで、科学的思考力と探究心を育成" },
       { icon: "⭐", title: "実学重視の教育", detail: "社会で活きる実践的な知識とスキルを重視した、実学志向の教育" },
@@ -1141,6 +1176,7 @@ export const schools: School[] = [
     features: ["ICT", "サイエンス", "国際", "探究"],
     description: "探究型学習と国際教育を両輪に、グローバル社会で活躍できる力を育む学校です。",
     commuteAreas: ["文京", "豊島", "台東", "北区"],
+    homepage: "https://hiroo-koishikawa.ed.jp/",
     uniqueStrengths: [
       { icon: "📱", title: "先進的ICT教育", detail: "1人1台端末とICT環境を活かした双方向型授業で、デジタルリテラシーを育成" },
       { icon: "🌡️", title: "本格サイエンス教育", detail: "大学や研究機関と連携した本格的な科学教育で、研究者マインドを育む" },
@@ -1173,6 +1209,7 @@ export const schools: School[] = [
     features: ["進学実績", "ICT", "グローバル", "探究"],
     description: "探究型の学びを大切にし、生徒一人ひとりの知的好奇心を伸ばす学校です。",
     commuteAreas: ["世田谷", "目黒", "大田", "渋谷"],
+    homepage: "https://www.tcu-todoroki.ed.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "🖥️", title: "先進的ICT教育", detail: "1人1台端末とICT環境を活かした双方向型授業で、デジタルリテラシーを育成" },
@@ -1205,6 +1242,7 @@ export const schools: School[] = [
     features: ["理系", "ICT", "STEAM", "ものづくり"],
     description: "理系教育とSTEAM教育に力を入れ、科学的思考力と創造力を育む学校です。",
     commuteAreas: ["江東", "墨田", "中央", "港区"],
+    homepage: "https://www.ijh.shibaura-it.ac.jp/",
     uniqueStrengths: [
       { icon: "🧬", title: "理系教育の充実", detail: "充実した実験設備と体系的なカリキュラムで、科学的思考力と探究心を育成" },
       { icon: "📱", title: "先進的ICT教育", detail: "1人1台端末とICT環境を活かした双方向型授業で、デジタルリテラシーを育成" },
@@ -1237,6 +1275,7 @@ export const schools: School[] = [
     features: ["伝統", "文武両道", "規律", "教養"],
     description: "伝統と教養を大切にし、豊かな人間性と確かな学力を育む学校です。",
     commuteAreas: ["杉並", "世田谷", "練馬", "中野"],
+    homepage: "https://www.kokugakuin.ed.jp/",
     uniqueStrengths: [
       { icon: "🎎", title: "伝統校の教育力", detail: "長年の教育実績に裏打ちされた指導ノウハウで、確かな学力と人間力を育成" },
       { icon: "🏃", title: "文武両道の実践", detail: "学業と部活動の両立を重視し、バランスの取れた成長を支える充実した環境" },
@@ -1269,6 +1308,7 @@ export const schools: School[] = [
     features: ["進学実績", "文武両道", "伝統", "理系"],
     description: "理系教育に定評があり、科学的な思考力と実践力を伸ばす男子校です。",
     commuteAreas: ["横浜", "川崎", "鎌倉", "品川"],
+    homepage: "https://www.asano.ed.jp/",
     uniqueStrengths: [
       { icon: "📊", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "⚽", title: "文武両道の実践", detail: "学業と部活動の両立を重視し、バランスの取れた成長を支える充実した環境" },
@@ -1301,6 +1341,7 @@ export const schools: School[] = [
     features: ["大学附属", "国際", "ICT", "帰国生"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["藤沢", "鎌倉", "横浜", "茅ヶ崎"],
+    homepage: "https://www.sfc-js.keio.ac.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "🌐", title: "国際教育プログラム", detail: "海外研修や異文化交流を通じて、グローバルな視野と実践的な英語力を養成" },
@@ -1333,6 +1374,7 @@ export const schools: School[] = [
     features: ["カトリック", "進学実績", "温かさ", "少人数"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む男子校です。",
     commuteAreas: ["横浜", "川崎", "大田", "品川"],
+    homepage: "https://www.salesio-gakuin.ed.jp/",
     uniqueStrengths: [
       { icon: "🕊️", title: "カトリック精神の教育", detail: "キリスト教の教えに基づく人間教育で、他者への思いやりと奉仕の心を育む" },
       { icon: "📈", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
@@ -1365,6 +1407,7 @@ export const schools: School[] = [
     features: ["海洋教育", "自然", "探究", "グローバル"],
     description: "探究型の学びを大切にし、生徒一人ひとりの知的好奇心を伸ばす男子校です。",
     commuteAreas: ["逗子", "鎌倉", "横浜", "藤沢"],
+    homepage: "https://www.zushi-kaisei.ac.jp/",
     uniqueStrengths: [
       { icon: "⭐", title: "海洋教育プログラム", detail: "海に面した立地を活かし、ヨット実習や海洋調査など本物の海洋体験を提供" },
       { icon: "🏔️", title: "自然豊かな学習環境", detail: "緑豊かなキャンパスで、自然と触れ合いながら豊かな感性と学びを育む" },
@@ -1397,6 +1440,7 @@ export const schools: School[] = [
     features: ["伝統", "仏教", "文武両道", "自然"],
     description: "仏教精神に基づく温かな教育で、心の成長と学力向上を両立する男子校です。",
     commuteAreas: ["鎌倉", "藤沢", "逗子", "横浜"],
+    homepage: "https://www.kamagaku.ac.jp/",
     uniqueStrengths: [
       { icon: "🎎", title: "伝統校の教育力", detail: "長年の教育実績に裏打ちされた指導ノウハウで、確かな学力と人間力を育成" },
       { icon: "☸️", title: "仏教精神に基づく教育", detail: "仏教の教えを通じて、命の尊さと他者への思いやりを学ぶ心の教育" },
@@ -1429,6 +1473,7 @@ export const schools: School[] = [
     features: ["キリスト教", "自由", "教養", "国際"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["横浜", "川崎", "鎌倉", "品川"],
+    homepage: "https://www.ferris.ed.jp/",
     uniqueStrengths: [
       { icon: "⛪", title: "キリスト教に基づく教育", detail: "キリスト教の精神を土台に、豊かな人間性と他者を思いやる心を育む" },
       { icon: "💫", title: "自由な校風と自主性", detail: "生徒の自主性を最大限に尊重し、自ら考え行動する力を育む自由闊達な環境" },
@@ -1461,6 +1506,7 @@ export const schools: School[] = [
     features: ["大学附属", "教養", "バランス", "進学"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["横浜", "川崎", "大田", "品川"],
+    homepage: "https://www.yokohama-js.chuo-u.ac.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "📚", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -1493,6 +1539,7 @@ export const schools: School[] = [
     features: ["大学附属", "自然", "バランス", "進学"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["横浜", "川崎", "大田", "世田谷"],
+    homepage: "https://www.fhs.kanagawa-u.ac.jp/",
     uniqueStrengths: [
       { icon: "📚", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "🌳", title: "自然豊かな学習環境", detail: "緑豊かなキャンパスで、自然と触れ合いながら豊かな感性と学びを育む" },
@@ -1525,6 +1572,7 @@ export const schools: School[] = [
     features: ["大学附属", "自由", "文武両道", "教養"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["川崎", "横浜", "大田", "世田谷"],
+    homepage: "https://www.hosei2.ed.jp/",
     uniqueStrengths: [
       { icon: "📚", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "🕊️", title: "自由な校風と自主性", detail: "生徒の自主性を最大限に尊重し、自ら考え行動する力を育む自由闊達な環境" },
@@ -1557,6 +1605,7 @@ export const schools: School[] = [
     features: ["大学附属", "教養", "人間力", "伝統"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む男子校です。",
     commuteAreas: ["横浜", "川崎", "大田", "品川"],
+    homepage: "https://www.kf.keio.ac.jp/",
     uniqueStrengths: [
       { icon: "📚", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "🎭", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -1589,6 +1638,7 @@ export const schools: School[] = [
     features: ["国立", "進学実績", "自由", "探究"],
     description: "国立校ならではの先進的な教育研究と自由な学びの環境で、高い知性と探究力を育む学校です。",
     commuteAreas: ["世田谷", "目黒", "渋谷", "大田"],
+    homepage: "https://www.komaba-s.tsukuba.ac.jp/",
     uniqueStrengths: [
       { icon: "📊", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "💫", title: "自由な校風と自主性", detail: "生徒の自主性を最大限に尊重し、自ら考え行動する力を育む自由闊達な環境" },
@@ -1621,6 +1671,7 @@ export const schools: School[] = [
     features: ["大学附属", "文武両道", "教養", "伝統"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["国分寺", "小金井", "国立", "立川"],
+    homepage: "https://www.wasedajg.ed.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "⚽", title: "文武両道の実践", detail: "学業と部活動の両立を重視し、バランスの取れた成長を支える充実した環境" },
@@ -1653,6 +1704,7 @@ export const schools: School[] = [
     features: ["大学附属", "自由", "教養", "進学"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む男子校です。",
     commuteAreas: ["練馬", "豊島", "板橋", "新宿"],
+    homepage: "https://www.waseda.jp/school/jhs/",
     uniqueStrengths: [
       { icon: "🏫", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "💫", title: "自由な校風と自主性", detail: "生徒の自主性を最大限に尊重し、自ら考え行動する力を育む自由闊達な環境" },
@@ -1685,6 +1737,7 @@ export const schools: School[] = [
     features: ["大学附属", "キリスト教", "教養", "自由"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む男子校です。",
     commuteAreas: ["豊島", "文京", "板橋", "新宿"],
+    homepage: "https://ikebukuro.rikkyo.ac.jp/",
     uniqueStrengths: [
       { icon: "🏫", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "⛪", title: "キリスト教に基づく教育", detail: "キリスト教の精神を土台に、豊かな人間性と他者を思いやる心を育む" },
@@ -1717,6 +1770,7 @@ export const schools: School[] = [
     features: ["伝統", "教養", "皇室", "バランス"],
     description: "伝統と教養を大切にし、豊かな人間性と確かな学力を育む男子校です。",
     commuteAreas: ["豊島", "文京", "新宿", "渋谷"],
+    homepage: "https://www.gakushuin.ac.jp/bjh/",
     uniqueStrengths: [
       { icon: "🏛️", title: "伝統校の教育力", detail: "長年の教育実績に裏打ちされた指導ノウハウで、確かな学力と人間力を育成" },
       { icon: "📖", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -1749,6 +1803,7 @@ export const schools: School[] = [
     features: ["カトリック", "フランス語", "伝統", "進学"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む男子校です。",
     commuteAreas: ["千代田", "文京", "新宿", "港区"],
+    homepage: "https://www.gyosei-h.ed.jp/",
     uniqueStrengths: [
       { icon: "🕊️", title: "カトリック精神の教育", detail: "キリスト教の教えに基づく人間教育で、他者への思いやりと奉仕の心を育む" },
       { icon: "📖", title: "フランス語教育", detail: "英語に加えフランス語を学び、多言語・多文化への理解を深める環境" },
@@ -1781,6 +1836,7 @@ export const schools: School[] = [
     features: ["伝統", "バランス", "進学実績", "温かさ"],
     description: "確かな進学実績に裏打ちされた教育力で、生徒の可能性を最大限に引き出す男子校です。",
     commuteAreas: ["港区", "品川", "渋谷", "大田"],
+    homepage: "https://www.takanawa.ed.jp/",
     uniqueStrengths: [
       { icon: "📜", title: "伝統校の教育力", detail: "長年の教育実績に裏打ちされた指導ノウハウで、確かな学力と人間力を育成" },
       { icon: "📊", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
@@ -1813,6 +1869,7 @@ export const schools: School[] = [
     features: ["大学附属", "文武両道", "教養", "伝統"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む男子校です。",
     commuteAreas: ["中野", "新宿", "杉並", "渋谷"],
+    homepage: "https://www.meinaka.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "🏃", title: "文武両道の実践", detail: "学業と部活動の両立を重視し、バランスの取れた成長を支える充実した環境" },
@@ -1845,6 +1902,7 @@ export const schools: School[] = [
     features: ["大学附属", "自然", "教養", "進学"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["八王子", "日野", "立川", "多摩"],
+    homepage: "https://www.mnh.ed.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "🌳", title: "自然豊かな学習環境", detail: "緑豊かなキャンパスで、自然と触れ合いながら豊かな感性と学びを育む" },
@@ -1877,6 +1935,7 @@ export const schools: School[] = [
     features: ["キリスト教", "大学附属", "国際", "教養"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["横浜", "川崎", "大田", "品川"],
+    homepage: "https://www.yokohama-eiwa.ac.jp/chukou/",
     uniqueStrengths: [
       { icon: "⛪", title: "キリスト教に基づく教育", detail: "キリスト教の精神を土台に、豊かな人間性と他者を思いやる心を育む" },
       { icon: "📚", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
@@ -1909,6 +1968,7 @@ export const schools: School[] = [
     features: ["探究", "理系", "国際", "進学実績"],
     description: "探究型学習と国際教育を両輪に、グローバル社会で活躍できる力を育む学校です。",
     commuteAreas: ["文京", "千代田", "豊島", "台東"],
+    homepage: "https://www.metro.ed.jp/koishikawa-s/",
     uniqueStrengths: [
       { icon: "🧪", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "⚗️", title: "理系教育の充実", detail: "充実した実験設備と体系的なカリキュラムで、科学的思考力と探究心を育成" },
@@ -1941,6 +2001,7 @@ export const schools: School[] = [
     features: ["探究", "理系", "公立", "バランス"],
     description: "公立ならではの多様性と充実した探究教育で、確かな学力と主体性を育む学校です。",
     commuteAreas: ["武蔵野", "三鷹", "杉並", "練馬"],
+    homepage: "https://www.metro.ed.jp/musashi-h/",
     uniqueStrengths: [
       { icon: "📝", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "🧬", title: "理系教育の充実", detail: "充実した実験設備と体系的なカリキュラムで、科学的思考力と探究心を育成" },
@@ -1973,6 +2034,7 @@ export const schools: School[] = [
     features: ["探究", "論文", "公立", "教養"],
     description: "公立ならではの多様性と充実した探究教育で、確かな学力と主体性を育む学校です。",
     commuteAreas: ["目黒", "世田谷", "品川", "渋谷"],
+    homepage: "https://www.metro.ed.jp/oshukan-s/",
     uniqueStrengths: [
       { icon: "📝", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "⭐", title: "論文指導の充実", detail: "中学生から論文執筆に取り組み、論理的な文章力と研究力を段階的に育成" },
@@ -2005,6 +2067,7 @@ export const schools: School[] = [
     features: ["伝統", "探究", "公立", "バランス"],
     description: "公立ならではの多様性と充実した探究教育で、確かな学力と主体性を育む学校です。",
     commuteAreas: ["墨田", "台東", "江東", "中央"],
+    homepage: "https://www.metro.ed.jp/ryogoku-h/",
     uniqueStrengths: [
       { icon: "📜", title: "伝統校の教育力", detail: "長年の教育実績に裏打ちされた指導ノウハウで、確かな学力と人間力を育成" },
       { icon: "🧪", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
@@ -2037,6 +2100,7 @@ export const schools: School[] = [
     features: ["探究", "公立", "バランス", "ICT"],
     description: "公立ならではの多様性と充実した探究教育で、確かな学力と主体性を育む学校です。",
     commuteAreas: ["三鷹", "武蔵野", "調布", "杉並"],
+    homepage: "https://www.metro.ed.jp/mitaka-s/",
     uniqueStrengths: [
       { icon: "📝", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "🏫", title: "公立校ならではの教育", detail: "多様な生徒が集う公立校で、社会性と協調性を育みながら高い学力を実現" },
@@ -2069,6 +2133,7 @@ export const schools: School[] = [
     features: ["探究", "公立", "フィールドワーク", "バランス"],
     description: "公立ならではの多様性と充実した探究教育で、確かな学力と主体性を育む学校です。",
     commuteAreas: ["八王子", "日野", "多摩", "立川"],
+    homepage: "https://www.metro.ed.jp/minamitama-s/",
     uniqueStrengths: [
       { icon: "🔍", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "🏫", title: "公立校ならではの教育", detail: "多様な生徒が集う公立校で、社会性と協調性を育みながら高い学力を実現" },
@@ -2101,6 +2166,7 @@ export const schools: School[] = [
     features: ["探究", "国際", "公立", "バランス"],
     description: "公立ならではの多様性と充実した探究教育で、確かな学力と主体性を育む学校です。",
     commuteAreas: ["練馬", "板橋", "西東京", "杉並"],
+    homepage: "https://www.metro.ed.jp/oizumi-h/",
     uniqueStrengths: [
       { icon: "🧪", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "✈️", title: "国際教育プログラム", detail: "海外研修や異文化交流を通じて、グローバルな視野と実践的な英語力を養成" },
@@ -2133,6 +2199,7 @@ export const schools: School[] = [
     features: ["探究", "ICT", "国際", "進学実績"],
     description: "探究型学習と国際教育を両輪に、グローバル社会で活躍できる力を育む学校です。",
     commuteAreas: ["市川", "船橋", "江戸川", "松戸"],
+    homepage: "https://www.ichigaku.ac.jp/",
     uniqueStrengths: [
       { icon: "🔍", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "📱", title: "先進的ICT教育", detail: "1人1台端末とICT環境を活かした双方向型授業で、デジタルリテラシーを育成" },
@@ -2165,6 +2232,7 @@ export const schools: School[] = [
     features: ["理系", "サイエンス", "探究", "進学実績"],
     description: "探究型の学びを大切にし、生徒一人ひとりの知的好奇心を伸ばす学校です。",
     commuteAreas: ["習志野", "船橋", "千葉", "市川"],
+    homepage: "https://www.tohojh.toho-u.ac.jp/",
     uniqueStrengths: [
       { icon: "🧬", title: "理系教育の充実", detail: "充実した実験設備と体系的なカリキュラムで、科学的思考力と探究心を育成" },
       { icon: "🌡️", title: "本格サイエンス教育", detail: "大学や研究機関と連携した本格的な科学教育で、研究者マインドを育む" },
@@ -2197,6 +2265,7 @@ export const schools: School[] = [
     features: ["進学実績", "バランス", "ICT", "教養"],
     description: "先進的なICT環境を活かした教育で、未来を生き抜く力を育む学校です。",
     commuteAreas: ["千葉", "習志野", "船橋", "市川"],
+    homepage: "https://www.showa-shuei.ed.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "🎯", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
@@ -2229,6 +2298,7 @@ export const schools: School[] = [
     features: ["理系", "STEAM", "ICT", "探究"],
     description: "探究学習とSTEAM教育を融合させ、創造力と科学的思考力を育む学校です。",
     commuteAreas: ["柏", "松戸", "我孫子", "流山"],
+    homepage: "https://www.ka.shibaura-it.ac.jp/",
     uniqueStrengths: [
       { icon: "🔬", title: "理系教育の充実", detail: "充実した実験設備と体系的なカリキュラムで、科学的思考力と探究心を育成" },
       { icon: "⚙️", title: "STEAM教育の実践", detail: "科学・技術・工学・アート・数学を横断する学びで、創造力と問題解決力を養成" },
@@ -2261,6 +2331,7 @@ export const schools: School[] = [
     features: ["大学附属", "バランス", "進学", "教養"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["松戸", "柏", "市川", "葛飾"],
+    homepage: "https://www.senshu-u-matsudo.ed.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "🎯", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
@@ -2293,6 +2364,7 @@ export const schools: School[] = [
     features: ["公立", "探究", "進学実績", "バランス"],
     description: "公立ならではの多様性と充実した探究教育で、確かな学力と主体性を育む学校です。",
     commuteAreas: ["千葉", "習志野", "船橋", "市川"],
+    homepage: "https://cms1.chiba-c.ed.jp/chiba-j/",
     uniqueStrengths: [
       { icon: "📝", title: "公立校ならではの教育", detail: "多様な生徒が集う公立校で、社会性と協調性を育みながら高い学力を実現" },
       { icon: "🔍", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
@@ -2325,6 +2397,7 @@ export const schools: School[] = [
     features: ["公立", "探究", "医歯薬", "バランス"],
     description: "公立ならではの多様性と充実した探究教育で、確かな学力と主体性を育む学校です。",
     commuteAreas: ["柏", "松戸", "流山", "我孫子"],
+    homepage: "https://cms1.chiba-c.ed.jp/tohkatsu-jh/",
     uniqueStrengths: [
       { icon: "🏫", title: "公立校ならではの教育", detail: "多様な生徒が集う公立校で、社会性と協調性を育みながら高い学力を実現" },
       { icon: "📝", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
@@ -2357,6 +2430,7 @@ export const schools: School[] = [
     features: ["道徳", "国際", "自然", "教養"],
     description: "国際教育に力を入れ、英語力と異文化理解力を育む学校です。",
     commuteAreas: ["柏", "松戸", "流山", "我孫子"],
+    homepage: "https://www.hs.reitaku.jp/",
     uniqueStrengths: [
       { icon: "⭐", title: "道徳教育の充実", detail: "豊かな心と正しい判断力を育む道徳教育で、人間としての成長を支援" },
       { icon: "🌍", title: "国際教育プログラム", detail: "海外研修や異文化交流を通じて、グローバルな視野と実践的な英語力を養成" },
@@ -2389,6 +2463,7 @@ export const schools: School[] = [
     features: ["大学附属", "バランス", "進学", "教養"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["船橋", "習志野", "千葉", "市川"],
+    homepage: "https://www.chibanichi.ed.jp/",
     uniqueStrengths: [
       { icon: "📚", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "🎯", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
@@ -2421,6 +2496,7 @@ export const schools: School[] = [
     features: ["バランス", "ICT", "探究", "教養"],
     description: "探究型の学びを大切にし、生徒一人ひとりの知的好奇心を伸ばす学校です。",
     commuteAreas: ["市川", "船橋", "江戸川", "松戸"],
+    homepage: "https://www.showa-gkn.ed.jp/js/",
     uniqueStrengths: [
       { icon: "⚖️", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
       { icon: "💻", title: "先進的ICT教育", detail: "1人1台端末とICT環境を活かした双方向型授業で、デジタルリテラシーを育成" },
@@ -2453,6 +2529,7 @@ export const schools: School[] = [
     features: ["少人数", "バランス", "教養", "温かさ"],
     description: "少人数教育できめ細やかな指導を実現し、一人ひとりの成長を支える学校です。",
     commuteAreas: ["市川", "船橋", "江戸川", "松戸"],
+    homepage: "https://www.hinode.ed.jp/",
     uniqueStrengths: [
       { icon: "🏫", title: "少人数制のきめ細やかな指導", detail: "少人数クラスで一人ひとりに目が行き届く、きめ細やかな教育を実現" },
       { icon: "⚖️", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
@@ -2485,6 +2562,7 @@ export const schools: School[] = [
     features: ["国際", "進学実績", "バランス", "留学"],
     description: "国際教育に力を入れ、英語力と異文化理解力を育む学校です。",
     commuteAreas: ["横浜", "川崎", "大田", "品川"],
+    homepage: "https://www.yamate-gakuin.ac.jp/",
     uniqueStrengths: [
       { icon: "🌐", title: "国際教育プログラム", detail: "海外研修や異文化交流を通じて、グローバルな視野と実践的な英語力を養成" },
       { icon: "🎓", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
@@ -2517,6 +2595,7 @@ export const schools: School[] = [
     features: ["自学自習", "国際", "帰国生", "自由"],
     description: "帰国生の受け入れ体制が充実し、多文化共生の中でグローバルな力を育む学校です。",
     commuteAreas: ["横浜", "鎌倉", "藤沢", "川崎"],
+    homepage: "https://kumon.ac.jp/k-gakuen/kokusai/",
     uniqueStrengths: [
       { icon: "🌐", title: "国際教育プログラム", detail: "海外研修や異文化交流を通じて、グローバルな視野と実践的な英語力を養成" },
       { icon: "⭐", title: "帰国生の受け入れ体制", detail: "帰国生の経験を活かし、多文化共生の中で互いに学び合う環境" },
@@ -2549,6 +2628,7 @@ export const schools: School[] = [
     features: ["キリスト教", "バランス", "教養", "伝統"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む学校です。",
     commuteAreas: ["横浜", "川崎", "品川", "大田"],
+    homepage: "https://www.kantogakuin.ed.jp/",
     uniqueStrengths: [
       { icon: "✝️", title: "キリスト教に基づく教育", detail: "キリスト教の精神を土台に、豊かな人間性と他者を思いやる心を育む" },
       { icon: "⚖️", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
@@ -2581,6 +2661,7 @@ export const schools: School[] = [
     features: ["進学実績", "ICT", "探究", "バランス"],
     description: "探究型の学びを大切にし、生徒一人ひとりの知的好奇心を伸ばす学校です。",
     commuteAreas: ["横浜", "川崎", "町田", "大田"],
+    homepage: "https://toin.ac.jp/ses/",
     uniqueStrengths: [
       { icon: "📊", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "💻", title: "先進的ICT教育", detail: "1人1台端末とICT環境を活かした双方向型授業で、デジタルリテラシーを育成" },
@@ -2613,6 +2694,7 @@ export const schools: School[] = [
     features: ["自然", "教養", "温かさ", "バランス"],
     description: "バランスの取れた教育で、生徒一人ひとりの個性と可能性を伸ばす学校です。",
     commuteAreas: ["横浜", "川崎", "町田", "大田"],
+    homepage: "https://www.morimura.ac.jp/",
     uniqueStrengths: [
       { icon: "🌳", title: "自然豊かな学習環境", detail: "緑豊かなキャンパスで、自然と触れ合いながら豊かな感性と学びを育む" },
       { icon: "🎭", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -2645,6 +2727,7 @@ export const schools: School[] = [
     features: ["大学附属", "バランス", "進学", "教養"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["横浜", "川崎", "大田", "品川"],
+    homepage: "https://www.yokohama.hs.nihon-u.ac.jp/",
     uniqueStrengths: [
       { icon: "🏫", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "🎯", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
@@ -2677,6 +2760,7 @@ export const schools: School[] = [
     features: ["大学附属", "自然", "バランス", "進学"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["藤沢", "茅ヶ崎", "鎌倉", "横浜"],
+    homepage: "https://www.fujisawa.hs.nihon-u.ac.jp/",
     uniqueStrengths: [
       { icon: "📚", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "🏔️", title: "自然豊かな学習環境", detail: "緑豊かなキャンパスで、自然と触れ合いながら豊かな感性と学びを育む" },
@@ -2709,6 +2793,7 @@ export const schools: School[] = [
     features: ["カトリック", "教養", "国際", "伝統"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["藤沢", "鎌倉", "横浜", "茅ヶ崎"],
+    homepage: "https://chukou.shonan-shirayuri.ac.jp/",
     uniqueStrengths: [
       { icon: "✝️", title: "カトリック精神の教育", detail: "キリスト教の教えに基づく人間教育で、他者への思いやりと奉仕の心を育む" },
       { icon: "📖", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -2741,6 +2826,7 @@ export const schools: School[] = [
     features: ["カトリック", "教養", "伝統", "礼法"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["横浜", "川崎", "品川", "大田"],
+    homepage: "https://www.yokohamafutaba.ed.jp/",
     uniqueStrengths: [
       { icon: "🕊️", title: "カトリック精神の教育", detail: "キリスト教の教えに基づく人間教育で、他者への思いやりと奉仕の心を育む" },
       { icon: "📚", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -2773,6 +2859,7 @@ export const schools: School[] = [
     features: ["キリスト教", "教養", "伝統", "バランス"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["横浜", "川崎", "品川", "大田"],
+    homepage: "https://www.kjg.ed.jp/",
     uniqueStrengths: [
       { icon: "⛪", title: "キリスト教に基づく教育", detail: "キリスト教の精神を土台に、豊かな人間性と他者を思いやる心を育む" },
       { icon: "🎭", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -2805,6 +2892,7 @@ export const schools: School[] = [
     features: ["カトリック", "フランス語", "国際", "教養"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["川崎", "横浜", "大田", "世田谷"],
+    homepage: "https://www.caritas.ed.jp/",
     uniqueStrengths: [
       { icon: "⛪", title: "カトリック精神の教育", detail: "キリスト教の教えに基づく人間教育で、他者への思いやりと奉仕の心を育む" },
       { icon: "🇫🇷", title: "フランス語教育", detail: "英語に加えフランス語を学び、多言語・多文化への理解を深める環境" },
@@ -2837,6 +2925,7 @@ export const schools: School[] = [
     features: ["伝統", "教養", "自然", "バランス"],
     description: "伝統と教養を大切にし、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["鎌倉", "藤沢", "逗子", "横浜"],
+    homepage: "https://www.kamajo.ac.jp/",
     uniqueStrengths: [
       { icon: "🏛️", title: "伝統校の教育力", detail: "長年の教育実績に裏打ちされた指導ノウハウで、確かな学力と人間力を育成" },
       { icon: "📚", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -2869,6 +2958,7 @@ export const schools: School[] = [
     features: ["公立", "探究", "進学実績", "バランス"],
     description: "公立ならではの多様性と充実した探究教育で、確かな学力と主体性を育む学校です。",
     commuteAreas: ["相模原", "町田", "八王子", "座間"],
+    homepage: "https://www.pen-kanagawa.ed.jp/sagamihara-chuto-ss/",
     uniqueStrengths: [
       { icon: "📝", title: "公立校ならではの教育", detail: "多様な生徒が集う公立校で、社会性と協調性を育みながら高い学力を実現" },
       { icon: "🔍", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
@@ -2901,6 +2991,7 @@ export const schools: School[] = [
     features: ["理系", "サイエンス", "STEAM", "公立"],
     description: "公立ならではの多様性と充実した探究教育で、確かな学力と主体性を育む学校です。",
     commuteAreas: ["横浜", "川崎", "大田", "品川"],
+    homepage: "https://www.edu.city.yokohama.lg.jp/school/jhs/hs-sf/",
     uniqueStrengths: [
       { icon: "🧬", title: "理系教育の充実", detail: "充実した実験設備と体系的なカリキュラムで、科学的思考力と探究心を育成" },
       { icon: "🔬", title: "本格サイエンス教育", detail: "大学や研究機関と連携した本格的な科学教育で、研究者マインドを育む" },
@@ -2933,6 +3024,7 @@ export const schools: School[] = [
     features: ["公立", "探究", "EGG", "バランス"],
     description: "公立ならではの多様性と充実した探究教育で、確かな学力と主体性を育む学校です。",
     commuteAreas: ["横浜", "川崎", "品川", "大田"],
+    homepage: "https://www.edu.city.yokohama.lg.jp/school/jhs/hs-minami/",
     uniqueStrengths: [
       { icon: "📝", title: "公立校ならではの教育", detail: "多様な生徒が集う公立校で、社会性と協調性を育みながら高い学力を実現" },
       { icon: "🧪", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
@@ -2965,6 +3057,7 @@ export const schools: School[] = [
     features: ["カトリック", "教養", "伝統", "フランス語"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["千代田", "文京", "港区", "新宿"],
+    homepage: "https://www.futabagakuen-jh.ed.jp/",
     uniqueStrengths: [
       { icon: "🕊️", title: "カトリック精神の教育", detail: "キリスト教の教えに基づく人間教育で、他者への思いやりと奉仕の心を育む" },
       { icon: "📖", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -2997,6 +3090,7 @@ export const schools: School[] = [
     features: ["カトリック", "教養", "フランス語", "伝統"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["千代田", "文京", "新宿", "港区"],
+    homepage: "https://www.shirayuri.ed.jp/",
     uniqueStrengths: [
       { icon: "⛪", title: "カトリック精神の教育", detail: "キリスト教の教えに基づく人間教育で、他者への思いやりと奉仕の心を育む" },
       { icon: "📖", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -3029,6 +3123,7 @@ export const schools: School[] = [
     features: ["キリスト教", "国際", "帰国生", "英語"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["港区", "品川", "渋谷", "目黒"],
+    homepage: "https://www.shoei.ed.jp/",
     uniqueStrengths: [
       { icon: "⛪", title: "キリスト教に基づく教育", detail: "キリスト教の精神を土台に、豊かな人間性と他者を思いやる心を育む" },
       { icon: "🌐", title: "国際教育プログラム", detail: "海外研修や異文化交流を通じて、グローバルな視野と実践的な英語力を養成" },
@@ -3061,6 +3156,7 @@ export const schools: School[] = [
     features: ["自由", "探究", "園芸", "教養"],
     description: "探究型の学びを大切にし、生徒一人ひとりの知的好奇心を伸ばす女子校です。",
     commuteAreas: ["世田谷", "渋谷", "目黒", "大田"],
+    homepage: "https://www.ohyu.jp/",
     uniqueStrengths: [
       { icon: "💫", title: "自由な校風と自主性", detail: "生徒の自主性を最大限に尊重し、自ら考え行動する力を育む自由闊達な環境" },
       { icon: "🔍", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
@@ -3093,6 +3189,7 @@ export const schools: School[] = [
     features: ["伝統", "教養", "皇室", "礼法"],
     description: "伝統と教養を大切にし、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["新宿", "豊島", "渋谷", "文京"],
+    homepage: "https://www.gakushuin.ac.jp/girl/",
     uniqueStrengths: [
       { icon: "🏛️", title: "伝統校の教育力", detail: "長年の教育実績に裏打ちされた指導ノウハウで、確かな学力と人間力を育成" },
       { icon: "📖", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -3125,6 +3222,7 @@ export const schools: School[] = [
     features: ["キリスト教", "教養", "国際", "伝統"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["港区", "渋谷", "品川", "目黒"],
+    homepage: "https://www.toyoeiwa.ed.jp/chu-ko/",
     uniqueStrengths: [
       { icon: "⛪", title: "キリスト教に基づく教育", detail: "キリスト教の精神を土台に、豊かな人間性と他者を思いやる心を育む" },
       { icon: "🎭", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -3157,6 +3255,7 @@ export const schools: School[] = [
     features: ["キリスト教", "少人数", "教養", "温かさ"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["港区", "品川", "渋谷", "目黒"],
+    homepage: "https://www.friends.ac.jp/",
     uniqueStrengths: [
       { icon: "✝️", title: "キリスト教に基づく教育", detail: "キリスト教の精神を土台に、豊かな人間性と他者を思いやる心を育む" },
       { icon: "📝", title: "少人数制のきめ細やかな指導", detail: "少人数クラスで一人ひとりに目が行き届く、きめ細やかな教育を実現" },
@@ -3189,6 +3288,7 @@ export const schools: School[] = [
     features: ["伝統", "教養", "進学実績", "バランス"],
     description: "確かな進学実績に裏打ちされた教育力で、生徒の可能性を最大限に引き出す女子校です。",
     commuteAreas: ["千代田", "文京", "新宿", "港区"],
+    homepage: "https://www.otsuma.ed.jp/",
     uniqueStrengths: [
       { icon: "🎎", title: "伝統校の教育力", detail: "長年の教育実績に裏打ちされた指導ノウハウで、確かな学力と人間力を育成" },
       { icon: "📚", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -3221,6 +3321,7 @@ export const schools: School[] = [
     features: ["伝統", "教養", "バランス", "温かさ"],
     description: "伝統と教養を大切にし、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["千代田", "文京", "中央", "港区"],
+    homepage: "https://www.kyoritsu-wu.ac.jp/chukou/",
     uniqueStrengths: [
       { icon: "🎎", title: "伝統校の教育力", detail: "長年の教育実績に裏打ちされた指導ノウハウで、確かな学力と人間力を育成" },
       { icon: "📖", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -3253,6 +3354,7 @@ export const schools: School[] = [
     features: ["教養", "英語", "伝統", "温かさ"],
     description: "伝統と教養を大切にし、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["千代田", "文京", "新宿", "港区"],
+    homepage: "https://www.miwada.com/",
     uniqueStrengths: [
       { icon: "🎭", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
       { icon: "🌐", title: "英語教育の充実", detail: "ネイティブ教員や多彩なプログラムで、実践的な英語力を育む環境" },
@@ -3285,6 +3387,7 @@ export const schools: School[] = [
     features: ["サイエンス", "英語", "ICT", "教養"],
     description: "先進的なICT環境を活かした教育で、未来を生き抜く力を育む女子校です。",
     commuteAreas: ["港区", "渋谷", "品川", "千代田"],
+    homepage: "https://www.yamawaki.ed.jp/",
     uniqueStrengths: [
       { icon: "🔬", title: "本格サイエンス教育", detail: "大学や研究機関と連携した本格的な科学教育で、研究者マインドを育む" },
       { icon: "🌐", title: "英語教育の充実", detail: "ネイティブ教員や多彩なプログラムで、実践的な英語力を育む環境" },
@@ -3317,6 +3420,7 @@ export const schools: School[] = [
     features: ["キリスト教", "園芸", "国際", "平和"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["世田谷", "渋谷", "目黒", "大田"],
+    homepage: "https://www.keisen.jp/",
     uniqueStrengths: [
       { icon: "⛪", title: "キリスト教に基づく教育", detail: "キリスト教の精神を土台に、豊かな人間性と他者を思いやる心を育む" },
       { icon: "🌻", title: "園芸教育プログラム", detail: "植物を育てる体験を通じて、生命への敬意と忍耐力、観察力を育む" },
@@ -3349,6 +3453,7 @@ export const schools: School[] = [
     features: ["探究", "進学実績", "バランス", "教養"],
     description: "探究型の学びを大切にし、生徒一人ひとりの知的好奇心を伸ばす女子校です。",
     commuteAreas: ["練馬", "豊島", "板橋", "杉並"],
+    homepage: "https://www.fujimi.ac.jp/",
     uniqueStrengths: [
       { icon: "🔍", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "📈", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
@@ -3381,6 +3486,7 @@ export const schools: School[] = [
     features: ["仏教", "進学実績", "医系", "教養"],
     description: "仏教精神に基づく温かな教育で、心の成長と学力向上を両立する女子校です。",
     commuteAreas: ["さいたま", "川口", "戸田", "朝霞"],
+    homepage: "https://www.shukutoku-yono.ed.jp/",
     uniqueStrengths: [
       { icon: "🪷", title: "仏教精神に基づく教育", detail: "仏教の教えを通じて、命の尊さと他者への思いやりを学ぶ心の教育" },
       { icon: "🎓", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
@@ -3413,6 +3519,7 @@ export const schools: School[] = [
     features: ["進学実績", "探究", "AL", "バランス"],
     description: "探究型の学びを大切にし、生徒一人ひとりの知的好奇心を伸ばす学校です。",
     commuteAreas: ["さいたま", "川口", "大宮", "浦和"],
+    homepage: "https://www.sakaehigashi.ed.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "📝", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
@@ -3445,6 +3552,7 @@ export const schools: School[] = [
     features: ["探究", "フィールドワーク", "PBL", "理系"],
     description: "PBL型の探究学習を通じて、主体的に課題を発見し解決する力を育む学校です。",
     commuteAreas: ["さいたま", "大宮", "春日部", "蓮田"],
+    homepage: "https://www.kaichigakuen.ed.jp/",
     uniqueStrengths: [
       { icon: "🔍", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "⭐", title: "フィールドワーク学習", detail: "教室を飛び出し、現地調査や体験学習を通じて実践的な学びを深める" },
@@ -3477,6 +3585,7 @@ export const schools: School[] = [
     features: ["進学実績", "バランス", "特待", "教養"],
     description: "確かな進学実績に裏打ちされた教育力で、生徒の可能性を最大限に引き出す学校です。",
     commuteAreas: ["さいたま", "大宮", "上尾", "桶川"],
+    homepage: "https://www.omiyakaisei.jp/",
     uniqueStrengths: [
       { icon: "📈", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "🎯", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
@@ -3509,6 +3618,7 @@ export const schools: School[] = [
     features: ["大学附属", "キリスト教", "教養", "自由"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む男子校です。",
     commuteAreas: ["新座", "朝霞", "志木", "和光"],
+    homepage: "https://niiza.rikkyo.ac.jp/",
     uniqueStrengths: [
       { icon: "📚", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "⛪", title: "キリスト教に基づく教育", detail: "キリスト教の精神を土台に、豊かな人間性と他者を思いやる心を育む" },
@@ -3541,6 +3651,7 @@ export const schools: School[] = [
     features: ["進学実績", "文武両道", "バランス", "伝統"],
     description: "高い進学実績と文武両道を両立し、バランスの取れた人材を育成する男子校です。",
     commuteAreas: ["川越", "ふじみ野", "所沢", "朝霞"],
+    homepage: "https://www.johokusaitama.ac.jp/",
     uniqueStrengths: [
       { icon: "📈", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "⚽", title: "文武両道の実践", detail: "学業と部活動の両立を重視し、バランスの取れた成長を支える充実した環境" },
@@ -3573,6 +3684,7 @@ export const schools: School[] = [
     features: ["探究", "PBL", "STEAM", "新設校"],
     description: "探究学習とSTEAM教育を融合させ、創造力と科学的思考力を育む学校です。",
     commuteAreas: ["所沢", "入間", "飯能", "狭山"],
+    homepage: "https://kaichi-tokorozawa.ed.jp/",
     uniqueStrengths: [
       { icon: "🔍", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "💡", title: "PBL型授業の実践", detail: "実社会の課題に取り組むPBL型授業で、課題発見力と解決力を育成" },
@@ -3605,6 +3717,7 @@ export const schools: School[] = [
     features: ["国立", "探究", "教養", "進学実績"],
     description: "国立校ならではの先進的な教育研究と自由な学びの環境で、高い知性と探究力を育む学校です。",
     commuteAreas: ["文京", "千代田", "台東", "豊島"],
+    homepage: "https://www.high-s.tsukuba.ac.jp/jhs/",
     uniqueStrengths: [
       { icon: "🔍", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "🎭", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -3637,6 +3750,7 @@ export const schools: School[] = [
     features: ["国立", "探究", "教育研究", "自由"],
     description: "国立校ならではの先進的な教育研究と自由な学びの環境で、高い知性と探究力を育む学校です。",
     commuteAreas: ["世田谷", "目黒", "渋谷", "大田"],
+    homepage: "https://www.u-gakugei.ac.jp/~setachu/",
     uniqueStrengths: [
       { icon: "📝", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "📌", title: "教育研究の最先端", detail: "国立大学附属校として最先端の教育研究を実践し、新しい学びのモデルを追求" },
@@ -3669,6 +3783,7 @@ export const schools: School[] = [
     features: ["国立", "探究", "ジェンダー", "教養"],
     description: "国立校ならではの先進的な教育研究と自由な学びの環境で、高い知性と探究力を育む学校です。",
     commuteAreas: ["文京", "千代田", "台東", "豊島"],
+    homepage: "https://www.fz.ocha.ac.jp/ft/",
     uniqueStrengths: [
       { icon: "📝", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "💎", title: "ジェンダー教育", detail: "性別にとらわれない多様な生き方を考え、一人ひとりの可能性を広げる教育" },
@@ -3701,6 +3816,7 @@ export const schools: School[] = [
     features: ["仏教", "進学実績", "バランス", "特待"],
     description: "仏教精神に基づく温かな教育で、心の成長と学力向上を両立する学校です。",
     commuteAreas: ["板橋", "豊島", "練馬", "北区"],
+    homepage: "https://www.shukutoku.ed.jp/",
     uniqueStrengths: [
       { icon: "🙏", title: "仏教精神に基づく教育", detail: "仏教の教えを通じて、命の尊さと他者への思いやりを学ぶ心の教育" },
       { icon: "🎓", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
@@ -3733,6 +3849,7 @@ export const schools: School[] = [
     features: ["仏教", "文武両道", "バランス", "アメフト"],
     description: "仏教精神に基づく温かな教育で、心の成長と学力向上を両立する男子校です。",
     commuteAreas: ["杉並", "中野", "新宿", "練馬"],
+    homepage: "https://www.kosei.ac.jp/boys/",
     uniqueStrengths: [
       { icon: "🙏", title: "仏教精神に基づく教育", detail: "仏教の教えを通じて、命の尊さと他者への思いやりを学ぶ心の教育" },
       { icon: "⚽", title: "文武両道の実践", detail: "学業と部活動の両立を重視し、バランスの取れた成長を支える充実した環境" },
@@ -3765,6 +3882,7 @@ export const schools: School[] = [
     features: ["ICT", "理数", "探究", "プログラミング"],
     description: "探究型の学びを大切にし、生徒一人ひとりの知的好奇心を伸ばす学校です。",
     commuteAreas: ["中野", "新宿", "杉並", "渋谷"],
+    homepage: "https://www.hosen.ed.jp/jhs/",
     uniqueStrengths: [
       { icon: "💻", title: "先進的ICT教育", detail: "1人1台端末とICT環境を活かした双方向型授業で、デジタルリテラシーを育成" },
       { icon: "🧪", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
@@ -3797,6 +3915,7 @@ export const schools: School[] = [
     features: ["自由", "教養", "芸術", "大学附属"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["世田谷", "渋谷", "新宿", "目黒"],
+    homepage: "https://www.seijogakuen.ed.jp/chukou/",
     uniqueStrengths: [
       { icon: "🕊️", title: "自由な校風と自主性", detail: "生徒の自主性を最大限に尊重し、自ら考え行動する力を育む自由闊達な環境" },
       { icon: "🎭", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -3829,6 +3948,7 @@ export const schools: School[] = [
     features: ["教養", "国際", "自然", "バランス"],
     description: "国際教育に力を入れ、英語力と異文化理解力を育む学校です。",
     commuteAreas: ["武蔵野", "三鷹", "杉並", "練馬"],
+    homepage: "https://www.seikei.ac.jp/jsh/",
     uniqueStrengths: [
       { icon: "📖", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
       { icon: "✈️", title: "国際教育プログラム", detail: "海外研修や異文化交流を通じて、グローバルな視野と実践的な英語力を養成" },
@@ -3861,6 +3981,7 @@ export const schools: School[] = [
     features: ["大学附属", "バランス", "少人数", "進学"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["八王子", "日野", "多摩", "立川"],
+    homepage: "https://www.teikyo-u.ed.jp/",
     uniqueStrengths: [
       { icon: "🏫", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "📊", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
@@ -3893,6 +4014,7 @@ export const schools: School[] = [
     features: ["進学実績", "自然", "少人数", "バランス"],
     description: "確かな進学実績に裏打ちされた教育力で、生徒の可能性を最大限に引き出す学校です。",
     commuteAreas: ["八王子", "日野", "多摩", "立川"],
+    homepage: "https://www.emk.ac.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "🌿", title: "自然豊かな学習環境", detail: "緑豊かなキャンパスで、自然と触れ合いながら豊かな感性と学びを育む" },
@@ -3925,6 +4047,7 @@ export const schools: School[] = [
     features: ["進学実績", "文武両道", "バランス", "自然"],
     description: "高い進学実績と文武両道を両立し、バランスの取れた人材を育成する学校です。",
     commuteAreas: ["川崎", "横浜", "町田", "大田"],
+    homepage: "https://www.toko.ed.jp/high/",
     uniqueStrengths: [
       { icon: "📊", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "⚽", title: "文武両道の実践", detail: "学業と部活動の両立を重視し、バランスの取れた成長を支える充実した環境" },
@@ -3957,6 +4080,7 @@ export const schools: School[] = [
     features: ["自由", "探究", "ESD", "国際"],
     description: "探究型学習と国際教育を両輪に、グローバル社会で活躍できる力を育む学校です。",
     commuteAreas: ["藤沢", "鎌倉", "茅ヶ崎", "横浜"],
+    homepage: "https://www.shogak.ac.jp/highschool/",
     uniqueStrengths: [
       { icon: "🌈", title: "自由な校風と自主性", detail: "生徒の自主性を最大限に尊重し、自ら考え行動する力を育む自由闊達な環境" },
       { icon: "🧪", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
@@ -3989,6 +4113,7 @@ export const schools: School[] = [
     features: ["探究", "セルフサイエンス", "少人数", "バランス"],
     description: "探究型の学びを大切にし、生徒一人ひとりの知的好奇心を伸ばす学校です。",
     commuteAreas: ["伊勢原", "秦野", "平塚", "厚木"],
+    homepage: "https://www.jishukan.ed.jp/",
     uniqueStrengths: [
       { icon: "🔍", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "📌", title: "セルフサイエンス教育", detail: "自分自身を科学的に理解し、自己成長につなげる独自の教育プログラム" },
@@ -4021,6 +4146,7 @@ export const schools: School[] = [
     features: ["探究", "工藤勇一校長", "改革", "バランス"],
     description: "探究型の学びを大切にし、生徒一人ひとりの知的好奇心を伸ばす学校です。",
     commuteAreas: ["横浜", "川崎", "大田", "品川"],
+    homepage: "https://www.soei.ed.jp/",
     uniqueStrengths: [
       { icon: "📝", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "📌", title: "校長主導の教育改革", detail: "「自律」を軸とした教育改革で、生徒が主体的に学ぶ環境を構築" },
@@ -4053,6 +4179,7 @@ export const schools: School[] = [
     features: ["公立", "国際", "探究", "バランス"],
     description: "公立ならではの多様性と充実した探究教育で、確かな学力と主体性を育む学校です。",
     commuteAreas: ["千葉", "習志野", "船橋", "市川"],
+    homepage: "https://www.city.chiba.jp/school/jhs/inage/",
     uniqueStrengths: [
       { icon: "📝", title: "公立校ならではの教育", detail: "多様な生徒が集う公立校で、社会性と協調性を育みながら高い学力を実現" },
       { icon: "🌐", title: "国際教育プログラム", detail: "海外研修や異文化交流を通じて、グローバルな視野と実践的な英語力を養成" },
@@ -4085,6 +4212,7 @@ export const schools: School[] = [
     features: ["理数", "STEAM", "新設校", "探究"],
     description: "探究学習とSTEAM教育を融合させ、創造力と科学的思考力を育む学校です。",
     commuteAreas: ["松戸", "柏", "市川", "葛飾"],
+    homepage: "https://www.veritas.ed.jp/",
     uniqueStrengths: [
       { icon: "🛠️", title: "STEAM教育の実践", detail: "科学・技術・工学・アート・数学を横断する学びで、創造力と問題解決力を養成" },
       { icon: "✨", title: "新しい教育への挑戦", detail: "従来の枠にとらわれない新しい教育モデルで、未来を切り拓く力を育成" },
@@ -4117,6 +4245,7 @@ export const schools: School[] = [
     features: ["大学附属", "バランス", "スポーツ", "教養"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["浦安", "市川", "江戸川", "船橋"],
+    homepage: "https://www.urayasu.tokai.ed.jp/",
     uniqueStrengths: [
       { icon: "📚", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "📊", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
@@ -4149,6 +4278,7 @@ export const schools: School[] = [
     features: ["大学附属", "スポーツ", "バランス", "教養"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["柏", "松戸", "流山", "我孫子"],
+    homepage: "https://www.ryukei.ed.jp/",
     uniqueStrengths: [
       { icon: "📚", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "🏃", title: "充実したスポーツ環境", detail: "充実した運動施設と指導体制で、心身の成長を支えるスポーツ教育" },
@@ -4181,6 +4311,7 @@ export const schools: School[] = [
     features: ["仏教", "教養", "伝統", "バランス"],
     description: "仏教精神に基づく温かな教育で、心の成長と学力向上を両立する女子校です。",
     commuteAreas: ["市川", "船橋", "江戸川", "松戸"],
+    homepage: "https://www.konodai-gs.ac.jp/",
     uniqueStrengths: [
       { icon: "🙏", title: "仏教精神に基づく教育", detail: "仏教の教えを通じて、命の尊さと他者への思いやりを学ぶ心の教育" },
       { icon: "📖", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -4213,6 +4344,7 @@ export const schools: School[] = [
     features: ["教養", "伝統", "礼法", "バランス"],
     description: "伝統と教養を大切にし、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["市川", "船橋", "江戸川", "松戸"],
+    homepage: "https://www.wayokonodai.ed.jp/",
     uniqueStrengths: [
       { icon: "📖", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
       { icon: "📜", title: "伝統校の教育力", detail: "長年の教育実績に裏打ちされた指導ノウハウで、確かな学力と人間力を育成" },
@@ -4245,6 +4377,7 @@ export const schools: School[] = [
     features: ["公立", "探究", "バランス", "進学"],
     description: "公立ならではの多様性と充実した探究教育で、確かな学力と主体性を育む学校です。",
     commuteAreas: ["平塚", "茅ヶ崎", "藤沢", "秦野"],
+    homepage: "https://www.pen-kanagawa.ed.jp/hiratsuka-chuto-ss/",
     uniqueStrengths: [
       { icon: "📝", title: "公立校ならではの教育", detail: "多様な生徒が集う公立校で、社会性と協調性を育みながら高い学力を実現" },
       { icon: "🧪", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
@@ -4277,6 +4410,7 @@ export const schools: School[] = [
     features: ["公立", "バランス", "探究", "国際"],
     description: "公立ならではの多様性と充実した探究教育で、確かな学力と主体性を育む学校です。",
     commuteAreas: ["川崎", "横浜", "大田", "品川"],
+    homepage: "https://www.kaw-s.ed.jp/jhkawasaki-jh/",
     uniqueStrengths: [
       { icon: "🎯", title: "公立校ならではの教育", detail: "多様な生徒が集う公立校で、社会性と協調性を育みながら高い学力を実現" },
       { icon: "📊", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
@@ -4309,6 +4443,7 @@ export const schools: School[] = [
     features: ["キリスト教", "教養", "国際", "バランス"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["横浜", "川崎", "品川", "大田"],
+    homepage: "https://www.yjg.y-gakuin.ed.jp/",
     uniqueStrengths: [
       { icon: "⛪", title: "キリスト教に基づく教育", detail: "キリスト教の精神を土台に、豊かな人間性と他者を思いやる心を育む" },
       { icon: "🎭", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -4341,6 +4476,7 @@ export const schools: School[] = [
     features: ["カトリック", "教養", "少人数", "温かさ"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["藤沢", "鎌倉", "茅ヶ崎", "横浜"],
+    homepage: "https://www.misono.jp/",
     uniqueStrengths: [
       { icon: "⛪", title: "カトリック精神の教育", detail: "キリスト教の教えに基づく人間教育で、他者への思いやりと奉仕の心を育む" },
       { icon: "📚", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -4373,6 +4509,7 @@ export const schools: School[] = [
     features: ["カトリック", "少人数", "教養", "温かさ"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["大和", "海老名", "藤沢", "横浜"],
+    homepage: "https://www.cecilia.ac.jp/",
     uniqueStrengths: [
       { icon: "✝️", title: "カトリック精神の教育", detail: "キリスト教の教えに基づく人間教育で、他者への思いやりと奉仕の心を育む" },
       { icon: "📝", title: "少人数制のきめ細やかな指導", detail: "少人数クラスで一人ひとりに目が行き届く、きめ細やかな教育を実現" },
@@ -4405,6 +4542,7 @@ export const schools: School[] = [
     features: ["大学附属", "自由", "自主性", "教養"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む女子校です。",
     commuteAreas: ["川崎", "横浜", "大田", "世田谷"],
+    homepage: "https://www.jwu.ac.jp/jhsc/",
     uniqueStrengths: [
       { icon: "📚", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "🕊️", title: "自由な校風と自主性", detail: "生徒の自主性を最大限に尊重し、自ら考え行動する力を育む自由闊達な環境" },
@@ -4437,6 +4575,7 @@ export const schools: School[] = [
     features: ["カトリック", "国際", "教養", "温かさ"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["鎌倉", "藤沢", "逗子", "横浜"],
+    homepage: "https://www.seisen-h.ed.jp/",
     uniqueStrengths: [
       { icon: "🕊️", title: "カトリック精神の教育", detail: "キリスト教の教えに基づく人間教育で、他者への思いやりと奉仕の心を育む" },
       { icon: "🌐", title: "国際教育プログラム", detail: "海外研修や異文化交流を通じて、グローバルな視野と実践的な英語力を養成" },
@@ -4469,6 +4608,7 @@ export const schools: School[] = [
     features: ["探究", "教養", "バランス", "温かさ"],
     description: "探究型の学びを大切にし、生徒一人ひとりの知的好奇心を伸ばす女子校です。",
     commuteAreas: ["横浜", "川崎", "大田", "品川"],
+    homepage: "https://www.kanagawa-kgs.ac.jp/",
     uniqueStrengths: [
       { icon: "📝", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "📖", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
@@ -4501,6 +4641,7 @@ export const schools: School[] = [
     features: ["進学実績", "バランス", "伝統", "教養"],
     description: "確かな進学実績に裏打ちされた教育力で、生徒の可能性を最大限に引き出す学校です。",
     commuteAreas: ["川越", "ふじみ野", "所沢", "朝霞"],
+    homepage: "https://www.hoshino.ac.jp/jhigh/",
     uniqueStrengths: [
       { icon: "📈", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "🎯", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
@@ -4533,6 +4674,7 @@ export const schools: School[] = [
     features: ["進学実績", "グローバル", "バランス", "教養"],
     description: "確かな進学実績に裏打ちされた教育力で、生徒の可能性を最大限に引き出す学校です。",
     commuteAreas: ["狭山", "入間", "所沢", "川越"],
+    homepage: "https://www.bunri-s.ed.jp/",
     uniqueStrengths: [
       { icon: "📊", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "🌍", title: "グローバル教育の推進", detail: "海外研修や国際交流プログラムを通じて、世界で活躍できる力を養成" },
@@ -4565,6 +4707,7 @@ export const schools: School[] = [
     features: ["スポーツ", "バランス", "進学", "教養"],
     description: "スポーツと学業の両立を大切にし、心身ともにたくましい人間を育てる学校です。",
     commuteAreas: ["さいたま", "大宮", "上尾", "川口"],
+    homepage: "https://www.saitamasakae-h.ed.jp/",
     uniqueStrengths: [
       { icon: "🏃", title: "充実したスポーツ環境", detail: "充実した運動施設と指導体制で、心身の成長を支えるスポーツ教育" },
       { icon: "🎯", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
@@ -4597,6 +4740,7 @@ export const schools: School[] = [
     features: ["進学実績", "バランス", "文武両道", "教養"],
     description: "高い進学実績と文武両道を両立し、バランスの取れた人材を育成する学校です。",
     commuteAreas: ["春日部", "越谷", "草加", "さいたま"],
+    homepage: "https://www.k-kyoei.ed.jp/",
     uniqueStrengths: [
       { icon: "🎓", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "⚖️", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
@@ -4629,6 +4773,7 @@ export const schools: School[] = [
     features: ["大学附属", "ドイツ語", "教養", "自然"],
     description: "大学附属ならではの一貫教育で、受験にとらわれない幅広い教養と人間力を育む学校です。",
     commuteAreas: ["越谷", "草加", "春日部", "さいたま"],
+    homepage: "https://www.dokkyo-saitama.ed.jp/",
     uniqueStrengths: [
       { icon: "🏫", title: "大学附属校の一貫教育", detail: "大学までの一貫教育で受験に縛られず、幅広い教養と人間力をじっくり育成" },
       { icon: "🗣️", title: "ドイツ語教育", detail: "英語に加えドイツ語を学び、ヨーロッパ文化への理解を深める教育" },
@@ -4661,6 +4806,7 @@ export const schools: School[] = [
     features: ["カトリック", "進学実績", "教養", "伝統"],
     description: "キリスト教の教えに基づく教育で、豊かな人間性と確かな学力を育む女子校です。",
     commuteAreas: ["さいたま", "浦和", "川口", "大宮"],
+    homepage: "https://www.urawa-akenohoshi.ed.jp/",
     uniqueStrengths: [
       { icon: "🕊️", title: "カトリック精神の教育", detail: "キリスト教の教えに基づく人間教育で、他者への思いやりと奉仕の心を育む" },
       { icon: "🎓", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
@@ -4693,6 +4839,7 @@ export const schools: School[] = [
     features: ["教養", "自然", "バランス", "温かさ"],
     description: "バランスの取れた教育で、生徒一人ひとりの個性と可能性を伸ばす女子校です。",
     commuteAreas: ["嵐山", "東松山", "熊谷", "川越"],
+    homepage: "https://www.otsuma-ranzan.ed.jp/",
     uniqueStrengths: [
       { icon: "📖", title: "幅広い教養教育", detail: "文理の枠を超えた幅広い学びで、豊かな知性と教養を身につける環境" },
       { icon: "🏔️", title: "自然豊かな学習環境", detail: "緑豊かなキャンパスで、自然と触れ合いながら豊かな感性と学びを育む" },
@@ -4725,6 +4872,7 @@ export const schools: School[] = [
     features: ["探究", "哲学", "PBL", "自走力"],
     description: "PBL型の探究学習を通じて、主体的に課題を発見し解決する力を育む学校です。",
     commuteAreas: ["加須", "久喜", "羽生", "鴻巣"],
+    homepage: "https://www.kaichimimai.ed.jp/",
     uniqueStrengths: [
       { icon: "🔍", title: "探究型学習の充実", detail: "生徒が自ら問いを立て、調査・分析・発表する探究学習で主体的な学びの力を育成" },
       { icon: "⭐", title: "哲学教育", detail: "「なぜ？」を大切にする哲学的対話で、深い思考力と自分の言葉で語る力を育成" },
@@ -4757,6 +4905,7 @@ export const schools: School[] = [
     features: ["ICT", "特待", "進学実績", "バランス"],
     description: "先進的なICT環境を活かした教育で、未来を生き抜く力を育む学校です。",
     commuteAreas: ["杉戸", "春日部", "久喜", "蓮田"],
+    homepage: "https://www.shohei.sugito.saitama.jp/contents/jh/",
     uniqueStrengths: [
       { icon: "💻", title: "先進的ICT教育", detail: "1人1台端末とICT環境を活かした双方向型授業で、デジタルリテラシーを育成" },
       { icon: "⭐", title: "特待生制度", detail: "優秀な生徒の学びを支援する特待生制度で、意欲ある生徒の成長を後押し" },
@@ -4789,6 +4938,7 @@ export const schools: School[] = [
     features: ["進学実績", "バランス", "教養", "新設校"],
     description: "確かな進学実績に裏打ちされた教育力で、生徒の可能性を最大限に引き出す学校です。",
     commuteAreas: ["志木", "朝霞", "新座", "和光"],
+    homepage: "https://www.hosodagakuen.jp/",
     uniqueStrengths: [
       { icon: "📈", title: "確かな進学実績", detail: "体系的な学習指導と充実したサポート体制で、生徒の目標達成を力強く後押し" },
       { icon: "🎯", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
@@ -4821,6 +4971,7 @@ export const schools: School[] = [
     features: ["文武両道", "バランス", "進学", "教養"],
     description: "文武両道を重視し、学業と部活動の両立を通じてたくましい人間を育てる学校です。",
     commuteAreas: ["蕨", "川口", "戸田", "さいたま"],
+    homepage: "https://www.bunan.ed.jp/",
     uniqueStrengths: [
       { icon: "🏃", title: "文武両道の実践", detail: "学業と部活動の両立を重視し、バランスの取れた成長を支える充実した環境" },
       { icon: "⚖️", title: "バランスの取れた教育", detail: "学力・人間性・社会性をバランスよく育む、充実した教育プログラム" },
@@ -5246,6 +5397,18 @@ export function calculateScores(input: DiagnosisInput): SchoolScore[] {
     if (filteredSchools.length < 3) {
       filteredSchools = schools;
     }
+  }
+
+  // 偏差値帯の差が10以上離れた学校は完全に除外
+  const [userDevMin, userDevMax] = getDeviationValue(input.deviationRange);
+  const deviationFiltered = filteredSchools.filter((s) => {
+    const [schoolMin, schoolMax] =
+      input.deviationStandard === "sapix" ? s.sapixDeviation : s.yotsuyaDeviation;
+    const gap = Math.max(0, schoolMin - userDevMax, userDevMin - schoolMax);
+    return gap < 10;
+  });
+  if (deviationFiltered.length >= 3) {
+    filteredSchools = deviationFiltered;
   }
 
   const scored: SchoolScore[] = filteredSchools.map((school) => {

@@ -342,6 +342,19 @@ function FirstPlaceCard({ result, userInput }: { result: SchoolScore; userInput:
               {result.matchComment}
             </p>
           </div>
+
+          {/* 公式サイトリンク */}
+          {school.homepage && (
+            <a
+              href={school.homepage}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex items-center justify-center gap-1.5 w-full px-4 py-2.5 rounded-xl bg-gradient-to-b from-[#D4AF37] to-[#8B6914] text-white font-serif font-bold text-[12px] shadow-sm hover:opacity-90 transition-opacity border border-[#8B6914]/30"
+              data-testid={`link-homepage-${school.id}`}
+            >
+              🔗 学校公式サイトを見る
+            </a>
+          )}
         </div>
       </div>
     </div>
@@ -447,6 +460,19 @@ function RunnerUpCard({
           <p className="font-serif text-[11px] text-[#5A4632] leading-relaxed">
             {result.matchComment.split("\n")[0]}
           </p>
+
+          {/* 公式サイトリンク */}
+          {school.homepage && (
+            <a
+              href={school.homepage}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2.5 inline-flex items-center justify-center gap-1 w-full px-3 py-2 rounded-lg bg-[#D4AF37]/10 text-[#8B6914] font-serif font-bold text-[10px] border border-[#D4AF37]/30 hover:bg-[#D4AF37]/20 transition-colors"
+              data-testid={`link-homepage-${school.id}`}
+            >
+              🔗 学校公式サイト
+            </a>
+          )}
         </div>
       </div>
     </div>
