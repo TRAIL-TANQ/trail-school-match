@@ -8,6 +8,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, Trophy, Medal, Award, ArrowUp, Sparkles, RotateCcw, GraduationCap, Lightbulb, Share2, Copy, Check } from "lucide-react";
 import type { SchoolScore, DiagnosisInput } from "@/lib/schoolData";
+import ExplorationReport from "./ExplorationReport";
 
 interface ResultSectionProps {
   results: SchoolScore[];
@@ -111,6 +112,28 @@ export default function ResultSection({ results, userInput, onRestart }: ResultS
           className="mb-8"
         >
           <ComparisonSection results={results} userInput={userInput} />
+        </motion.div>
+
+        {/* Exploration Report */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.48 }}
+          className="mb-8"
+        >
+          <div className="text-center mb-4">
+            <span className="font-sans text-[10px] tracking-[0.25em] text-[#2C5F7C] uppercase font-semibold">
+              Exploration Report
+            </span>
+            <h3 className="font-sans font-bold text-[#333333] text-lg mt-1">
+              探究力診断レポート
+            </h3>
+            <p className="font-sans text-[11px] text-[#6B7280] mt-1">
+              お子さまの学びのタイプを可視化しました
+            </p>
+          </div>
+          <ExplorationReport userInput={userInput} results={results} />
         </motion.div>
 
         {/* TRAIL Message */}
