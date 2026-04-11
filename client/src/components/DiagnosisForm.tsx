@@ -21,7 +21,7 @@ import {
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer,
 } from "recharts";
 import type { DiagnosisInput } from "@/lib/schoolData";
-import { STRENGTH_OPTIONS, GROWTH_OPTIONS, AREA_GROUPS } from "@/lib/schoolData";
+import { GROWTH_OPTIONS, AREA_GROUPS } from "@/lib/schoolData";
 
 /* ============================================================
    Quiz Questions - 能力を自動算出するための質問セット
@@ -246,12 +246,11 @@ interface DiagnosisFormProps {
 
 const STEPS = [
   { id: 1, title: "学力の現在地", icon: Shield, subtitle: "お子さまの学年・偏差値を教えてください" },
-  { id: 2, title: "お子さまの強み", icon: Sparkles, subtitle: "現在持っている強みを選んでください" },
-  { id: 3, title: "伸ばしたい能力", icon: Target, subtitle: "中学で育みたい力を選んでください" },
-  { id: 4, title: "性格・学びのスタイル", icon: Flame, subtitle: "ご家庭での様子から診断します" },
-  { id: 5, title: "学びの環境", icon: TreePine, subtitle: "希望される校風をお選びください" },
-  { id: 6, title: "共学・別学", icon: Users, subtitle: "ご希望の学校形態をお選びください" },
-  { id: 7, title: "通学条件", icon: MapPin, subtitle: "通学時間について（任意）" },
+  { id: 2, title: "伸ばしたい能力", icon: Target, subtitle: "中学で育みたい力を選んでください" },
+  { id: 3, title: "性格・学びのスタイル", icon: Flame, subtitle: "ご家庭での様子から診断します" },
+  { id: 4, title: "学びの環境", icon: TreePine, subtitle: "希望される校風をお選びください" },
+  { id: 5, title: "共学・別学", icon: Users, subtitle: "ご希望の学校形態をお選びください" },
+  { id: 6, title: "通学条件", icon: MapPin, subtitle: "通学時間について（任意）" },
 ];
 
 const TOTAL_STEPS = STEPS.length;
@@ -294,7 +293,7 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
     setFormData((prev) => ({ ...prev, [key]: value }));
   };
 
-  const toggleArrayField = (key: "currentStrengths" | "desiredGrowth", value: string) => {
+  const toggleArrayField = (key: "desiredGrowth", value: string) => {
     setFormData((prev) => {
       const arr = (prev[key] as string[]) || [];
       if (arr.includes(value)) {
@@ -310,12 +309,11 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
     switch (currentStep) {
       case 1:
         return !!(formData.deviationStandard && formData.deviationRange);
-      case 2: return (formData.currentStrengths?.length ?? 0) >= 1;
-      case 3: return (formData.desiredGrowth?.length ?? 0) >= 1;
-      case 4: return true;
-      case 5: return !!formData.schoolStyle;
-      case 6: return !!formData.coedPreference;
-      case 7: return true; // 任意なので常にtrue
+      case 2: return (formData.desiredGrowth?.length ?? 0) >= 1;
+      case 3: return true;
+      case 4: return !!formData.schoolStyle;
+      case 5: return !!formData.coedPreference;
+      case 6: return true; // 任意なので常にtrue
       default: return true;
     }
   };
@@ -337,11 +335,11 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
   };
 
   const handlePrev = () => {
-    if (currentStep === 4 && showRadar) {
+    if (currentStep === 3 && showRadar) {
       setShowRadar(false);
       return;
     }
-    if (currentStep === 4 && quizIndex > 0) {
+    if (currentStep === 3 && quizIndex > 0) {
       setQuizIndex(quizIndex - 1);
       return;
     }
@@ -377,7 +375,7 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
 
   const handleRadarContinue = () => {
     setShowRadar(false);
-    setCurrentStep(5);
+    setCurrentStep(4);
     setQuizIndex(0);
     scrollToSection();
   };
@@ -539,9 +537,8 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
             {/* Step Content */}
             <div className="space-y-4">
               {currentStep === 1 && <Step1 formData={formData} updateField={updateField} />}
-              {currentStep === 2 && <Step2 formData={formData} toggleArrayField={toggleArrayField} />}
-              {currentStep === 3 && <Step3 formData={formData} toggleArrayField={toggleArrayField} />}
-              {currentStep === 4 && !showRadar && (
+              {currentStep === 2 && <Step3 formData={formData} toggleArrayField={toggleArrayField} />}
+              {currentStep === 3 && !showRadar && (
                 <QuizStep
                   questions={quizQuestions}
                   quizIndex={quizIndex}
@@ -549,12 +546,12 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
                   onAnswer={handleQuizAnswer}
                 />
               )}
-              {currentStep === 4 && showRadar && (
+              {currentStep === 3 && showRadar && (
                 <RadarResultView formData={formData} onContinue={handleRadarContinue} />
               )}
-              {currentStep === 5 && <Step5 formData={formData} updateField={updateField} />}
-              {currentStep === 6 && <Step6 formData={formData} updateField={updateField} />}
-              {currentStep === 7 && <Step7 formData={formData} updateField={updateField} />}
+              {currentStep === 4 && <Step5 formData={formData} updateField={updateField} />}
+              {currentStep === 5 && <Step6 formData={formData} updateField={updateField} />}
+              {currentStep === 6 && <Step7 formData={formData} updateField={updateField} />}
             </div>
           </motion.div>
         </AnimatePresence>
@@ -562,7 +559,7 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
         {/* Navigation */}
         {!isCompleted && (
           <div className="flex gap-3">
-            {(currentStep > 1 || (currentStep === 4 && quizIndex > 0)) && (
+            {(currentStep > 1 || (currentStep === 3 && quizIndex > 0)) && (
               <button
                 onClick={handlePrev}
                 className="flex-1 py-3.5 rounded-xl border-2 border-[#E5E7EB]/30 text-[#2C5F7C] font-serif font-semibold text-[13px] bg-[#FFFFFF]/30 hover:bg-[#F3F4F6]/50 active:bg-[#F3F4F6] transition-all duration-200 flex items-center justify-center gap-1.5"
@@ -571,8 +568,8 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
                 戻る
               </button>
             )}
-            {currentStep === 4 ? (
-              // STEP4 (quiz) は選択で自動的に進むため「次へ」ボタンは非表示
+            {currentStep === 3 ? (
+              // STEP3 (quiz) は選択で自動的に進むため「次へ」ボタンは非表示
               null
             ) : currentStep < TOTAL_STEPS ? (
               <button
@@ -1070,7 +1067,7 @@ interface StepProps {
 
 interface ArrayStepProps {
   formData: Partial<DiagnosisInput>;
-  toggleArrayField: (key: "currentStrengths" | "desiredGrowth", value: string) => void;
+  toggleArrayField: (key: "desiredGrowth", value: string) => void;
 }
 
 /* STEP 1: 学力の現在地 */
@@ -1111,44 +1108,7 @@ function Step1({ formData, updateField }: StepProps) {
   );
 }
 
-/* STEP 2: お子さまの現在の適性 */
-function Step2({ formData, toggleArrayField }: ArrayStepProps) {
-  const selected = formData.currentStrengths || [];
-  return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between mb-1">
-        <p className="font-sans text-[11px] text-[#4B5563] font-bold tracking-wide">
-          お子さまの強みを選んでください
-        </p>
-        <span className={`font-sans text-[10px] font-bold px-2 py-0.5 rounded-full ${
-          selected.length >= 1 && selected.length <= 3
-            ? "bg-[#2C5F7C]/15 text-[#2C5F7C]"
-            : "bg-[#E5E7EB]/10 text-[#2C5F7C]/40"
-        }`}>
-          {selected.length} / 3
-        </span>
-      </div>
-      <p className="font-sans text-[10px] text-[#2C5F7C]/50 -mt-2 mb-2">
-        1〜3つまで選択できます（お子さまの今の姿に近いものを選んでください）
-      </p>
-      <div className="grid grid-cols-2 gap-2">
-        {STRENGTH_OPTIONS.map((opt) => (
-          <TagChip
-            key={opt.value}
-            icon={opt.icon}
-            label={opt.label}
-            desc={opt.desc}
-            selected={selected.includes(opt.value)}
-            disabled={!selected.includes(opt.value) && selected.length >= 3}
-            onClick={() => toggleArrayField("currentStrengths", opt.value)}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* STEP 3: 伸ばしたい能力 */
+/* STEP 2: 伸ばしたい能力 */
 function Step3({ formData, toggleArrayField }: ArrayStepProps) {
   const selected = formData.desiredGrowth || [];
   return (

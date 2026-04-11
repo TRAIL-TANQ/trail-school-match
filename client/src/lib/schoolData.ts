@@ -5505,7 +5505,7 @@ export function calculateScores(input: DiagnosisInput): SchoolScore[] {
       Math.max(input.futureOrientation, input.explorationPower),
       Math.max(school.aiEducationLevel, school.digitalEnvironment)
     );
-    const strengthMatchScore = calculateStrengthMatch(input.currentStrengths, school);
+    const strengthMatchScore = 60;
     const growthMatchScore = calculateGrowthMatch(input.desiredGrowth, school);
 
     // Weighted total - 偏差値を重視しつつバランスよく
