@@ -40,54 +40,46 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --font-display: "Cinzel Decorative", "Cinzel", serif;
-  --font-heading: "Cinzel", serif;
-  --font-serif: "Noto Serif JP", serif;
-  --font-sans: "Noto Sans JP", sans-serif;
-  --color-gold: oklch(0.75 0.12 85);
-  --color-gold-light: oklch(0.85 0.1 85);
-  --color-gold-dark: oklch(0.55 0.12 70);
-  --color-parchment: oklch(0.94 0.03 80);
-  --color-parchment-dark: oklch(0.88 0.04 75);
-  --color-brown-dark: oklch(0.25 0.05 50);
-  --color-brown-medium: oklch(0.4 0.06 55);
-  --color-blue-mist: oklch(0.72 0.06 230);
+  --font-display: "Noto Sans JP", "Hiragino Sans", sans-serif;
+  --font-heading: "Noto Sans JP", "Hiragino Sans", sans-serif;
+  --font-serif: "Noto Sans JP", "Hiragino Sans", sans-serif;
+  --font-sans: "Noto Sans JP", "Hiragino Sans", sans-serif;
 }
 
 :root {
-  --radius: 0.5rem;
-  --background: oklch(0.94 0.03 80);
-  --foreground: oklch(0.25 0.05 50);
-  --card: oklch(0.96 0.025 80);
-  --card-foreground: oklch(0.25 0.05 50);
-  --popover: oklch(0.96 0.025 80);
-  --popover-foreground: oklch(0.25 0.05 50);
-  --primary: oklch(0.55 0.12 70);
-  --primary-foreground: oklch(0.98 0.01 80);
-  --secondary: oklch(0.9 0.03 80);
-  --secondary-foreground: oklch(0.35 0.06 55);
-  --muted: oklch(0.92 0.025 80);
-  --muted-foreground: oklch(0.5 0.04 55);
-  --accent: oklch(0.75 0.12 85);
-  --accent-foreground: oklch(0.2 0.05 50);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.82 0.06 75);
-  --input: oklch(0.88 0.04 78);
-  --ring: oklch(0.65 0.12 80);
-  --chart-1: oklch(0.75 0.12 85);
-  --chart-2: oklch(0.65 0.1 80);
-  --chart-3: oklch(0.72 0.06 230);
-  --chart-4: oklch(0.55 0.12 70);
-  --chart-5: oklch(0.85 0.1 85);
-  --sidebar: oklch(0.92 0.03 78);
-  --sidebar-foreground: oklch(0.25 0.05 50);
-  --sidebar-primary: oklch(0.55 0.12 70);
-  --sidebar-primary-foreground: oklch(0.98 0.01 80);
-  --sidebar-accent: oklch(0.88 0.04 80);
-  --sidebar-accent-foreground: oklch(0.25 0.05 50);
-  --sidebar-border: oklch(0.82 0.06 75);
-  --sidebar-ring: oklch(0.65 0.12 80);
+  --radius: 0.75rem;
+  --background: #FAFAF8;
+  --foreground: #333333;
+  --card: #FFFFFF;
+  --card-foreground: #333333;
+  --popover: #FFFFFF;
+  --popover-foreground: #333333;
+  --primary: #2C5F7C;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F3F4F6;
+  --secondary-foreground: #333333;
+  --muted: #F3F4F6;
+  --muted-foreground: #6B7280;
+  --accent: #4A9B7F;
+  --accent-foreground: #FFFFFF;
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+  --border: #E5E7EB;
+  --input: #E5E7EB;
+  --ring: #2C5F7C;
+  --chart-1: #2C5F7C;
+  --chart-2: #4A9B7F;
+  --chart-3: #6B7280;
+  --chart-4: #9CA3AF;
+  --chart-5: #D1D5DB;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #333333;
+  --sidebar-primary: #2C5F7C;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F3F4F6;
+  --sidebar-accent-foreground: #333333;
+  --sidebar-border: #E5E7EB;
+  --sidebar-ring: #2C5F7C;
 }
 
 @layer base {
@@ -99,6 +91,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    font-family: "Noto Sans JP", "Hiragino Sans", "ヒラギノ角ゴシック", sans-serif;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -144,93 +137,61 @@
 }
 
 /* ============================================================
-   RPG Gold Button
+   Primary Button - 落ち着いたネイビーのフラットボタン
    ============================================================ */
 .gold-btn {
-  background: linear-gradient(180deg, #D4AF37 0%, #B8860B 50%, #8B6914 100%);
-  color: #FFF8E7;
-  border: 2px solid #D4AF37;
-  box-shadow:
-    0 2px 8px rgba(184, 134, 11, 0.35),
-    0 4px 16px rgba(184, 134, 11, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  font-family: "Noto Serif JP", serif;
+  background: #2C5F7C;
+  color: #FFFFFF;
+  border: 1px solid #2C5F7C;
+  box-shadow: 0 1px 3px rgba(44, 95, 124, 0.15);
+  font-family: "Noto Sans JP", "Hiragino Sans", sans-serif;
   font-weight: 600;
-  letter-spacing: 0.06em;
-  transition: all 0.25s ease;
+  letter-spacing: 0.03em;
+  transition: all 0.2s ease;
 }
 
 .gold-btn:hover {
-  background: linear-gradient(180deg, #E5C04B 0%, #D4AF37 50%, #9A7B1A 100%);
-  box-shadow:
-    0 4px 20px rgba(184, 134, 11, 0.5),
-    0 8px 32px rgba(184, 134, 11, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  transform: translateY(-1px);
+  background: #235067;
+  box-shadow: 0 2px 6px rgba(44, 95, 124, 0.25);
 }
 
 .gold-btn:active {
+  background: #1E4556;
   transform: translateY(0);
-  box-shadow:
-    0 1px 4px rgba(184, 134, 11, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 /* ============================================================
-   Parchment Card
+   Card - 白背景・控えめなシャドウ
    ============================================================ */
 .parchment-card {
-  background: linear-gradient(145deg, 
-    rgba(245, 230, 200, 0.95) 0%, 
-    rgba(237, 217, 179, 0.92) 40%, 
-    rgba(240, 223, 192, 0.95) 100%
-  );
-  border: 1px solid rgba(197, 165, 90, 0.5);
-  box-shadow:
-    0 2px 12px rgba(139, 105, 20, 0.1),
-    0 8px 24px rgba(139, 105, 20, 0.06),
-    inset 0 0 30px rgba(197, 165, 90, 0.08);
-  backdrop-filter: blur(4px);
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  backdrop-filter: none;
 }
 
 /* ============================================================
-   Gold ornament border
+   Border ornament (legacy class, now a subtle border)
    ============================================================ */
 .ornament-border {
-  border: 2px solid #C5A55A;
-  box-shadow:
-    inset 0 0 0 1px rgba(197, 165, 90, 0.3),
-    0 2px 8px rgba(139, 105, 20, 0.1);
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 /* ============================================================
-   Shimmer animation (gold light sweep)
+   Shimmer - 無効化（フラットデザイン）
    ============================================================ */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
 .gold-shimmer {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(212, 175, 55, 0.15) 25%,
-    rgba(255, 248, 231, 0.25) 50%,
-    rgba(212, 175, 55, 0.15) 75%,
-    transparent 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 3.5s ease-in-out infinite;
+  background: transparent;
+  animation: none;
 }
 
 /* ============================================================
-   Floating animation (owl, badges)
+   Floating animation (small subtle bounce)
    ============================================================ */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
+  50% { transform: translateY(-4px); }
 }
 
 .animate-float {
@@ -238,11 +199,11 @@
 }
 
 /* ============================================================
-   Sparkle animation
+   Sparkle - 無効化
    ============================================================ */
 @keyframes sparkle {
-  0%, 100% { opacity: 0.4; transform: scale(0.85) rotate(0deg); }
-  50% { opacity: 1; transform: scale(1.15) rotate(15deg); }
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 .animate-sparkle {
@@ -250,19 +211,19 @@
 }
 
 /* ============================================================
-   Loading Overlay (for diagnosis calculation)
+   Loading progress bar animation
    ============================================================ */
-@keyframes loading-compass {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes progress-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
 }
 
-.loading-compass {
-  animation: loading-compass 2s linear infinite;
+.progress-slide {
+  animation: progress-slide 1.4s ease-in-out infinite;
 }
 
 @keyframes loading-dots {
-  0%, 80%, 100% { opacity: 0; transform: scale(0.6); }
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
   40% { opacity: 1; transform: scale(1); }
 }
 
@@ -271,11 +232,11 @@
 .loading-dot-3 { animation: loading-dots 1.4s ease-in-out 0.4s infinite; }
 
 /* ============================================================
-   Pulse glow (for emphasis)
+   Pulse glow - 控えめに
    ============================================================ */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 5px rgba(212, 175, 55, 0.2); }
-  50% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.5), 0 0 40px rgba(212, 175, 55, 0.15); }
+  0%, 100% { box-shadow: 0 0 0 rgba(44, 95, 124, 0.1); }
+  50% { box-shadow: 0 0 12px rgba(44, 95, 124, 0.2); }
 }
 
 .pulse-glow {
@@ -283,39 +244,41 @@
 }
 
 /* ============================================================
-   Gold text gradient
+   Accent text - 落ち着いたネイビー
    ============================================================ */
 .gold-text {
-  background: linear-gradient(135deg, #B8860B 0%, #D4AF37 40%, #E5C04B 60%, #B8860B 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #2C5F7C;
+  background: none;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  background-clip: initial;
+  font-weight: 700;
 }
 
 /* ============================================================
-   Scrollbar styling (thin, gold-themed)
+   Scrollbar - シンプル
    ============================================================ */
 ::-webkit-scrollbar {
   width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(245, 230, 200, 0.5);
+  background: #F3F4F6;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(197, 165, 90, 0.4);
+  background: #D1D5DB;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(197, 165, 90, 0.6);
+  background: #9CA3AF;
 }
 
 /* ============================================================
    Selection color
    ============================================================ */
 ::selection {
-  background: rgba(212, 175, 55, 0.25);
-  color: #2C1810;
+  background: rgba(44, 95, 124, 0.15);
+  color: #333333;
 }

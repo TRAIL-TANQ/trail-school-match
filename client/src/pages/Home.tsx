@@ -1,11 +1,9 @@
 /*
  * TRAIL 私立中学相性診断 - メインページ
- * Design: 古代図書館の冒険書スタイル
- * Flow: Hero → Quest Form → Loading → Results
+ * Flow: Hero → 診断フォーム → Loading → Results
  */
 import { useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Compass } from "lucide-react";
 import HeroSection from "@/components/HeroSection";
 import DiagnosisForm from "@/components/DiagnosisForm";
 import ResultSection from "@/components/ResultSection";
@@ -113,35 +111,33 @@ export default function Home() {
             className="fixed inset-0 z-[60] flex items-center justify-center"
           >
             {/* Backdrop */}
-            <div className="absolute inset-0 bg-[#2C1810]/70 backdrop-blur-sm" />
+            <div className="absolute inset-0 bg-white/85 backdrop-blur-sm" />
 
             {/* Loading Content */}
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.96, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+              exit={{ scale: 0.96, opacity: 0 }}
               transition={{ delay: 0.1 }}
-              className="relative z-10 text-center px-8"
+              className="relative z-10 text-center px-8 w-full max-w-[340px]"
             >
-              {/* Spinning Compass */}
-              <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-b from-[#D4AF37] to-[#8B6914] flex items-center justify-center shadow-lg shadow-[#D4AF37]/30 loading-compass">
-                  <Compass className="w-8 h-8 text-white" />
-                </div>
-              </div>
-
-              <h3 className="font-serif font-bold text-[#F5E6C8] text-lg mb-2">
-                冒険のルートを探索中...
+              <h3 className="font-sans font-bold text-[#333333] text-[15px] mb-2">
+                お子さまに最適な学校を分析中...
               </h3>
-              <p className="font-sans text-[#EDD9B3]/70 text-xs mb-4">
-                お子さまに最適な学びのフィールドを分析しています
+              <p className="font-sans text-[#6B7280] text-[11px] mb-5">
+                150校のデータから最適な学校を選定しています
               </p>
 
+              {/* Progress Bar */}
+              <div className="relative h-1.5 bg-[#E5E7EB] rounded-full overflow-hidden">
+                <div className="absolute inset-y-0 left-0 w-1/4 bg-[#2C5F7C] rounded-full progress-slide" />
+              </div>
+
               {/* Loading dots */}
-              <div className="flex justify-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-[#D4AF37] loading-dot-1" />
-                <div className="w-2 h-2 rounded-full bg-[#D4AF37] loading-dot-2" />
-                <div className="w-2 h-2 rounded-full bg-[#D4AF37] loading-dot-3" />
+              <div className="flex justify-center gap-1.5 mt-4">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#2C5F7C] loading-dot-1" />
+                <div className="w-1.5 h-1.5 rounded-full bg-[#2C5F7C] loading-dot-2" />
+                <div className="w-1.5 h-1.5 rounded-full bg-[#2C5F7C] loading-dot-3" />
               </div>
             </motion.div>
           </motion.div>

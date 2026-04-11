@@ -1,13 +1,12 @@
 /*
- * DiagnosisForm - RPGクエスト形式の診断フォーム
- * Design: 古書テーマ、カード形式、STEP1〜7
- * Mobile-first: タッチフレンドリーなボタン、スクロールで進行
+ * DiagnosisForm - 診断フォーム（保護者向け）
+ * 清潔感のある上品なデザイン、STEP1〜7
  *
  * STEP構成:
  * 1. 学力の現在地（学年・偏差値）
- * 2. お子さまの適性（現在の強み）
+ * 2. お子さまの現在の強み
  * 3. 伸ばしたい能力
- * 4. 学びのスタイル（性格特性）
+ * 4. 性格・学びのスタイル診断
  * 5. 学びの環境（校風）
  * 6. 共学/別学
  * 7. 通学条件（任意）
@@ -240,21 +239,19 @@ function computeAbilityScores(
   return result;
 }
 
-const QUEST_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663286960690/3onwxhANtpgAkHzmhikcoQ/quest-map-bg-2DikbyW7biu93HRJZty2Xd.webp";
-
 interface DiagnosisFormProps {
   onSubmit: (input: DiagnosisInput) => void;
   isCompleted: boolean;
 }
 
 const STEPS = [
-  { id: 1, title: "学力の現在地", icon: Shield, subtitle: "冒険者のレベルを確認しましょう" },
-  { id: 2, title: "お子さまの適性", icon: Sparkles, subtitle: "今持っている強みを教えてください" },
-  { id: 3, title: "伸ばしたい能力", icon: Target, subtitle: "中学で育みたい力を選びましょう" },
-  { id: 4, title: "学びのスタイル", icon: Flame, subtitle: "冒険者の特性を見極めます" },
-  { id: 5, title: "学びの環境", icon: TreePine, subtitle: "理想のフィールドを選びます" },
-  { id: 6, title: "共学/別学", icon: Users, subtitle: "パーティの編成を決めましょう" },
-  { id: 7, title: "通学条件", icon: MapPin, subtitle: "冒険の拠点を確認します（任意）" },
+  { id: 1, title: "学力の現在地", icon: Shield, subtitle: "お子さまの学年・偏差値を教えてください" },
+  { id: 2, title: "お子さまの強み", icon: Sparkles, subtitle: "現在持っている強みを選んでください" },
+  { id: 3, title: "伸ばしたい能力", icon: Target, subtitle: "中学で育みたい力を選んでください" },
+  { id: 4, title: "性格・学びのスタイル", icon: Flame, subtitle: "ご家庭での様子から診断します" },
+  { id: 5, title: "学びの環境", icon: TreePine, subtitle: "希望される校風をお選びください" },
+  { id: 6, title: "共学・別学", icon: Users, subtitle: "ご希望の学校形態をお選びください" },
+  { id: 7, title: "通学条件", icon: MapPin, subtitle: "通学時間について（任意）" },
 ];
 
 const TOTAL_STEPS = STEPS.length;
@@ -392,14 +389,8 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
   };
 
   return (
-    <section id="quest-section" className="relative py-10 px-4">
-      {/* Background */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${QUEST_BG})` }}
-      />
-      <div className="absolute inset-0 bg-[#F5E6C8]/90 backdrop-blur-[2px]" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/40 to-transparent" />
+    <section id="quest-section" className="relative py-10 px-4 bg-[#FAFAF8]">
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#2C5F7C]/30 to-transparent" />
 
       <div className="relative z-10 max-w-[420px] mx-auto">
         {/* Section Header */}
@@ -409,15 +400,13 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
           viewport={{ once: true }}
           className="text-center mb-6"
         >
-          <div className="flex items-center justify-center gap-2 mb-1">
-            <div className="h-px w-8 bg-gradient-to-r from-transparent to-[#C5A55A]" />
-            <span className="font-heading text-[10px] tracking-[0.25em] text-[#B8860B] uppercase">
-              Quest
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <span className="font-sans text-[10px] tracking-[0.25em] text-[#2C5F7C] uppercase font-semibold">
+              Diagnosis
             </span>
-            <div className="h-px w-8 bg-gradient-to-l from-transparent to-[#C5A55A]" />
           </div>
-          <h2 className="font-serif font-bold text-[#2C1810] text-lg">
-            冒険者の情報を入力
+          <h2 className="font-sans font-bold text-[#333333] text-lg">
+            お子さまの情報を入力
           </h2>
         </motion.div>
 
@@ -439,10 +428,10 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
                 transition={{ type: "spring", stiffness: 300 }}
                 className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-[10px] sm:text-[11px] font-bold transition-all duration-300 ${
                   step.id === currentStep
-                    ? "bg-gradient-to-b from-[#E5C04B] to-[#8B6914] text-white shadow-md shadow-[#D4AF37]/30"
+                    ? "bg-gradient-to-b from-[#2C5F7C] to-[#2C5F7C] text-white shadow-md shadow-[#2C5F7C]/30"
                     : step.id < currentStep
-                    ? "bg-[#C5A55A] text-white/90"
-                    : "bg-[#EDD9B3]/50 text-[#B8860B]/30 border border-[#C5A55A]/15"
+                    ? "bg-[#E5E7EB] text-white/90"
+                    : "bg-[#F3F4F6]/50 text-[#2C5F7C]/30 border border-[#E5E7EB]/15"
                 }`}
               >
                 {step.id < currentStep ? "✓" : step.id}
@@ -450,7 +439,7 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
               {idx < STEPS.length - 1 && (
                 <div
                   className={`w-2 sm:w-3.5 h-[2px] mx-px rounded-full transition-colors duration-400 ${
-                    step.id < currentStep ? "bg-[#C5A55A]" : "bg-[#C5A55A]/12"
+                    step.id < currentStep ? "bg-[#E5E7EB]" : "bg-[#E5E7EB]/12"
                   }`}
                 />
               )}
@@ -466,31 +455,31 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -40 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="parchment-card rounded-2xl p-5 sm:p-6 mb-5 shadow-lg shadow-[#8B6914]/8"
+            className="parchment-card rounded-2xl p-5 sm:p-6 mb-5 shadow-lg shadow-[#2C5F7C]/8"
           >
             {/* Step Header */}
             <div className="flex items-center gap-3 mb-1">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-b from-[#E5C04B] to-[#8B6914] flex items-center justify-center shadow-md shadow-[#D4AF37]/20 shrink-0">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-b from-[#2C5F7C] to-[#2C5F7C] flex items-center justify-center shadow-md shadow-[#2C5F7C]/20 shrink-0">
                 {(() => {
                   const Icon = STEPS[currentStep - 1].icon;
                   return <Icon className="w-5 h-5 text-white" />;
                 })()}
               </div>
               <div>
-                <span className="text-[10px] font-sans text-[#B8860B] font-bold tracking-wider uppercase">
+                <span className="text-[10px] font-sans text-[#2C5F7C] font-bold tracking-wider uppercase">
                   Step {currentStep} / {TOTAL_STEPS}
                 </span>
-                <h3 className="font-serif font-bold text-[#2C1810] text-[15px] leading-tight">
+                <h3 className="font-serif font-bold text-[#333333] text-[15px] leading-tight">
                   {STEPS[currentStep - 1].title}
                 </h3>
               </div>
             </div>
-            <p className="text-[11px] text-[#8B6914]/55 font-sans mb-5 ml-[52px]">
+            <p className="text-[11px] text-[#2C5F7C]/55 font-sans mb-5 ml-[52px]">
               {STEPS[currentStep - 1].subtitle}
             </p>
 
             {/* Divider */}
-            <div className="h-px bg-gradient-to-r from-transparent via-[#C5A55A]/25 to-transparent mb-5" />
+            <div className="h-px bg-gradient-to-r from-transparent via-[#E5E7EB]/25 to-transparent mb-5" />
 
             {/* Step Content */}
             <div className="space-y-4">
@@ -521,7 +510,7 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
             {(currentStep > 1 || (currentStep === 4 && quizIndex > 0)) && (
               <button
                 onClick={handlePrev}
-                className="flex-1 py-3.5 rounded-xl border-2 border-[#C5A55A]/30 text-[#8B6914] font-serif font-semibold text-[13px] bg-[#F5E6C8]/30 hover:bg-[#EDD9B3]/50 active:bg-[#EDD9B3] transition-all duration-200 flex items-center justify-center gap-1.5"
+                className="flex-1 py-3.5 rounded-xl border-2 border-[#E5E7EB]/30 text-[#2C5F7C] font-serif font-semibold text-[13px] bg-[#FFFFFF]/30 hover:bg-[#F3F4F6]/50 active:bg-[#F3F4F6] transition-all duration-200 flex items-center justify-center gap-1.5"
               >
                 <ChevronLeft className="w-4 h-4" />
                 戻る
@@ -534,21 +523,20 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
               <button
                 onClick={handleNext}
                 disabled={!canProceed()}
-                className={`flex-1 gold-btn py-3.5 rounded-xl text-[13px] relative overflow-hidden flex items-center justify-center gap-1.5 ${
-                  !canProceed() ? "opacity-35 pointer-events-none" : ""
+                className={`flex-1 gold-btn py-3.5 rounded-xl text-[13px] flex items-center justify-center gap-1.5 ${
+                  !canProceed() ? "opacity-40 pointer-events-none" : ""
                 }`}
               >
-                <span className="relative z-10">次のステップへ</span>
-                <ChevronRight className="w-4 h-4 relative z-10" />
-                <div className="absolute inset-0 gold-shimmer" />
+                <span>次へ進む</span>
+                <ChevronRight className="w-4 h-4" />
               </button>
             ) : (
               <button
                 onClick={handleSubmit}
-                className="flex-1 gold-btn py-4 rounded-xl text-[14px] relative overflow-hidden"
+                className="flex-1 gold-btn py-4 rounded-xl text-[14px]"
+                data-testid="button-submit-diagnosis"
               >
-                <span className="relative z-10 tracking-wider">おすすめルートを探す</span>
-                <div className="absolute inset-0 gold-shimmer" />
+                診断する
               </button>
             )}
           </div>
@@ -569,34 +557,34 @@ function ModeSelection({ onSelect }: { onSelect: (mode: "simple" | "detailed") =
     <motion.div
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      className="parchment-card rounded-2xl p-5 sm:p-6 shadow-lg shadow-[#8B6914]/8"
+      className="parchment-card rounded-2xl p-5 sm:p-6 shadow-lg shadow-[#2C5F7C]/8"
     >
       <div className="text-center mb-5">
-        <h3 className="font-serif font-bold text-[#2C1810] text-[16px] mb-1">
+        <h3 className="font-serif font-bold text-[#333333] text-[16px] mb-1">
           診断モードを選んでください
         </h3>
-        <p className="font-sans text-[11px] text-[#8B6914]/60">
+        <p className="font-sans text-[11px] text-[#2C5F7C]/60">
           お子さまの学びタイプを自動で分析します
         </p>
       </div>
       <div className="space-y-3">
         <button
           onClick={() => onSelect("simple")}
-          className="w-full text-left p-4 rounded-xl border-2 border-[#C5A55A]/25 bg-white/35 hover:border-[#D4AF37] hover:bg-[#D4AF37]/8 active:scale-[0.98] transition-all duration-200"
+          className="w-full text-left p-4 rounded-xl border-2 border-[#E5E7EB]/25 bg-white/35 hover:border-[#2C5F7C] hover:bg-[#2C5F7C]/8 active:scale-[0.98] transition-all duration-200"
           data-testid="button-mode-simple"
         >
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-full bg-gradient-to-b from-[#E5C04B] to-[#8B6914] flex items-center justify-center shrink-0 shadow-sm">
+            <div className="w-11 h-11 rounded-full bg-gradient-to-b from-[#2C5F7C] to-[#2C5F7C] flex items-center justify-center shrink-0 shadow-sm">
               <Zap className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1">
               <div className="flex items-baseline gap-2">
-                <span className="font-serif font-bold text-[14px] text-[#2C1810]">
+                <span className="font-serif font-bold text-[14px] text-[#333333]">
                   サクッと診断
                 </span>
-                <span className="font-sans text-[10px] text-[#8B6914]/60">約3分</span>
+                <span className="font-sans text-[10px] text-[#2C5F7C]/60">約3分</span>
               </div>
-              <p className="font-sans text-[11px] text-[#6B5744] mt-0.5">
+              <p className="font-sans text-[11px] text-[#6B7280] mt-0.5">
                 7つの質問で手軽に診断
               </p>
             </div>
@@ -604,24 +592,24 @@ function ModeSelection({ onSelect }: { onSelect: (mode: "simple" | "detailed") =
         </button>
         <button
           onClick={() => onSelect("detailed")}
-          className="relative w-full text-left p-4 rounded-xl border-2 border-[#D4AF37] bg-gradient-to-br from-[#D4AF37]/15 to-[#D4AF37]/5 shadow-md shadow-[#D4AF37]/15 active:scale-[0.98] transition-all duration-200"
+          className="relative w-full text-left p-4 rounded-xl border-2 border-[#2C5F7C] bg-gradient-to-br from-[#2C5F7C]/15 to-[#2C5F7C]/5 shadow-md shadow-[#2C5F7C]/15 active:scale-[0.98] transition-all duration-200"
           data-testid="button-mode-detailed"
         >
-          <span className="absolute -top-2 right-3 text-[9px] font-sans font-bold text-white bg-gradient-to-b from-[#D4AF37] to-[#8B6914] px-2 py-0.5 rounded-full shadow-sm">
+          <span className="absolute -top-2 right-3 text-[9px] font-sans font-bold text-white bg-gradient-to-b from-[#2C5F7C] to-[#2C5F7C] px-2 py-0.5 rounded-full shadow-sm">
             おすすめ
           </span>
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-full bg-gradient-to-b from-[#E5C04B] to-[#8B6914] flex items-center justify-center shrink-0 shadow-sm">
+            <div className="w-11 h-11 rounded-full bg-gradient-to-b from-[#2C5F7C] to-[#2C5F7C] flex items-center justify-center shrink-0 shadow-sm">
               <Search className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1">
               <div className="flex items-baseline gap-2">
-                <span className="font-serif font-bold text-[14px] text-[#8B6914]">
+                <span className="font-serif font-bold text-[14px] text-[#2C5F7C]">
                   じっくり診断
                 </span>
-                <span className="font-sans text-[10px] text-[#8B6914]/70">約7分</span>
+                <span className="font-sans text-[10px] text-[#2C5F7C]/70">約7分</span>
               </div>
-              <p className="font-sans text-[11px] text-[#6B5744] mt-0.5">
+              <p className="font-sans text-[11px] text-[#6B7280] mt-0.5">
                 14の質問で精密に診断
               </p>
             </div>
@@ -653,14 +641,14 @@ function QuizStep({
     <div>
       {/* 質問進捗 */}
       <div className="flex items-center justify-between mb-3">
-        <span className="font-sans text-[10px] font-bold text-[#B8860B] tracking-wider uppercase">
+        <span className="font-sans text-[10px] font-bold text-[#2C5F7C] tracking-wider uppercase">
           Q{quizIndex + 1} / {questions.length}
         </span>
-        <span className="font-sans text-[10px] text-[#8B6914]/60">{q.category}</span>
+        <span className="font-sans text-[10px] text-[#2C5F7C]/60">{q.category}</span>
       </div>
-      <div className="h-1 bg-[#C5A55A]/15 rounded-full mb-4 overflow-hidden">
+      <div className="h-1 bg-[#E5E7EB]/15 rounded-full mb-4 overflow-hidden">
         <motion.div
-          className="h-full bg-gradient-to-r from-[#D4AF37] to-[#8B6914]"
+          className="h-full bg-gradient-to-r from-[#2C5F7C] to-[#2C5F7C]"
           initial={{ width: 0 }}
           animate={{ width: `${((quizIndex + 1) / questions.length) * 100}%` }}
           transition={{ duration: 0.35 }}
@@ -675,7 +663,7 @@ function QuizStep({
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.22 }}
         >
-          <h4 className="font-serif font-bold text-[#2C1810] text-[14px] leading-relaxed mb-4">
+          <h4 className="font-serif font-bold text-[#333333] text-[14px] leading-relaxed mb-4">
             {q.question}
           </h4>
           <div className="space-y-2.5">
@@ -685,8 +673,8 @@ function QuizStep({
                 onClick={() => onAnswer(idx)}
                 className={`w-full text-left p-3.5 rounded-xl border-2 transition-all duration-200 active:scale-[0.98] ${
                   selected === idx
-                    ? "border-[#D4AF37] bg-gradient-to-br from-[#D4AF37]/25 to-[#D4AF37]/10 shadow-md shadow-[#D4AF37]/20"
-                    : "border-[#C5A55A]/15 bg-white/30 hover:border-[#C5A55A]/40 active:bg-[#EDD9B3]/30"
+                    ? "border-[#2C5F7C] bg-gradient-to-br from-[#2C5F7C]/25 to-[#2C5F7C]/10 shadow-md shadow-[#2C5F7C]/20"
+                    : "border-[#E5E7EB]/15 bg-white/30 hover:border-[#E5E7EB]/40 active:bg-[#F3F4F6]/30"
                 }`}
                 data-testid={`button-quiz-${q.id}-${idx}`}
               >
@@ -694,13 +682,13 @@ function QuizStep({
                   <span
                     className={`shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center font-serif font-bold text-[11px] ${
                       selected === idx
-                        ? "border-[#8B6914] bg-[#D4AF37] text-white"
-                        : "border-[#C5A55A]/40 text-[#8B6914]/60"
+                        ? "border-[#2C5F7C] bg-[#2C5F7C] text-white"
+                        : "border-[#E5E7EB]/40 text-[#2C5F7C]/60"
                     }`}
                   >
                     {String.fromCharCode(65 + idx)}
                   </span>
-                  <span className="font-serif text-[12px] text-[#2C1810] leading-relaxed pt-0.5">
+                  <span className="font-serif text-[12px] text-[#333333] leading-relaxed pt-0.5">
                     {ans.label}
                   </span>
                 </div>
@@ -738,26 +726,26 @@ function RadarResultView({
       animate={{ opacity: 1, y: 0 }}
       className="text-center"
     >
-      <h4 className="font-serif font-bold text-[#2C1810] text-[15px] mb-1">
+      <h4 className="font-serif font-bold text-[#333333] text-[15px] mb-1">
         お子さまの学びのタイプ
       </h4>
-      <p className="font-sans text-[11px] text-[#8B6914]/60 mb-3">
+      <p className="font-sans text-[11px] text-[#2C5F7C]/60 mb-3">
         診断結果を可視化しました
       </p>
       <div className="w-full h-[260px] -mx-2">
         <ResponsiveContainer width="100%" height="100%">
           <RadarChart data={data} outerRadius="72%">
-            <PolarGrid stroke="#C5A55A" strokeOpacity={0.3} />
+            <PolarGrid stroke="#E5E7EB" strokeOpacity={0.3} />
             <PolarAngleAxis
               dataKey="axis"
-              tick={{ fill: "#5A4632", fontSize: 11, fontWeight: 600 }}
+              tick={{ fill: "#4B5563", fontSize: 11, fontWeight: 600 }}
             />
             <PolarRadiusAxis domain={[0, 5]} tick={false} axisLine={false} />
             <Radar
               name="スコア"
               dataKey="value"
-              stroke="#8B6914"
-              fill="#D4AF37"
+              stroke="#2C5F7C"
+              fill="#2C5F7C"
               fillOpacity={0.5}
               strokeWidth={2}
             />
@@ -766,12 +754,11 @@ function RadarResultView({
       </div>
       <button
         onClick={onContinue}
-        className="mt-3 gold-btn py-3 px-8 rounded-xl text-[13px] relative overflow-hidden inline-flex items-center gap-1.5"
+        className="mt-3 gold-btn py-3 px-8 rounded-xl text-[13px] inline-flex items-center gap-1.5"
         data-testid="button-radar-continue"
       >
-        <span className="relative z-10">次のステップへ</span>
-        <ChevronRight className="w-4 h-4 relative z-10" />
-        <div className="absolute inset-0 gold-shimmer" />
+        <span>次のステップへ</span>
+        <ChevronRight className="w-4 h-4" />
       </button>
     </motion.div>
   );
@@ -848,18 +835,18 @@ function Step2({ formData, toggleArrayField }: ArrayStepProps) {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between mb-1">
-        <p className="font-sans text-[11px] text-[#5A4632] font-bold tracking-wide">
+        <p className="font-sans text-[11px] text-[#4B5563] font-bold tracking-wide">
           お子さまの強みを選んでください
         </p>
         <span className={`font-sans text-[10px] font-bold px-2 py-0.5 rounded-full ${
           selected.length >= 1 && selected.length <= 3
-            ? "bg-[#D4AF37]/15 text-[#8B6914]"
-            : "bg-[#C5A55A]/10 text-[#8B6914]/40"
+            ? "bg-[#2C5F7C]/15 text-[#2C5F7C]"
+            : "bg-[#E5E7EB]/10 text-[#2C5F7C]/40"
         }`}>
           {selected.length} / 3
         </span>
       </div>
-      <p className="font-sans text-[10px] text-[#8B6914]/50 -mt-2 mb-2">
+      <p className="font-sans text-[10px] text-[#2C5F7C]/50 -mt-2 mb-2">
         1〜3つまで選択できます（お子さまの今の姿に近いものを選んでください）
       </p>
       <div className="grid grid-cols-2 gap-2">
@@ -885,18 +872,18 @@ function Step3({ formData, toggleArrayField }: ArrayStepProps) {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between mb-1">
-        <p className="font-sans text-[11px] text-[#5A4632] font-bold tracking-wide">
+        <p className="font-sans text-[11px] text-[#4B5563] font-bold tracking-wide">
           私立中学で伸ばしたい力
         </p>
         <span className={`font-sans text-[10px] font-bold px-2 py-0.5 rounded-full ${
           selected.length >= 1 && selected.length <= 3
-            ? "bg-[#D4AF37]/15 text-[#8B6914]"
-            : "bg-[#C5A55A]/10 text-[#8B6914]/40"
+            ? "bg-[#2C5F7C]/15 text-[#2C5F7C]"
+            : "bg-[#E5E7EB]/10 text-[#2C5F7C]/40"
         }`}>
           {selected.length} / 3
         </span>
       </div>
-      <p className="font-sans text-[10px] text-[#8B6914]/50 -mt-2 mb-2">
+      <p className="font-sans text-[10px] text-[#2C5F7C]/50 -mt-2 mb-2">
         1〜3つまで選択できます（中学校で特に育みたい力を選んでください）
       </p>
       <div className="grid grid-cols-2 gap-2">
@@ -972,10 +959,10 @@ function Step7({ formData, updateField }: StepProps) {
     <div className="space-y-5">
       {/* 通学条件を含めるかの選択 */}
       <div className="space-y-3">
-        <p className="font-sans text-[11px] text-[#5A4632] font-bold tracking-wide">
+        <p className="font-sans text-[11px] text-[#4B5563] font-bold tracking-wide">
           通学距離を診断に含めますか？
         </p>
-        <p className="font-sans text-[10px] text-[#8B6914]/50 leading-relaxed">
+        <p className="font-sans text-[10px] text-[#2C5F7C]/50 leading-relaxed">
           住所の特定が気になる方は「含めない」を選択できます。通学条件なしでも正確な診断が可能です。
         </p>
 
@@ -984,15 +971,15 @@ function Step7({ formData, updateField }: StepProps) {
             onClick={() => updateField("includeCommute", true)}
             className={`py-3.5 px-3 rounded-xl border-2 transition-all duration-200 active:scale-95 text-center ${
               includeCommute
-                ? "border-[#D4AF37] bg-gradient-to-b from-[#D4AF37]/20 to-[#D4AF37]/8 shadow-sm shadow-[#D4AF37]/15"
-                : "border-[#C5A55A]/15 bg-white/30 hover:border-[#C5A55A]/40"
+                ? "border-[#2C5F7C] bg-gradient-to-b from-[#2C5F7C]/20 to-[#2C5F7C]/8 shadow-sm shadow-[#2C5F7C]/15"
+                : "border-[#E5E7EB]/15 bg-white/30 hover:border-[#E5E7EB]/40"
             }`}
           >
-            <MapPin className={`w-5 h-5 mx-auto mb-1.5 ${includeCommute ? "text-[#8B6914]" : "text-[#C5A55A]/40"}`} />
-            <span className={`font-serif text-[13px] font-bold block ${includeCommute ? "text-[#8B6914]" : "text-[#5A4632]"}`}>
+            <MapPin className={`w-5 h-5 mx-auto mb-1.5 ${includeCommute ? "text-[#2C5F7C]" : "text-[#E5E7EB]/40"}`} />
+            <span className={`font-serif text-[13px] font-bold block ${includeCommute ? "text-[#2C5F7C]" : "text-[#4B5563]"}`}>
               含める
             </span>
-            <span className="font-sans text-[10px] text-[#8B6914]/50 block mt-0.5">
+            <span className="font-sans text-[10px] text-[#2C5F7C]/50 block mt-0.5">
               通学時間も考慮して診断
             </span>
           </button>
@@ -1003,15 +990,15 @@ function Step7({ formData, updateField }: StepProps) {
             }}
             className={`py-3.5 px-3 rounded-xl border-2 transition-all duration-200 active:scale-95 text-center ${
               !includeCommute
-                ? "border-[#D4AF37] bg-gradient-to-b from-[#D4AF37]/20 to-[#D4AF37]/8 shadow-sm shadow-[#D4AF37]/15"
-                : "border-[#C5A55A]/15 bg-white/30 hover:border-[#C5A55A]/40"
+                ? "border-[#2C5F7C] bg-gradient-to-b from-[#2C5F7C]/20 to-[#2C5F7C]/8 shadow-sm shadow-[#2C5F7C]/15"
+                : "border-[#E5E7EB]/15 bg-white/30 hover:border-[#E5E7EB]/40"
             }`}
           >
-            <Shield className={`w-5 h-5 mx-auto mb-1.5 ${!includeCommute ? "text-[#8B6914]" : "text-[#C5A55A]/40"}`} />
-            <span className={`font-serif text-[13px] font-bold block ${!includeCommute ? "text-[#8B6914]" : "text-[#5A4632]"}`}>
+            <Shield className={`w-5 h-5 mx-auto mb-1.5 ${!includeCommute ? "text-[#2C5F7C]" : "text-[#E5E7EB]/40"}`} />
+            <span className={`font-serif text-[13px] font-bold block ${!includeCommute ? "text-[#2C5F7C]" : "text-[#4B5563]"}`}>
               含めない
             </span>
-            <span className="font-sans text-[10px] text-[#8B6914]/50 block mt-0.5">
+            <span className="font-sans text-[10px] text-[#2C5F7C]/50 block mt-0.5">
               学校の特徴のみで診断
             </span>
           </button>
@@ -1058,7 +1045,7 @@ function Step7({ formData, updateField }: StepProps) {
 function FieldGroup({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block font-sans text-[11px] font-bold text-[#5A4632] mb-2 tracking-wide">
+      <label className="block font-sans text-[11px] font-bold text-[#4B5563] mb-2 tracking-wide">
         {label}
       </label>
       {children}
@@ -1080,8 +1067,8 @@ function SelectChip({
       onClick={onClick}
       className={`py-2.5 px-2 rounded-lg border-2 font-sans text-[13px] font-medium transition-all duration-200 active:scale-95 ${
         selected
-          ? "border-[#D4AF37] bg-gradient-to-b from-[#D4AF37]/20 to-[#D4AF37]/8 text-[#8B6914] shadow-sm shadow-[#D4AF37]/15 font-bold"
-          : "border-[#C5A55A]/15 bg-white/30 text-[#5A4632] hover:border-[#C5A55A]/40 active:bg-[#EDD9B3]/30"
+          ? "border-[#2C5F7C] bg-gradient-to-b from-[#2C5F7C]/20 to-[#2C5F7C]/8 text-[#2C5F7C] shadow-sm shadow-[#2C5F7C]/15 font-bold"
+          : "border-[#E5E7EB]/15 bg-white/30 text-[#4B5563] hover:border-[#E5E7EB]/40 active:bg-[#F3F4F6]/30"
       }`}
     >
       {label}
@@ -1110,24 +1097,24 @@ function TagChip({
       disabled={disabled && !selected}
       className={`text-left p-3 rounded-xl border-2 transition-all duration-200 active:scale-[0.97] ${
         selected
-          ? "border-[#D4AF37] bg-gradient-to-br from-[#D4AF37]/15 to-[#D4AF37]/5 shadow-sm shadow-[#D4AF37]/12"
+          ? "border-[#2C5F7C] bg-gradient-to-br from-[#2C5F7C]/15 to-[#2C5F7C]/5 shadow-sm shadow-[#2C5F7C]/12"
           : disabled
-          ? "border-[#C5A55A]/8 bg-white/15 opacity-40 cursor-not-allowed"
-          : "border-[#C5A55A]/12 bg-white/25 hover:border-[#C5A55A]/35"
+          ? "border-[#E5E7EB]/8 bg-white/15 opacity-40 cursor-not-allowed"
+          : "border-[#E5E7EB]/12 bg-white/25 hover:border-[#E5E7EB]/35"
       }`}
     >
       <div className="flex items-center gap-1.5 mb-0.5">
         <span className="text-[14px]">{icon}</span>
         <span className={`font-serif text-[12px] font-bold ${
-          selected ? "text-[#8B6914]" : "text-[#2C1810]"
+          selected ? "text-[#2C5F7C]" : "text-[#333333]"
         }`}>
           {label}
         </span>
         {selected && (
-          <span className="ml-auto text-[10px] text-[#D4AF37]">✓</span>
+          <span className="ml-auto text-[10px] text-[#2C5F7C]">✓</span>
         )}
       </div>
-      <span className="font-sans text-[9px] text-[#6B5744]/70 leading-snug block">
+      <span className="font-sans text-[9px] text-[#6B7280]/70 leading-snug block">
         {desc}
       </span>
     </button>
@@ -1150,21 +1137,21 @@ function OptionCard({
       onClick={onClick}
       className={`w-full text-left p-3.5 rounded-xl border-2 transition-all duration-200 active:scale-[0.98] ${
         selected
-          ? "border-[#D4AF37] bg-gradient-to-r from-[#D4AF37]/12 to-[#D4AF37]/5 shadow-sm shadow-[#D4AF37]/12"
-          : "border-[#C5A55A]/12 bg-white/25 hover:border-[#C5A55A]/35"
+          ? "border-[#2C5F7C] bg-gradient-to-r from-[#2C5F7C]/12 to-[#2C5F7C]/5 shadow-sm shadow-[#2C5F7C]/12"
+          : "border-[#E5E7EB]/12 bg-white/25 hover:border-[#E5E7EB]/35"
       }`}
     >
       <div className="flex items-center gap-2">
         <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${
-          selected ? "border-[#D4AF37] bg-[#D4AF37]" : "border-[#C5A55A]/30 bg-transparent"
+          selected ? "border-[#2C5F7C] bg-[#2C5F7C]" : "border-[#E5E7EB]/30 bg-transparent"
         }`}>
           {selected && (
             <div className="w-1.5 h-1.5 rounded-full bg-white" />
           )}
         </div>
-        <span className="font-serif font-bold text-[13px] text-[#2C1810]">{label}</span>
+        <span className="font-serif font-bold text-[13px] text-[#333333]">{label}</span>
       </div>
-      <span className="font-sans text-[11px] text-[#6B5744] mt-1 block leading-relaxed ml-6">{desc}</span>
+      <span className="font-sans text-[11px] text-[#6B7280] mt-1 block leading-relaxed ml-6">{desc}</span>
     </button>
   );
 }
