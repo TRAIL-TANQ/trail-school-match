@@ -4989,6 +4989,9 @@ export const schools: School[] = [
 
 export interface DiagnosisInput {
   grade: string;
+  // 基本情報
+  gender: "male" | "female" | "";
+  preferredAreas: string[]; // エリア識別子の配列。"any" で「こだわらない」
   deviationStandard: "sapix" | "yotsuya";
   deviationRange: string;
   // 現在の適性（お子さまの今の強み）
@@ -5009,6 +5012,52 @@ export interface DiagnosisInput {
   includeCommute: boolean;
   commuteTime: string;
 }
+
+// ============================================================
+// エリア定義 - 通学エリアのフィルタリング用
+// ============================================================
+export const AREA_GROUPS: Record<string, { label: string; keywords: string[] }> = {
+  "tokyo23-east": {
+    label: "東京23区 東部（千代田・中央・台東・墨田・江東・荒川・文京）",
+    keywords: ["千代田", "中央区", "台東", "墨田", "江東", "荒川", "文京"],
+  },
+  "tokyo23-west": {
+    label: "東京23区 西部（新宿・渋谷・目黒・世田谷・杉並・中野・練馬）",
+    keywords: ["新宿", "渋谷", "目黒", "世田谷", "杉並", "中野", "練馬"],
+  },
+  "tokyo23-south": {
+    label: "東京23区 南部（港・品川・大田）",
+    keywords: ["港区", "港", "品川", "大田"],
+  },
+  "tokyo23-north": {
+    label: "東京23区 北部（豊島・板橋・北）",
+    keywords: ["豊島", "板橋", "北区"],
+  },
+  "tama": {
+    label: "東京 多摩地区（武蔵野・三鷹・調布・国立・八王子など）",
+    keywords: ["武蔵野", "三鷹", "調布", "国立", "八王子", "多摩", "立川", "府中"],
+  },
+  "kanagawa-yokohama": {
+    label: "神奈川 横浜・川崎",
+    keywords: ["横浜", "川崎", "神奈川"],
+  },
+  "kanagawa-shonan": {
+    label: "神奈川 湘南・鎌倉",
+    keywords: ["湘南", "鎌倉", "藤沢", "茅ヶ崎"],
+  },
+  "chiba": {
+    label: "千葉（市川・船橋・千葉・柏など）",
+    keywords: ["市川", "船橋", "千葉", "柏", "松戸"],
+  },
+  "saitama": {
+    label: "埼玉（さいたま・川越・所沢など）",
+    keywords: ["さいたま", "川越", "所沢", "埼玉", "大宮", "浦和"],
+  },
+  "any": {
+    label: "エリアにこだわらない",
+    keywords: [],
+  },
+};
 
 // ============================================================
 // 適性・伸ばしたい能力の選択肢
@@ -5387,14 +5436,37 @@ function generateMatchComment(input: DiagnosisInput, school: School, rank: numbe
 }
 
 export function calculateScores(input: DiagnosisInput): SchoolScore[] {
-  // Filter by coed preference
   let filteredSchools = schools;
+
+  // 性別フィルタ: 男の子は女子校を除外、女の子は男子校を除外
+  if (input.gender === "male") {
+    const g = filteredSchools.filter((s) => s.coed !== "女子校");
+    if (g.length >= 3) filteredSchools = g;
+  } else if (input.gender === "female") {
+    const g = filteredSchools.filter((s) => s.coed !== "男子校");
+    if (g.length >= 3) filteredSchools = g;
+  }
+
+  // 共学・別学の希望フィルタ（ユーザーの明示的な選択）
   if (input.coedPreference !== "こだわらない") {
-    filteredSchools = schools.filter(
-      (s) => s.coed === input.coedPreference
+    const c = filteredSchools.filter((s) => s.coed === input.coedPreference);
+    if (c.length >= 3) filteredSchools = c;
+  }
+
+  // エリアフィルタ: 選択されたエリアの keyword がcommuteAreasにマッチする学校を優先
+  if (
+    input.preferredAreas &&
+    input.preferredAreas.length > 0 &&
+    !input.preferredAreas.includes("any")
+  ) {
+    const keywords = input.preferredAreas.flatMap(
+      (a) => AREA_GROUPS[a]?.keywords ?? []
     );
-    if (filteredSchools.length < 3) {
-      filteredSchools = schools;
+    if (keywords.length > 0) {
+      const areaFiltered = filteredSchools.filter((s) =>
+        s.commuteAreas.some((ca) => keywords.some((kw) => ca.includes(kw)))
+      );
+      if (areaFiltered.length >= 3) filteredSchools = areaFiltered;
     }
   }
 

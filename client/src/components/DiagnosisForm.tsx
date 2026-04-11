@@ -21,7 +21,7 @@ import {
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer,
 } from "recharts";
 import type { DiagnosisInput } from "@/lib/schoolData";
-import { STRENGTH_OPTIONS, GROWTH_OPTIONS } from "@/lib/schoolData";
+import { STRENGTH_OPTIONS, GROWTH_OPTIONS, AREA_GROUPS } from "@/lib/schoolData";
 
 /* ============================================================
    Quiz Questions - 能力を自動算出するための質問セット
@@ -257,6 +257,7 @@ const STEPS = [
 const TOTAL_STEPS = STEPS.length;
 
 export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormProps) {
+  const [basicInfoIndex, setBasicInfoIndex] = useState(0); // 0:学年 1:性別 2:エリア 3:完了
   const [quizMode, setQuizMode] = useState<"simple" | "detailed" | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [quizIndex, setQuizIndex] = useState(0);
@@ -268,6 +269,8 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
 
   const [formData, setFormData] = useState<Partial<DiagnosisInput>>({
     grade: "",
+    gender: "",
+    preferredAreas: [],
     deviationStandard: "sapix",
     deviationRange: "",
     currentStrengths: [],
@@ -306,7 +309,7 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
   const canProceed = () => {
     switch (currentStep) {
       case 1:
-        return !!(formData.grade && formData.deviationStandard && formData.deviationRange);
+        return !!(formData.deviationStandard && formData.deviationRange);
       case 2: return (formData.currentStrengths?.length ?? 0) >= 1;
       case 3: return (formData.desiredGrowth?.length ?? 0) >= 1;
       case 4: return true;
@@ -384,6 +387,42 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
     setQuizAnswers(new Array(mode === "detailed" ? 14 : 7).fill(null));
   };
 
+  const handleBasicInfoGrade = (g: string) => {
+    updateField("grade", g);
+    setTimeout(() => setBasicInfoIndex(1), 200);
+  };
+
+  const handleBasicInfoGender = (g: "male" | "female") => {
+    updateField("gender", g);
+    setTimeout(() => setBasicInfoIndex(2), 200);
+  };
+
+  const toggleArea = (area: string) => {
+    setFormData((prev) => {
+      const arr = (prev.preferredAreas as string[]) || [];
+      if (area === "any") {
+        // 「こだわらない」は排他選択
+        return { ...prev, preferredAreas: arr.includes("any") ? [] : ["any"] };
+      }
+      const without = arr.filter((a) => a !== "any");
+      if (without.includes(area)) {
+        return { ...prev, preferredAreas: without.filter((a) => a !== area) };
+      }
+      return { ...prev, preferredAreas: [...without, area] };
+    });
+  };
+
+  const handleBasicInfoAreaNext = () => {
+    setBasicInfoIndex(3);
+    scrollToSection();
+  };
+
+  const handleBasicInfoBack = () => {
+    if (basicInfoIndex > 0) {
+      setBasicInfoIndex(basicInfoIndex - 1);
+    }
+  };
+
   const handleSubmit = () => {
     onSubmit(formData as DiagnosisInput);
   };
@@ -410,12 +449,28 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
           </h2>
         </motion.div>
 
-        {/* Mode Selection - 診断モードを選んでください */}
-        {quizMode === null && !isCompleted && (
-          <ModeSelection onSelect={selectMode} />
+        {/* Basic Info - 基本情報（学年・性別・エリア） */}
+        {basicInfoIndex < 3 && !isCompleted && (
+          <BasicInfoScreen
+            index={basicInfoIndex}
+            formData={formData}
+            onSelectGrade={handleBasicInfoGrade}
+            onSelectGender={handleBasicInfoGender}
+            onToggleArea={toggleArea}
+            onAreaNext={handleBasicInfoAreaNext}
+            onBack={handleBasicInfoBack}
+          />
         )}
 
-        {quizMode !== null && (
+        {/* Mode Selection - 診断モードを選んでください */}
+        {basicInfoIndex >= 3 && quizMode === null && !isCompleted && (
+          <ModeSelection
+            onSelect={selectMode}
+            onBack={() => setBasicInfoIndex(2)}
+          />
+        )}
+
+        {basicInfoIndex >= 3 && quizMode !== null && (
         <>
         {/* Step Progress Bar */}
         <div className="flex items-center justify-center gap-0 mb-7 px-1">
@@ -552,7 +607,13 @@ export default function DiagnosisForm({ onSubmit, isCompleted }: DiagnosisFormPr
    Mode Selection Screen
    ============================================================ */
 
-function ModeSelection({ onSelect }: { onSelect: (mode: "simple" | "detailed") => void }) {
+function ModeSelection({
+  onSelect,
+  onBack,
+}: {
+  onSelect: (mode: "simple" | "detailed") => void;
+  onBack?: () => void;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 15 }}
@@ -560,10 +621,10 @@ function ModeSelection({ onSelect }: { onSelect: (mode: "simple" | "detailed") =
       className="parchment-card rounded-2xl p-5 sm:p-6 shadow-lg shadow-[#2C5F7C]/8"
     >
       <div className="text-center mb-5">
-        <h3 className="font-serif font-bold text-[#333333] text-[16px] mb-1">
+        <h3 className="font-sans font-bold text-[#333333] text-[16px] mb-1">
           診断モードを選んでください
         </h3>
-        <p className="font-sans text-[11px] text-[#2C5F7C]/60">
+        <p className="font-sans text-[11px] text-[#6B7280]">
           お子さまの学びタイプを自動で分析します
         </p>
       </div>
@@ -616,6 +677,240 @@ function ModeSelection({ onSelect }: { onSelect: (mode: "simple" | "detailed") =
           </div>
         </button>
       </div>
+      {onBack && (
+        <button
+          onClick={onBack}
+          className="mt-4 w-full py-2.5 rounded-xl border border-[#E5E7EB] text-[#6B7280] font-sans text-[12px] hover:bg-[#F3F4F6] transition-colors flex items-center justify-center gap-1.5"
+        >
+          <ChevronLeft className="w-3.5 h-3.5" />
+          基本情報に戻る
+        </button>
+      )}
+    </motion.div>
+  );
+}
+
+/* ============================================================
+   Basic Info Screen - 学年・性別・エリア（1問ずつカード表示）
+   ============================================================ */
+
+const GRADE_OPTIONS: { value: string; label: string }[] = [
+  { value: "小1", label: "小学1年生" },
+  { value: "小2", label: "小学2年生" },
+  { value: "小3", label: "小学3年生" },
+  { value: "小4", label: "小学4年生" },
+  { value: "小5", label: "小学5年生" },
+  { value: "小6", label: "小学6年生" },
+];
+
+function BasicInfoScreen({
+  index,
+  formData,
+  onSelectGrade,
+  onSelectGender,
+  onToggleArea,
+  onAreaNext,
+  onBack,
+}: {
+  index: number;
+  formData: Partial<DiagnosisInput>;
+  onSelectGrade: (g: string) => void;
+  onSelectGender: (g: "male" | "female") => void;
+  onToggleArea: (a: string) => void;
+  onAreaNext: () => void;
+  onBack: () => void;
+}) {
+  const selectedAreas = (formData.preferredAreas as string[]) || [];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="parchment-card rounded-2xl p-5 sm:p-6 shadow-lg shadow-[#2C5F7C]/8"
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between mb-2">
+        <span className="font-sans text-[10px] font-bold text-[#2C5F7C] tracking-wider uppercase">
+          基本情報 {index + 1} / 3
+        </span>
+        <span className="font-sans text-[10px] text-[#6B7280]">
+          {index === 0 ? "学年" : index === 1 ? "性別" : "エリア"}
+        </span>
+      </div>
+
+      {/* Progress bar */}
+      <div className="h-1 bg-[#E5E7EB] rounded-full mb-5 overflow-hidden">
+        <motion.div
+          className="h-full bg-[#2C5F7C]"
+          initial={{ width: 0 }}
+          animate={{ width: `${((index + 1) / 3) * 100}%` }}
+          transition={{ duration: 0.35 }}
+        />
+      </div>
+
+      <AnimatePresence mode="wait">
+        {/* Q1: 学年 */}
+        {index === 0 && (
+          <motion.div
+            key="grade"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.22 }}
+          >
+            <h3 className="font-sans font-bold text-[#333333] text-[15px] mb-1">
+              お子さまの学年は？
+            </h3>
+            <p className="font-sans text-[11px] text-[#6B7280] mb-4">
+              該当する学年を選んでください
+            </p>
+            <div className="grid grid-cols-2 gap-2.5">
+              {GRADE_OPTIONS.map((g) => (
+                <button
+                  key={g.value}
+                  onClick={() => onSelectGrade(g.value)}
+                  className={`py-4 px-3 rounded-xl border-2 font-sans font-semibold text-[14px] transition-all duration-200 active:scale-[0.97] ${
+                    formData.grade === g.value
+                      ? "border-[#2C5F7C] bg-[#2C5F7C]/8 text-[#2C5F7C]"
+                      : "border-[#E5E7EB] bg-white text-[#333333] hover:border-[#2C5F7C]/40"
+                  }`}
+                  data-testid={`button-grade-${g.value}`}
+                >
+                  {g.label}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Q2: 性別 */}
+        {index === 1 && (
+          <motion.div
+            key="gender"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.22 }}
+          >
+            <h3 className="font-sans font-bold text-[#333333] text-[15px] mb-1">
+              お子さまの性別は？
+            </h3>
+            <p className="font-sans text-[11px] text-[#6B7280] mb-4">
+              学校形態の初期フィルタに使用します（後から変更可能）
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={() => onSelectGender("male")}
+                className={`py-6 rounded-xl border-2 font-sans font-semibold text-[15px] transition-all duration-200 active:scale-[0.97] flex flex-col items-center gap-1.5 ${
+                  formData.gender === "male"
+                    ? "border-[#2C5F7C] bg-[#2C5F7C]/8 text-[#2C5F7C]"
+                    : "border-[#E5E7EB] bg-white text-[#333333] hover:border-[#2C5F7C]/40"
+                }`}
+                data-testid="button-gender-male"
+              >
+                <span className="text-[28px]">👦</span>
+                <span>男の子</span>
+              </button>
+              <button
+                onClick={() => onSelectGender("female")}
+                className={`py-6 rounded-xl border-2 font-sans font-semibold text-[15px] transition-all duration-200 active:scale-[0.97] flex flex-col items-center gap-1.5 ${
+                  formData.gender === "female"
+                    ? "border-[#2C5F7C] bg-[#2C5F7C]/8 text-[#2C5F7C]"
+                    : "border-[#E5E7EB] bg-white text-[#333333] hover:border-[#2C5F7C]/40"
+                }`}
+                data-testid="button-gender-female"
+              >
+                <span className="text-[28px]">👧</span>
+                <span>女の子</span>
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Q3: エリア */}
+        {index === 2 && (
+          <motion.div
+            key="area"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.22 }}
+          >
+            <h3 className="font-sans font-bold text-[#333333] text-[15px] mb-1">
+              通学を考えているエリアは？
+            </h3>
+            <p className="font-sans text-[11px] text-[#6B7280] mb-4">
+              複数選択できます（該当エリアの学校を優先表示します）
+            </p>
+            <div className="space-y-2">
+              {Object.entries(AREA_GROUPS).map(([key, g]) => {
+                const checked = selectedAreas.includes(key);
+                return (
+                  <button
+                    key={key}
+                    onClick={() => onToggleArea(key)}
+                    className={`w-full text-left p-3 rounded-xl border-2 transition-all duration-200 active:scale-[0.99] flex items-start gap-2.5 ${
+                      checked
+                        ? "border-[#2C5F7C] bg-[#2C5F7C]/8"
+                        : "border-[#E5E7EB] bg-white hover:border-[#2C5F7C]/40"
+                    }`}
+                    data-testid={`button-area-${key}`}
+                  >
+                    <div
+                      className={`shrink-0 mt-0.5 w-4 h-4 rounded border-2 flex items-center justify-center transition-colors ${
+                        checked
+                          ? "border-[#2C5F7C] bg-[#2C5F7C]"
+                          : "border-[#D1D5DB] bg-white"
+                      }`}
+                    >
+                      {checked && (
+                        <svg viewBox="0 0 12 12" className="w-3 h-3 text-white" fill="none">
+                          <path
+                            d="M2 6L5 9L10 3"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      )}
+                    </div>
+                    <span
+                      className={`font-sans text-[12px] leading-snug ${
+                        checked ? "text-[#2C5F7C] font-semibold" : "text-[#333333]"
+                      }`}
+                    >
+                      {g.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            <button
+              onClick={onAreaNext}
+              disabled={selectedAreas.length === 0}
+              className={`mt-5 w-full gold-btn py-3.5 rounded-xl text-[13px] flex items-center justify-center gap-1.5 ${
+                selectedAreas.length === 0 ? "opacity-40 pointer-events-none" : ""
+              }`}
+              data-testid="button-area-next"
+            >
+              <span>次へ進む</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Back button */}
+      {index > 0 && (
+        <button
+          onClick={onBack}
+          className="mt-4 w-full py-2.5 rounded-xl border border-[#E5E7EB] text-[#6B7280] font-sans text-[12px] hover:bg-[#F3F4F6] transition-colors flex items-center justify-center gap-1.5"
+        >
+          <ChevronLeft className="w-3.5 h-3.5" />
+          前の質問に戻る
+        </button>
+      )}
     </motion.div>
   );
 }
@@ -782,19 +1077,6 @@ interface ArrayStepProps {
 function Step1({ formData, updateField }: StepProps) {
   return (
     <div className="space-y-5">
-      <FieldGroup label="学年">
-        <div className="grid grid-cols-3 gap-2">
-          {["小1", "小2", "小3", "小4", "小5", "小6"].map((g) => (
-            <SelectChip
-              key={g}
-              label={g}
-              selected={formData.grade === g}
-              onClick={() => updateField("grade", g)}
-            />
-          ))}
-        </div>
-      </FieldGroup>
-
       <FieldGroup label="偏差値基準">
         <div className="grid grid-cols-2 gap-2">
           {[
